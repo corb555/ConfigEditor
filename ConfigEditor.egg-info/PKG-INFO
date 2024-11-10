@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: ConfigEditor
+Version: 0.1.11
+Summary: Editor routines for text config and YML config files
+Author-email: corb <you@example.com>
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: PyYAML>=6.0.1
+Requires-Dist: PyQt6>=6.6.1
