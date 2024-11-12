@@ -30,10 +30,8 @@ class ConfigFile(DataManager):
     Handles loading, updating, and saving data in YML files.
 
     Extends `DataManager`:
-        - Inherits base file handling functionality: file load, save, and change
-        tracking.
-        - Implements methods specific to the YML file format, including custom
-        parsing and saving logic.
+        - Inherits base file handling functionality: file load, save, and undo.
+        - Implements YML file format parsing and saving logic.
     """
 
     def _load_data(self, f):
