@@ -27,10 +27,10 @@ from ConfigEditor.data_manager import DataManager
 
 class ConfigFile(DataManager):
     """
-    Handles loading, updating, and saving data in a YML file.
+    Handles loading, updating, and saving data in YML files.
 
-    Subclass of `DataManager`:
-        - Inherits base file handling functionality: file loading, saving, and change
+    Extends `DataManager`:
+        - Inherits base file handling functionality: file load, save, and change
         tracking.
         - Implements methods specific to the YML file format, including custom
         parsing and saving logic.

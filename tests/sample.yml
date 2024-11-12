@@ -1,7 +1,7 @@
-HILLSHADE1: -alg Horn
-HILLSHADE2: -z 3
-LAYER: C
-NAMES:
-  A: WA
-  B: USA
-  C: Yellowstone
+DESSERT: Tiramisu
+TIP: '203'
+HOME: C
+SITES:
+  A: Seattle
+  B: Portland
+  C: Vancouver

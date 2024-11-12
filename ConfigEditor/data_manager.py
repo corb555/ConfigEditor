@@ -54,6 +54,8 @@ class DataManager(ABC):
         self._handler = None  # the handler for our data type
         self.max_snapshots = 5  # Maximum number of snapshots to retain for undo
 
+        self.proxy_mapping = {}  # Dictionary to map keys to proxy files
+
     @property
     def handler(self):
         """ Initialize the handler when it's accessed for the first time."""
@@ -88,6 +90,9 @@ class DataManager(ABC):
         """
         Load data from the specified file.
         """
+        # Clear any proxy keys
+        self.proxy_mapping = {}  # Dictionary to map keys to proxy files
+
         self.file_path = path
         self.directory = os.path.dirname(path)
 
@@ -101,6 +106,38 @@ class DataManager(ABC):
             return True
         except (FileNotFoundError, IOError, ValueError, Exception):
             raise
+
+    def add_proxy(self, proxy_file, proxy_update_keys):
+        """
+        Add a proxy file and its associated update keys.
+        If any of these keys are updated, they will trigger a touch to this proxy_file.
+        This can be used to improve the granularity of dependencies for build management systems.
+        The build system can set a dependency on the proxy_file which is only updated for a subset
+        of fields in the config file.
+
+        Args:
+            proxy_file (str): The file to touch when any associated key is updated.
+            proxy_update_keys (List[str]): List of keys that trigger a touch to this proxy_file.
+        """
+        for key in proxy_update_keys:
+            if key in self.proxy_mapping:
+                raise ValueError(
+                    f"Key '{key}' is already associated with another proxy file: "
+                    f"{self.proxy_mapping[key]}"
+                )
+            self.proxy_mapping[key] = proxy_file
+
+    def get_proxy(self, key):
+        """
+        Retrieve the proxy file associated with a given key, if it exists.
+
+        Args:
+            key (str): The key to look up.
+
+        Returns:
+            str or None: The proxy file associated with the key, or None if not found.
+        """
+        return self.proxy_mapping.get(key)
 
     def get_open_mode(self, write=False):
         return 'w' if write else 'r'
@@ -170,6 +207,11 @@ class DataManager(ABC):
         self.unsaved_changes = True
         self.__setitem__(key, value)
 
+        # Check if updating this key should trigger a touch to a proxy_file
+        proxy_file = self.get_proxy(key)
+        if proxy_file is not None:
+            touch_file(proxy_file)
+
     def get(self, key_or_index, default=None):
         """Retrieve data from _data with a default if not found."""
         value = self.__getitem__(key_or_index)
@@ -178,6 +220,18 @@ class DataManager(ABC):
     def items(self):
         """Return items from _data if it's a dictionary, or the list itself if it's a list."""
         return self.handler.items(self._data)
+
+
+def touch_file(filename):
+    """
+    Set the file's modification and access time to the current time.
+
+    Args:
+        filename (str): Path to the file.
+    """
+    with open(filename, 'a'):
+        print(f"touch_file {filename}")
+        os.utime(filename, None)
 
 
 class DataHandler(ABC):
@@ -253,15 +307,23 @@ class DictDataHandler(DataHandler):
                 key = f"{main_key}{ref}"
 
         # Handle wildcard keys (e.g., name.*)
+        # todo throw exception if there are characters after "*" in key
         if ".*" in key:
+            if not key.endswith(".*"):
+                raise ValueError(
+                    f"Invalid wildcard key format: '{key}'. '.*' is only allowed at the end."
+                    )
             main_key = key.split(".*")[0]
-            return data.get(main_key, {}).items()
+            return data.get(main_key, {})
 
-        # Handle nested keys
+        # Handle nested dictionaries, with each sub-key separated by "."
         keys = key.split('.')
         value = data
         try:
             for k in keys:
+                if not isinstance(value, dict):
+                    # Ensure we are dereferencing a dictionary
+                    return None
                 value = value[k]
             return value
         except KeyError:
@@ -279,6 +341,7 @@ class DictDataHandler(DataHandler):
         """
         # Ignore set for wildcard keys (e.g., name.*)
         if ".*" in key:
+            print(f"Cannot update key with wildcard: '{key}'.")
             return
 
         # Handle indirect key case, e.g., FILES@LAYER
@@ -295,7 +358,11 @@ class DictDataHandler(DataHandler):
 
         # Traverse the dictionary to the correct level, except for the last key part
         for k in keys[:-1]:
-            target = target.setdefault(k, {})  # Ensure intermediate dictionaries are created
+            if k in target and not isinstance(target[k], dict):
+                raise TypeError(f"Cannot set value for {key}: Intermediate key '{k}' is not a dictionary.")
+
+            # Ensure intermediate dictionaries are created
+            target = target.setdefault(k, {})
 
         # Set the value for the final key part
         final_key = keys[-1]
@@ -361,8 +428,7 @@ class ListDataHandler(DataHandler):
         """
         if data:
             if index < len(data):
-                data[index] = value
-                # todo self.unsaved_changes = True
+                data[index] = value  # todo self.unsaved_changes = True
             else:
                 raise IndexError(f"List index out of range: {index}")
         else:
