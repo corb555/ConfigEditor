@@ -185,6 +185,10 @@ class SettingsWidget(QWidget):
         if self.is_loaded:
             self.config.save()
 
+    def undo(self):
+        self.config.undo()
+        self.display()
+
     def on_change(self, key, value):
         # Force full redisplay if the key is in the redisplay list
         if key and self.redisplay_keys is not None:

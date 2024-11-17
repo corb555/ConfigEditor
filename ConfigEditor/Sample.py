@@ -20,7 +20,7 @@
 #  DEALINGS IN THE SOFTWARE.
 import sys
 
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHBoxLayout
 
 from ConfigEditor.config_file import ConfigFile, rgx_starts, rgx_multiple_switches, rgx_token_suffix
 from ConfigEditor.settings_widget import SettingsWidget
@@ -53,12 +53,14 @@ if __name__ == "__main__":
     config = ConfigFile()
     config.load("tests/sample.yml")
 
+    # Create the UI layout for the fields in the YML file.  Each line is a row in the UI
     formats = {
         "layout1": {
             "LABEL1": ("Menu", "label", None, 400),
             "TIP": ("Tip Amount", "line_edit", r'^\d{1,2}%?$', 50),
             "DESSERT": ("Dessert", "combo", ["Tiramisu", "Apple Tart", "Cheesecake"], 200),
-            "LABEL2": (" ", "label", None, 400), "HOME": ("Home", "combo", ["A", "B", "C"], 200),
+            "LABEL2": (" ", "label", None, 400),
+            "HOME": ("Home", "combo", ["A", "B", "C"], 200),
             "SITES.@HOME": ("Home Location", "read_only", None, 180),
             "SITES.B": ("Location B", "read_only", None, 180),
             "SITES": ("Sites", "line_edit", None, 300),
@@ -66,46 +68,27 @@ if __name__ == "__main__":
         },
     }
 
-    formats1 = {
-        "layout1": {
-            "NAMES": ("Layers", "line_edit", None, 680),
-            "LAYER_LIST": ("Layer list", "line_edit", None, 680),
-            "LAYER": ("Active Layer", "combo", ["A", 'B', 'C', "D", 'E', 'F', "G", 'H', 'I'], 204),
-            "NAMES.@LAYER": ("Layer Name", "line_edit", r'^\w+$', 200),
-            "FILES.@LAYER": ("Elevation File(s)", "text_edit", rgx_token_suffix(".tif"), 680),
-            "SOURCES.@LAYER": ("Source", "line_edit", None, 680),
-            "LICENSES.@LAYER": ("License", "line_edit", None, 680),
-            "LABEL1": ("", "label", None, 400), "LABEL2": ("", "label", None, 400),
-            "WARP1": ("CRS", "line_edit", rgx_starts("-t_srs"), 500),
-            "WARP4": ("Performance", "line_edit", None, 500),
-            "WARP2": ("gdalwarp", "line_edit", rgx_multiple_switches(), 500), "WARP3": (
-                "Resampling", "combo",
-                ["-r bilinear", '-r cubic', '-r cubicspline', '-r lanczos', " "], 505),
-            "LABEL3": ("", "label", None, 400), "LABEL4": ("", "label", None, 400),
-        }, "layout2": {
-            "NAMES.@LAYER": ("Layer", "read_only", None, 180),
-            "FILES.@LAYER": ("Elevation File(s)", "text_edit", r"^[^/]*\.tif[^/]*$", 680),
-            "LABEL3": ("", "label", None, 400), "LABEL4": ("", "label", None, 400),
-        }
-    }
-
-    # Create a SettingsWidget and configure the display/edit fields based on 'formats'.
-    # Data is linked between the widgets and the corresponding fields in the config file
-    #settings_widget = SettingsWidget(config, formats, mode="expert", redisplay_keys=["LAYER"])
-
-
-    # Create color settings widget to display and edit the color table settings
-    settings_widget = SettingsWidget(config, formats,"layout1",["LAYER"])
+    # Create  settings widget to display and edit the YAML settings
+    settings_widget = SettingsWidget(config, formats,"layout1",["HOME"])
 
     # Link Save button to SettingsWidget.save to commit changes back to YAML file.
     save_button = QPushButton("Save")
     save_button.clicked.connect(settings_widget.save)
 
+    # Link Undo button to SettingsWidget.undo to undo changes
+    undo_button = QPushButton("Undo")
+    undo_button.clicked.connect(settings_widget.undo)
+
     # Set up the display with the settings widget and save button
     window = QWidget()
+
+    button_layout = QHBoxLayout()
+    button_layout.addWidget(save_button)
+    button_layout.addWidget(undo_button)
+
     layout = QVBoxLayout()
     layout.addWidget(settings_widget)
-    layout.addWidget(save_button)
+    layout.addLayout(button_layout)
     window.setLayout(layout)
 
     # Display the settings from the config file and allow editing

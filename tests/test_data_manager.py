@@ -81,7 +81,7 @@ def test_data_manager_snapshot_limit():
     dm = TestDataManager()
     dm._data = {}
     for i in range(7):  # Exceed max_snapshots
-        dm._create_snapshot()
+        dm.create_snapshot()
         dm._data["value"] = f"snapshot_{i}"
     assert len(dm.snapshots) == 5  # max_snapshots limit
     assert dm.snapshots[0] == {'value': 'snapshot_1'}

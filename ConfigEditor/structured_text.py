@@ -85,8 +85,6 @@ def parse_text(text, category, rgx):
                and is_valid is a boolean indicating the validity of the format.
     """
     if category in {DataCategory.DICT, DataCategory.LIST}:
-        if rgx:
-            print("parse_text: rgx only supported for SCALAR data category.")
         try:
             if category == DataCategory.LIST:
                 return parse_list(text), True

@@ -15,13 +15,14 @@ you don't want users to have to use a text editor for your YAML configuration fi
 highlights invalid entries.
 - **Data Syncing:** Synchronizes data values between the UI and the YAML file, seamlessly using the 
 ConfigFile manager described below.
+- **Utilizes PyQt6**
 
 **ConfigFile** provides functionality for creating, loading, updating, and saving YAML files.
 
 - **Load / Save / Create** Interfaces to load and save YAML files and to create new YAML files.
 - **Get / Set Operations:** Simple access key/value access to data fields in the YAML configuration. Including
 scalars (int, float, str), lists, and dictionaries.  _Complex nested hierarchies are not supported._
-- **Undo Support:** Snapshot-based undo within a session.
+- **Undo Support:** Keeps a snapshot for each save in session and restores from stack.
 - **Granular Dependency Management:** For build system integration, this can be configured to touch a proxy file 
 when specified fields change, offering more granular dependency tracking for build systems.
 

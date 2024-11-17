@@ -27,11 +27,9 @@ from typing import Dict, List, Union
 
 class DataManager(ABC):
     """
-    Abstract base class for managing data loading, saving, and updating.
-    The `DataManager` class
-    includes functionality for tracking unsaved changes, undoing changes,
-    and abstract methods for data-specific load/save
-    operations to be implemented by subclasses.
+    Abstract base class for managing data loading, saving, and updating with
+    abstract methods for data-specific load/save operations to be implemented by subclasses.
+    Keeps a stack for each save in session.  undo() restores from stack.
 
     Attributes:
         _data (Union[Dict, List]): Data  (either a dictionary or a list).
@@ -52,7 +50,7 @@ class DataManager(ABC):
         self.unsaved_changes = False
         self.snapshots = []  # Stack to store snapshots of _data for undo
         self._handler = None  # the handler for our data type
-        self.max_snapshots = 5  # Maximum number of snapshots to retain for undo
+        self.max_snapshots = 6  # Maximum number of snapshots to retain for undo
         self.proxy_mapping = {}  # Dictionary to map keys to proxy files
 
     @property
@@ -100,7 +98,7 @@ class DataManager(ABC):
 
     def create(self, data):
         """
-        Create and save a new configuration file with the data provided
+        Create a new configuration file with the data provided and save it.
 
         Args:
             data (dict): The initial data to create
@@ -124,7 +122,7 @@ class DataManager(ABC):
                 self._set_data_handler()
             self.unsaved_changes = False
             self.snapshots = []  # Clear snapshots
-            self._create_snapshot()  # Save the initial state
+            self.create_snapshot()  # Save the initial state
             return True
         except (FileNotFoundError, IOError, ValueError, Exception):
             raise
@@ -175,7 +173,7 @@ class DataManager(ABC):
             raise ValueError("Data cannot be None")
 
         if self.unsaved_changes:
-            self._create_snapshot()  # Save the current state before writing to the file
+            self.create_snapshot()  # Save the current state to snapshot stack
             try:
                 with open(self.file_path, self.get_open_mode(write=True)) as f:
                     self._save_data(f, self._data)
@@ -183,22 +181,26 @@ class DataManager(ABC):
             except (FileNotFoundError, IOError, RuntimeError):
                 raise
 
-
     def undo(self):
-        """Restore the previous state of _data from the snapshot history."""
-        name = os.path.basename(self.file_path)
+        """
+        Restore _data to the previous state from the snapshot stack.
+        Do not pop the last remaining snapshot.
+        """
         if not self.snapshots:
-            print(f"No {name} snapshots")
             return
 
-        # Restore the last snapshot
-        self._data = self.snapshots.pop()
-        self.unsaved_changes = True  # Mark the data as unsaved since it was changed
+        # Pop last snapshot unless it is the only one left
+        self._data = self.snapshots.pop() if len(self.snapshots) != 1 else self.snapshots[0]
+        self.unsaved_changes = True
 
-    def _create_snapshot(self):
-        """Create a snapshot of the current _data for undo functionality."""
+    def create_snapshot(self):
+        """
+        Add a snapshot of the current _data to the stack for undo functionality.
+        If the stack is full, retain the oldest snapshot and remove the second oldest
+        """
         if len(self.snapshots) >= self.max_snapshots:
-            self.snapshots.pop(0)  # Remove the oldest snapshot if we've reached the limit
+            # Remove the second oldest snapshot
+            self.snapshots.pop(1)
 
         # Create a deep copy of _data to store as a snapshot
         self.snapshots.append(copy.deepcopy(self._data))
@@ -256,7 +258,6 @@ def touch_file(filename):
         filename (str): Path to the file.
     """
     with open(filename, 'a'):
-        print(f"touch_file {filename}")
         os.utime(filename, None)
 
 
@@ -339,7 +340,6 @@ class DictDataHandler(DataHandler):
             for k in keys:
                 if not isinstance(value, dict):
                     # Ensure we are dereferencing a dictionary
-                    print(f"Not a dict. Type: {type(value)} key={k}")
                     return value
                 value = value[k]
             return value
