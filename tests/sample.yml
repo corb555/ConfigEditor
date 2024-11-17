@@ -5,15 +5,7 @@ SITES:
   A: New Orleans
   B: Boyleston
   C: Vancouver
-  D: Boise
-  E: Albany
-items:
-- id: 1
-  name: Item 1
-- id: 2
-  name: Item 2
 people:
-- hank toms
+- hank
 - tom
 - scott
-- avery fisher

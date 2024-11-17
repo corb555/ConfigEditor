@@ -32,15 +32,7 @@ to save changes back to the YAML file.
 """
 
 """
-Define the 'formats' dictionary to specify the display format for SettingsWidget.
-
-- Each key in 'formats' corresponds to a field in the YAML file, paired with layout
-attributes:
-    a) Display Name: The name shown in the UI for the setting.
-    b) Widget Type: The type of input control (e.g., 'line_edit', 'combo', 'read_only').
-    c) Valid Options: Either a regex pattern for field validation (e.g., line_edit), 
-       or a list of items for selection (e.g., combo box).
-    d) Field Width: Width of the widget in the UI.
+Define the 'formats'  to specify the display format for SettingsWidget.
 
 Format lines below:
     - "LABEL1" - Displays a label
@@ -59,9 +51,9 @@ if __name__ == "__main__":
 
     # Load YAML configuration data from 'tests/sample.yml'.
     config = ConfigFile()
-    config.load("tests/USA_relief.cfg")
+    config.load("tests/sample.yml")
 
-    formats1 = {
+    formats = {
         "layout1": {
             "LABEL1": ("Menu", "label", None, 400),
             "TIP": ("Tip Amount", "line_edit", r'^\d{1,2}%?$', 50),
@@ -69,13 +61,13 @@ if __name__ == "__main__":
             "LABEL2": (" ", "label", None, 400), "HOME": ("Home", "combo", ["A", "B", "C"], 200),
             "SITES.@HOME": ("Home Location", "read_only", None, 180),
             "SITES.B": ("Location B", "read_only", None, 180),
-            "SITES": ("Sites", "line_edit", None, 300), "items": ("Items", "line_edit", None, 300),
+            "SITES": ("Sites", "line_edit", None, 300),
             "people": ("People", "line_edit", None, 300),
         },
     }
 
-    formats = {
-        "expert": {
+    formats1 = {
+        "layout1": {
             "NAMES": ("Layers", "line_edit", None, 680),
             "LAYER_LIST": ("Layer list", "line_edit", None, 680),
             "LAYER": ("Active Layer", "combo", ["A", 'B', 'C', "D", 'E', 'F', "G", 'H', 'I'], 204),
@@ -90,7 +82,7 @@ if __name__ == "__main__":
                 "Resampling", "combo",
                 ["-r bilinear", '-r cubic', '-r cubicspline', '-r lanczos', " "], 505),
             "LABEL3": ("", "label", None, 400), "LABEL4": ("", "label", None, 400),
-        }, "basic": {
+        }, "layout2": {
             "NAMES.@LAYER": ("Layer", "read_only", None, 180),
             "FILES.@LAYER": ("Elevation File(s)", "text_edit", r"^[^/]*\.tif[^/]*$", 680),
             "LABEL3": ("", "label", None, 400), "LABEL4": ("", "label", None, 400),
@@ -103,7 +95,7 @@ if __name__ == "__main__":
 
 
     # Create color settings widget to display and edit the color table settings
-    settings_widget = SettingsWidget(config, formats,"expert",["LAYER"])
+    settings_widget = SettingsWidget(config, formats,"layout1",["LAYER"])
 
     # Link Save button to SettingsWidget.save to commit changes back to YAML file.
     save_button = QPushButton("Save")

@@ -86,8 +86,8 @@ class SettingsWidget(QWidget):
 
         self.formats = formats
         self.mode = mode  # Select which format within formats to use
-        self.format = self.formats[mode]  # Get format for the current mode
         self.validate_format(formats, mode)
+        self.format = self.formats[mode]  # Get format for the current mode
 
         # todo implement ignore_changes
         self.ignore_changes = False
@@ -230,7 +230,7 @@ class SettingsWidget(QWidget):
         # Validate format mode is in 'formats'
         if mode not in formats:
             raise KeyError(
-                f"Unknown format key '{mode}' in 'formats'. Available keys: {list(formats.keys())}"
+                f"Unknown mode '{mode}' in 'formats'. Available modes: {list(formats.keys())}"
             )
 
         format_def = formats[mode]  # Get format for the current mode
