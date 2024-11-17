@@ -1,7 +1,7 @@
 
 # ConfigEditor
 
-(images/sample.png)
+<img width="622" alt="sample" src="https://github.com/user-attachments/assets/cd9b8b36-a954-40e0-8d62-fc335a2ff8f9">
 
 `ConfigEditor` is a Python package for quickly creating a simple editor for a YAML configuration file. This is used when 
 you don't want users to have to use a text editor for your YAML configuration file.
