@@ -27,10 +27,10 @@ from typing import Dict, List, Union
 
 class DataManager(ABC):
     """
-    Abstract base class for managing data loading, saving, and handling
-    for different data types (dict or list). The `DataManager` class
-    includes functionality for tracking unsaved changes, undoing changes
-    with snapshots, and abstract methods for data-specific load/save
+    Abstract base class for managing data loading, saving, and updating.
+    The `DataManager` class
+    includes functionality for tracking unsaved changes, undoing changes,
+    and abstract methods for data-specific load/save
     operations to be implemented by subclasses.
 
     Attributes:
@@ -53,7 +53,6 @@ class DataManager(ABC):
         self.snapshots = []  # Stack to store snapshots of _data for undo
         self._handler = None  # the handler for our data type
         self.max_snapshots = 5  # Maximum number of snapshots to retain for undo
-
         self.proxy_mapping = {}  # Dictionary to map keys to proxy files
 
     @property
@@ -85,6 +84,29 @@ class DataManager(ABC):
         raise NotImplementedError(
             f"Subclass must implement {self.__class__.__name__}._save_data()"
         )
+
+    def init_data(self, data):
+        """
+        Overwrite _data with data provided.  Set data_handler.
+        Args:
+            data:
+
+        Returns:
+
+        """
+        self._data = data
+        self._set_data_handler()
+        self.unsaved_changes = True
+
+    def create(self, data):
+        """
+        Create and save a new configuration file with the data provided
+
+        Args:
+            data (dict): The initial data to create
+        """
+        self.init_data(data)
+        self.save()
 
     def load(self, path):
         """
@@ -149,6 +171,9 @@ class DataManager(ABC):
         if self.file_path is None:
             raise ValueError("File path cannot be None")
 
+        if self._data is None:
+            raise ValueError("Data cannot be None")
+
         if self.unsaved_changes:
             self._create_snapshot()  # Save the current state before writing to the file
             try:
@@ -157,6 +182,7 @@ class DataManager(ABC):
                 self.unsaved_changes = False
             except (FileNotFoundError, IOError, RuntimeError):
                 raise
+
 
     def undo(self):
         """Restore the previous state of _data from the snapshot history."""
@@ -288,13 +314,13 @@ class DictDataHandler(DataHandler):
 
     def get(self, data, key):
         """
-        Retrieve a value from a dictionary, supporting both nested keys, indirect key references,
-        and wildcards ('*') for returning all values under a given name.
+        Retrieve a value from a dictionary, supporting both nested keys, and indirect key
+        references.
 
         Args:
             data (dict): The dictionary to retrieve the value from.
             key (str): The key to access the value. Supports '.' for nested keys, '@' for
-            indirect keys, and '*' for wildcards.
+            indirect keys.
 
         Returns:
             The value associated with the key, or None if the key is not found.
@@ -306,16 +332,6 @@ class DictDataHandler(DataHandler):
             if ref is not None:
                 key = f"{main_key}{ref}"
 
-        # Handle wildcard keys (e.g., name.*)
-        # todo throw exception if there are characters after "*" in key
-        if ".*" in key:
-            if not key.endswith(".*"):
-                raise ValueError(
-                    f"Invalid wildcard key format: '{key}'. '.*' is only allowed at the end."
-                    )
-            main_key = key.split(".*")[0]
-            return data.get(main_key, {})
-
         # Handle nested dictionaries, with each sub-key separated by "."
         keys = key.split('.')
         value = data
@@ -323,7 +339,8 @@ class DictDataHandler(DataHandler):
             for k in keys:
                 if not isinstance(value, dict):
                     # Ensure we are dereferencing a dictionary
-                    return None
+                    print(f"Not a dict. Type: {type(value)} key={k}")
+                    return value
                 value = value[k]
             return value
         except KeyError:
@@ -339,10 +356,6 @@ class DictDataHandler(DataHandler):
             indirect keys.
             value: The value to store in the dictionary.
         """
-        # Ignore set for wildcard keys (e.g., name.*)
-        if ".*" in key:
-            print(f"Cannot update key with wildcard: '{key}'.")
-            return
 
         # Handle indirect key case, e.g., FILES@LAYER
         if "@" in key:
@@ -359,7 +372,9 @@ class DictDataHandler(DataHandler):
         # Traverse the dictionary to the correct level, except for the last key part
         for k in keys[:-1]:
             if k in target and not isinstance(target[k], dict):
-                raise TypeError(f"Cannot set value for {key}: Intermediate key '{k}' is not a dictionary.")
+                raise TypeError(
+                    f"Cannot set value for {key}: Intermediate key '{k}' is not a dictionary."
+                )
 
             # Ensure intermediate dictionaries are created
             target = target.setdefault(k, {})
@@ -413,14 +428,14 @@ class ListDataHandler(DataHandler):
         else:
             return None
 
-    def set(self, data, index, value):
+    def set(self, data, index, item):
         """
         Set an item in a list at the specified index.
 
         Args:
             data (list): The list to modify.
             index (int): The index at which to set the value.
-            value: The value to store at the specified index.
+            item: The item to store at the specified index.
 
         Raises:
             IndexError: If the index is out of range of the list.
@@ -428,11 +443,62 @@ class ListDataHandler(DataHandler):
         """
         if data:
             if index < len(data):
-                data[index] = value  # todo self.unsaved_changes = True
+                data[index] = item  # todo self.unsaved_changes = True
             else:
                 raise IndexError(f"List index out of range: {index}")
         else:
             raise ValueError(f"Cannot set value on empty data")
+
+    def insert(self, data_list, idx, item):
+        """
+        Insert an item in a list at the specified index.
+
+        Args:
+            data_list (list): The list to modify.
+            idx (int): The index at which to insert the value.
+            item: The value to store at the specified index.
+
+        Raises:
+            IndexError: If the index is out of range for insertion.
+            ValueError: If data_list is empty.
+        """
+        # Validate that data_list is non-empty
+        if not data_list:
+            raise ValueError("Cannot insert into an empty list")
+
+        # Ensure idx is within the acceptable range for insertion
+        if idx < 0 or idx > len(data_list):
+            raise IndexError(
+                f"Index {idx} is out of range for insertion in a list of length {len(data_list)}"
+            )
+
+        # Insert the item at the specified index
+        data_list.insert(idx, item)
+
+    def delete(self, data_list, idx):
+        """
+        Delete the item in the list at the specified index.
+
+        Args:
+            data_list (list): The list to modify.
+            idx (int): The index of the item to delete.
+
+        Raises:
+            IndexError: If the index is out of range for deletion.
+            ValueError: If data_list is empty.
+        """
+        # Check if data_list is empty
+        if not data_list:
+            raise ValueError("Cannot delete from an empty list")
+
+        # Ensure idx is within the allowable range for deletion
+        if idx < 0 or idx >= len(data_list):
+            raise IndexError(
+                f"Index {idx} is out of range for deletion in a list of length {len(data_list)}"
+            )
+
+        # Delete the item at the specified index
+        del data_list[idx]
 
     def items(self, data):
         """

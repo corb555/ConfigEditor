@@ -11,7 +11,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ConfigEditor"
 version = "0.1.11"
-description = "Editor routines for text config and YML config files"
+description = "Editor routines for text config and YAML config files"
 authors = [{ name = "corb" }]
 readme = "README.md"
 requires-python = ">=3.10"

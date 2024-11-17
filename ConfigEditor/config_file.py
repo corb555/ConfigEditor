@@ -27,11 +27,13 @@ from ConfigEditor.data_manager import DataManager
 
 class ConfigFile(DataManager):
     """
-    Handles loading, updating, and saving data in YML files.
+    Handles loading and saving data for YAML files.
 
-    Extends `DataManager`:
-        - Inherits base file handling functionality: file load, save, and undo.
-        - Implements YML file format parsing and saving logic.
+    Extends DataManager:
+        - Implements YAML specific file load, save
+
+    Inherits DataManager base file handling functionality:
+        - load, save, get, set, and undo.
     """
 
     def _load_data(self, f):
@@ -46,7 +48,7 @@ class ConfigFile(DataManager):
             RuntimeError: If the file cannot be parsed.
         """
         try:
-            # This will load data from YML files
+            # This will load data from YAML files
             data = yaml.safe_load(f)
 
             # Handle case where data is None (empty file) or incorrect format
@@ -62,7 +64,7 @@ class ConfigFile(DataManager):
 
     def _save_data(self, f, data):
         """
-        Save data in YML format
+        Save data in YAML format
 
         Args:
             f (file): The file object to write to.
@@ -82,29 +84,45 @@ class ConfigFile(DataManager):
         except Exception as e:
             raise RuntimeError(f"Error while saving data: {e}") from e
 
-    def create(self, data):
-        """
-        Create and save a new configuration with the data provided
 
-        Args:
-            data (dict): The initial data to create
-        """
-        self._data = data
-        self._set_data_handler()
-        self.unsaved_changes = True
-        self.save()
+# Regex patterns
+def rgx_token_suffix(token_suffix):
+    """
+    Returns a regex pattern where all tokens must end with token_suffix.
 
-    def save(self):
-        """
-        Save the current configuration to the file.
+    Parameters:
+        token_suffix (str): The required suffix for each token.
+    """
+    return rf"^(?:\S*{token_suffix}\s*)+$"
 
-        Raises:
-            RuntimeError: If there is an issue saving the configuration.
-        """
-        if self.unsaved_changes:
-            try:
-                with open(self.file_path, 'w') as f:
-                    self._save_data(f, self._data)
-            except Exception as e:
-                raise RuntimeError(f"Error while saving configuration: {e}") from e
-            self.unsaved_changes = False
+
+def rgx_multiple_switches():
+    """
+    Returns a regex pattern containing multiple switches,
+    where each switch is optional and may include arguments.
+
+    The pattern matches switches that may start with either one or two hyphens
+    and may optionally have key-value pairs following the switch.
+    """
+    return r"^(?:--?\w+(?:\s+\w+(?:=[\w/%]+)?)?\s*)+$"
+
+
+def rgx_starts(pattern):
+    """
+    Returns a regex pattern that starts with the specified pattern
+    followed by a whitespace and then a non-whitespace token.
+
+    Parameters:
+        pattern (str): The initial pattern that the string must start with.
+    """
+    return rf"^{pattern}\s+\S+$"
+
+
+def rgx_includes(pattern):
+    """
+    Returns a regex pattern that includes the specified pattern anywhere.
+
+    Parameters:
+        pattern (str): The pattern that must be included somewhere in the string.
+    """
+    return rf".*{pattern}.*"
