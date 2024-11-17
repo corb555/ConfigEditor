@@ -53,5 +53,5 @@ Sample.py is provided to demonstrate the capabilities and setup of `ConfigManage
 
 ## Support
 
-For support or to report an issue, please visit the [issue tracker](https://github.com/corb555/configmanager/issues).
+For support or to report an issue, please visit the [issue tracker](https://github.com/corb555/ConfigEditor/issues).
 
