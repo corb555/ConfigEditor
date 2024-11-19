@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>settings_widget &mdash; ConfigEditor 0.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1"/>
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7"/>
+
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=086c1757"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html"/>
+    <link rel="search" title="Search" href="../search.html"/>
+</head>
+
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+        <div class="wy-side-scroll">
+            <div class="wy-side-nav-search">
+
+
+                <a href="../index.html" class="icon icon-home">
+                    ConfigEditor
+                </a>
+                <div role="search">
+                    <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                        <input type="text" name="q" placeholder="Search docs" aria-label="Search docs"/>
+                        <input type="hidden" name="check_keywords" value="yes"/>
+                        <input type="hidden" name="area" value="default"/>
+                    </form>
+                </div>
+            </div>
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules.html">ConfigEditor</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+            <a href="../index.html">ConfigEditor</a>
+        </nav>
+
+        <div class="wy-nav-content">
+            <div class="rst-content">
+                <div role="navigation" aria-label="Page navigation">
+                    <ul class="wy-breadcrumbs">
+                        <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+                        <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+                        <li class="breadcrumb-item active">settings_widget</li>
+                        <li class="wy-breadcrumbs-aside">
+                        </li>
+                    </ul>
+                    <hr/>
+                </div>
+                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                    <div itemprop="articleBody">
+
+                        <h1>Source code for settings_widget</h1>
+                        <div class="highlight"><pre>
+<span></span><span class="c1">#  Copyright (c) 2024. Permission is hereby granted, free of charge, to any person obtaining a</span>
+<span class="c1">#  copy of this software and associated</span>
+<span class="c1">#  documentation files (the “Software”), to deal in the Software without restriction, including</span>
+<span class="c1">#  without limitation the</span>
+<span class="c1">#  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the</span>
+<span class="c1">#  Software, and to permit</span>
+<span class="c1">#  persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1">#  The above copyright notice and this permission notice shall be included in all copies or</span>
+<span class="c1">#  substantial portions of the</span>
+<span class="c1">#  Software.</span>
+<span class="c1">#</span>
+<span class="c1">#  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING</span>
+<span class="c1">#  BUT NOT LIMITED TO THE</span>
+<span class="c1">#  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO</span>
+<span class="c1">#  EVENT SHALL THE AUTHORS OR</span>
+<span class="c1">#  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF</span>
+<span class="c1">#  CONTRACT, TORT OR</span>
+<span class="c1">#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="c1">#  DEALINGS IN THE SOFTWARE.</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QWidget</span><span
+                                class="p">,</span> <span class="n">QLabel</span><span class="p">,</span> <span
+                                class="n">QGridLayout</span><span class="p">,</span> <span
+                                class="n">QSpacerItem</span><span class="p">,</span> <span class="n">QSizePolicy</span>
+
+<span class="kn">from</span> <span class="nn">item_widget</span> <span class="kn">import</span> <span class="n">ItemWidget</span>
+
+
+<div class="viewcode-block" id="SettingsWidget">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget">[docs]</a>
+<span class="k">class</span> <span class="nc">SettingsWidget</span><span class="p">(</span><span
+        class="n">QWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides a configurable user interface for editing settings in a YAML config file.</span>
+
+<span class="sd">    - Displays settings based on the user-supplied layout which defines:</span>
+<span class="sd">      type of control (text field, combo box, etc.) and the key for retrieving</span>
+<span class="sd">      each field. See project readme for a list of supported widgets and options.</span>
+<span class="sd">    - Handles changes made to widgets by syncing the updated values back to `Config` data.</span>
+<span class="sd">    - `Config` supports `get`, `set` data and `load`, and `save` to the YAML config file.</span>
+<span class="sd">    - Validates user input according to provided rules (regular expressions).</span>
+<span class="sd">    - Highlights the entry if there is an error.</span>
+<span class="sd">    - Supports full redisplay if a specified configuration key changes.</span>
+<span class="sd">    - Supports data fields that are lists, dictionaries, or scalar (int, string, etc.)</span>
+<span class="sd">    - Does not support fields that are complex nested data structures.</span>
+<span class="sd">    - Supports switching between multiple formats (e.g., &quot;basic&quot; vs &quot;expert&quot; format).</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        config (Config): The config file handler object.  Supports get, set, save, load.</span>
+<span class="sd">        formats (dict): Defines display format and input validation rules for each field.</span>
+<span class="sd">        redisplay_keys (list of str): A list of keys that trigger a full redisplay of the UI</span>
+<span class="sd">    **Methods**:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span
+        class="p">,</span> <span class="n">formats</span><span class="p">,</span> <span class="n">mode</span><span
+        class="p">,</span> <span class="n">redisplay_keys</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the settings widget.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (Config): Configuration object to load, update, and store settings.</span>
+<span class="sd">            formats (dict): Display formats for different modes.</span>
+<span class="sd">            mode (str): Used to select between multiple layout formats</span>
+<span class="sd">            redisplay_keys(List): Updates to these keys will trigger a full redisplay</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span
+        class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span> <span class="o">=</span> <span
+        class="n">QGridLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span
+        class="n">config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">formats</span> <span
+        class="o">=</span> <span class="n">formats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span
+        class="n">mode</span>  <span class="c1"># Select which format within formats to use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_format</span><span
+        class="p">(</span><span class="n">formats</span><span class="p">,</span> <span class="n">mode</span><span
+        class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span
+        class="bp">self</span><span class="o">.</span><span class="n">formats</span><span class="p">[</span><span
+        class="n">mode</span><span class="p">]</span>  <span class="c1"># Get format for the current mode</span>
+
+        <span class="c1"># todo implement ignore_changes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_changes</span> <span
+        class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_loaded</span> <span
+        class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">redisplay_keys</span> <span
+        class="o">=</span> <span class="n">redisplay_keys</span>  <span
+        class="c1"># Keys that trigger full UI redisplay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_widgets</span> <span
+        class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_setup_ui</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create and arrange widgets based on the format.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If &#39;self.formats&#39; is not set or is not a dictionary.</span>
+<span class="sd">            KeyError: If the key in &#39;self.mode&#39; is not found in &#39;self.formats&#39;.</span>
+<span class="sd">            Exception: If an error occurs while setting up a widget, with details on the row and</span>
+<span class="sd">            key.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span
+        class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">10</span><span
+        class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_layout</span><span class="p">()</span>
+
+        <span class="n">row</span><span class="p">,</span> <span class="n">data_key</span><span class="p">,</span> <span
+        class="n">format_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span
+        class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Add widgets from format</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="p">(</span><span
+        class="n">data_key</span><span class="p">,</span> <span class="n">format_row</span><span
+        class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span
+        class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span
+        class="n">items</span><span class="p">()):</span>
+                <span class="c1"># Unpack format row</span>
+                <span class="n">label_text</span><span class="p">,</span> <span class="n">widget_type</span><span
+        class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">width</span> <span
+        class="o">=</span> <span class="n">format_row</span>
+
+                <span class="c1"># Create specified ConfigWidget</span>
+                <span class="n">config_item</span> <span class="o">=</span> <span class="n">ItemWidget</span><span
+        class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span
+        class="p">,</span> <span class="n">widget_type</span><span class="p">,</span> <span class="kc">None</span><span
+        class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="bp">self</span><span
+        class="o">.</span><span class="n">on_change</span><span class="p">,</span> <span class="n">width</span><span
+        class="p">,</span> <span class="n">data_key</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Add to config list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config_widgets</span><span
+        class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">config_item</span><span
+        class="p">)</span>
+
+                <span class="c1"># Add label to col 0</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span
+        class="p">(</span><span class="n">label_text</span><span class="p">)</span>
+                <span class="n">label</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span
+        class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="o">.</span><span
+        class="n">Fixed</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span
+        class="n">Policy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span
+        class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span
+        class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span
+        class="p">)</span>
+
+                <span class="c1"># Add widget to col 1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span
+        class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span
+        class="n">config_item</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span
+        class="n">row</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># Add spacer item to col 2 to force items left</span>
+                <span class="n">h_spacer</span> <span class="o">=</span> <span class="n">QSpacerItem</span><span
+        class="p">(</span>
+                    <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span
+        class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="o">.</span><span
+        class="n">Preferred</span><span class="p">,</span> <span class="n">QSizePolicy</span><span
+        class="o">.</span><span class="n">Policy</span><span class="o">.</span><span class="n">Minimum</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span
+        class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">h_spacer</span><span
+        class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="mi">2</span><span
+        class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span
+        class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error setting up widget at row </span><span
+        class="si">{</span><span class="n">row</span><span class="si">}</span><span
+        class="s2"> with key &#39;</span><span class="si">{</span><span class="n">data_key</span><span
+        class="si">}</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected a tuple of (label_text, widget_type, options, width), but got &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">format_row</span><span
+        class="si">}</span><span class="s2">&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span
+        class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span
+        class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+        <span class="c1"># Add an expanding spacer item</span>
+        <span class="c1"># - QSizePolicy.Policy.Expanding: Allows the spacer to expand horizontally</span>
+        <span class="c1"># - QSizePolicy.Policy.Minimum: Ensures that the spacer occupies only its minimal</span>
+        <span class="c1"># required vertical space</span>
+        <span class="n">v_spacer</span> <span class="o">=</span> <span class="n">QSpacerItem</span><span
+        class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span
+        class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span
+        class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span
+        class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="o">.</span><span
+        class="n">Minimum</span><span class="p">)</span>
+
+        <span class="c1"># Add the spacer item to the grid layout:</span>
+        <span class="c1"># - self.grid_layout.rowCount(): Places the spacer after other rows.</span>
+        <span class="c1"># - Column 0: Starts the spacer at the column 0.</span>
+        <span class="c1"># - Row span of 1, Column span of 3: Spans the spacer across one row and three columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span
+        class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">v_spacer</span><span
+        class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span
+        class="o">.</span><span class="n">rowCount</span><span class="p">(),</span> <span class="mi">0</span><span
+        class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span
+        class="p">)</span>
+
+<div class="viewcode-block" id="SettingsWidget.display">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget.display">[docs]</a>
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update data from the Config data to the display widgets. Each widget&#39;s value is</span>
+<span class="sd">        set based on the corresponding configuration key&#39;s value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_changes</span> <span
+        class="o">=</span> <span class="kc">True</span>  <span class="c1"># Temporarily ignore changes during synchronization</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span
+        class="n">grid_layout</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setup_ui</span><span
+        class="p">()</span>  <span class="c1"># Initialize the UI if it hasn&#39;t been set up</span>
+
+        <span class="c1"># Iterate over each item in the layout to update widget values from config</span>
+        <span class="k">for</span> <span class="n">widget_item</span> <span class="ow">in</span> <span
+        class="bp">self</span><span class="o">.</span><span class="n">config_widgets</span><span class="p">:</span>
+            <span class="n">widget_item</span><span class="o">.</span><span class="n">display</span><span
+        class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_changes</span> <span
+        class="o">=</span> <span class="kc">False</span>  <span class="c1"># Re-enable change tracking after sync</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_loaded</span> <span
+        class="o">=</span> <span class="kc">True</span>  <span class="c1"># Mark the display as loaded</span></div>
+
+
+<div class="viewcode-block" id="SettingsWidget.save">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the current data to the configuration file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span
+        class="n">is_loaded</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span
+        class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SettingsWidget.undo">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget.undo">[docs]</a>
+    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverts data to last snapshot and refreshes display</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span
+        class="n">undo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span
+        class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SettingsWidget.on_change">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget.on_change">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_change</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span
+        class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do full redisplay if key is in redisplay_keys.  Called by ItemWidget</span>
+<span class="sd">        after it has updated data from a user edit.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): The key that changed.</span>
+<span class="sd">            value (str): The value that changed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Force full redisplay if the key is in the redisplay list</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">and</span> <span
+        class="bp">self</span><span class="o">.</span><span class="n">redisplay_keys</span> <span
+        class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span
+        class="o">.</span><span class="n">redisplay_keys</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span
+        class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SettingsWidget.clear_layout">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget.clear_layout">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_layout</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear the current settings widget layout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_layout</span><span class="p">(</span><span
+        class="bp">self</span><span class="o">.</span><span class="n">grid_layout</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_clear_layout</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">,</span> <span class="n">layout</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove all items from a layout</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            layout (QLayout): The layout to clear.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_widgets</span> <span
+        class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_loaded</span> <span
+        class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="n">layout</span><span class="o">.</span><span
+        class="n">count</span><span class="p">():</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">layout</span><span
+        class="o">.</span><span class="n">takeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">item</span><span
+        class="o">.</span><span class="n">widget</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+
+            <span class="n">nested_layout</span> <span class="o">=</span> <span class="n">item</span><span
+        class="o">.</span><span class="n">layout</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">nested_layout</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_clear_layout</span><span class="p">(</span><span
+        class="n">nested_layout</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SettingsWidget.validate_format">
+<a class="viewcode-back" href="../settings_widget.html#settings_widget.SettingsWidget.validate_format">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate_format</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">formats</span><span class="p">,</span> <span
+        class="n">mode</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the display format</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            formats (dict): A dictionary defining display formats.</span>
+<span class="sd">            mode (str): Used to select between multiple layout formats</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If &#39;formats&#39; is not formatted properly.</span>
+<span class="sd">            KeyError: If &#39;mode&#39; is not a format in formats.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Validate &#39;formats&#39; as a non-empty dictionary</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">formats</span> <span class="ow">or</span> <span
+        class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span
+        class="n">formats</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;formats&#39; must be a non-empty dictionary. Current type: </span><span
+        class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">formats</span><span
+        class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span
+        class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Validate format mode is in &#39;formats&#39;</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span
+        class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown mode &#39;</span><span class="si">{</span><span
+        class="n">mode</span><span class="si">}</span><span
+        class="s2">&#39; in &#39;formats&#39;. Available modes: </span><span class="si">{</span><span
+        class="nb">list</span><span class="p">(</span><span class="n">formats</span><span class="o">.</span><span
+        class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">format_def</span> <span class="o">=</span> <span class="n">formats</span><span
+        class="p">[</span><span class="n">mode</span><span class="p">]</span>  <span class="c1"># Get format for the current mode</span>
+
+        <span class="c1"># Validate the entries in the format</span>
+        <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="p">(</span><span
+        class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span
+        class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span
+        class="n">format_def</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="c1"># Validate format line</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span
+        class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span
+        class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span
+        class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span
+        class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Format for key &#39;</span><span class="si">{</span><span
+        class="n">key</span><span class="si">}</span><span class="s2">&#39; is invalid at row </span><span
+        class="si">{</span><span class="n">row</span><span class="si">}</span><span
+        class="s2">. Expected tuple:  &quot;</span>
+                    <span class="sa">f</span><span
+        class="s2">&quot;(label_text, widget_type, options, width), but got: </span><span class="si">{</span><span
+        class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span></div>
+</div>
+
+</pre>
+                        </div>
+
+                    </div>
+                </div>
+                <footer>
+
+                    <hr/>
+
+                    <div role="contentinfo">
+                        <p>&#169; Copyright 2024, corb555.</p>
+                    </div>
+
+                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    jQuery(function () {
+        SphinxRtdTheme.Navigation.enable(true);
+    });
+</script>
+
+</body>
+</html>

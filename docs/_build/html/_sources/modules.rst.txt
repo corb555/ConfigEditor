@@ -1,0 +1,11 @@
+ConfigEditor
+============
+
+.. toctree::
+   :maxdepth: 4
+
+   settings_widget
+   item_widget
+   data_manager
+   config_file
+   structured_text

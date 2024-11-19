@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>config_file &mdash; ConfigEditor 0.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1"/>
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7"/>
+
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=086c1757"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html"/>
+    <link rel="search" title="Search" href="../search.html"/>
+</head>
+
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+        <div class="wy-side-scroll">
+            <div class="wy-side-nav-search">
+
+
+                <a href="../index.html" class="icon icon-home">
+                    ConfigEditor
+                </a>
+                <div role="search">
+                    <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                        <input type="text" name="q" placeholder="Search docs" aria-label="Search docs"/>
+                        <input type="hidden" name="check_keywords" value="yes"/>
+                        <input type="hidden" name="area" value="default"/>
+                    </form>
+                </div>
+            </div>
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules.html">ConfigEditor</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+            <a href="../index.html">ConfigEditor</a>
+        </nav>
+
+        <div class="wy-nav-content">
+            <div class="rst-content">
+                <div role="navigation" aria-label="Page navigation">
+                    <ul class="wy-breadcrumbs">
+                        <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+                        <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+                        <li class="breadcrumb-item active">config_file</li>
+                        <li class="wy-breadcrumbs-aside">
+                        </li>
+                    </ul>
+                    <hr/>
+                </div>
+                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                    <div itemprop="articleBody">
+
+                        <h1>Source code for config_file</h1>
+                        <div class="highlight"><pre>
+<span></span><span class="c1">#  Copyright (c) 2024. Permission is hereby granted, free of charge, to any person obtaining a</span>
+<span class="c1">#  copy of this software and associated</span>
+<span class="c1">#  documentation files (the “Software”), to deal in the Software without restriction, including</span>
+<span class="c1">#  without limitation the</span>
+<span class="c1">#  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the</span>
+<span class="c1">#  Software, and to permit</span>
+<span class="c1">#  persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1">#  The above copyright notice and this permission notice shall be included in all copies or</span>
+<span class="c1">#  substantial portions of the</span>
+<span class="c1">#  Software.</span>
+<span class="c1">#</span>
+<span class="c1">#  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING</span>
+<span class="c1">#  BUT NOT LIMITED TO THE</span>
+<span class="c1">#  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO</span>
+<span class="c1">#  EVENT SHALL THE AUTHORS OR</span>
+<span class="c1">#  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF</span>
+<span class="c1">#  CONTRACT, TORT OR</span>
+<span class="c1">#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="c1">#  DEALINGS IN THE SOFTWARE.</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">ConfigEditor.data_manager</span> <span class="kn">import</span> <span
+                                class="n">DataManager</span>
+
+
+<div class="viewcode-block" id="ConfigFile">
+<a class="viewcode-back" href="../config_file.html#config_file.ConfigFile">[docs]</a>
+<span class="k">class</span> <span class="nc">ConfigFile</span><span class="p">(</span><span
+        class="n">DataManager</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles loading and saving YAML files.</span>
+
+<span class="sd">    Extends DataManager:</span>
+<span class="sd">        - Implements YAML specific file _load_data, _save_data</span>
+
+<span class="sd">    Inherits DataManager base file handling functionality:</span>
+<span class="sd">        - load, save, get, set, and undo.</span>
+
+<span class="sd">    **Methods**:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_load_data</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load data from a YAML file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f (file): The file object to read from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This will load data from YAML files</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span
+        class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="c1"># Handle case where data is None (empty file) or incorrect format</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span
+        class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span
+        class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span
+        class="o">.</span><span class="n">file_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span
+        class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span
+        class="p">)</span>  <span class="c1"># Delete corrupted file if it exists</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">_save_data</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">data</span><span
+        class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save data in YAML format</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f (file): The file object to write to.</span>
+<span class="sd">            data (dict): The modified data to save</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If _data is empty</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="c1"># Save the updated data to the file</span>
+            <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span
+        class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span
+        class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span
+        class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span
+        class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unsaved_changes</span> <span
+        class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;_data is None&quot;</span><span
+        class="p">)</span></div>
+
+
+
+<span class="c1"># Regex patterns</span>
+<div class="viewcode-block" id="rgx_token_suffix">
+<a class="viewcode-back" href="../config_file.html#config_file.rgx_token_suffix">[docs]</a>
+<span class="k">def</span> <span class="nf">rgx_token_suffix</span><span class="p">(</span><span
+        class="n">token_suffix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a regex pattern where all tokens must end with token_suffix.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        token_suffix (str): The required suffix for each token.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;^(?:\S*</span><span
+        class="si">{</span><span class="n">token_suffix</span><span class="si">}</span><span
+        class="s2">\s*)+$&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="rgx_multiple_switches">
+<a class="viewcode-back" href="../config_file.html#config_file.rgx_multiple_switches">[docs]</a>
+<span class="k">def</span> <span class="nf">rgx_multiple_switches</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a regex pattern containing multiple switches,</span>
+<span class="sd">    where each switch is optional and may include arguments.</span>
+
+<span class="sd">    The pattern matches switches that may start with either one or two hyphens</span>
+<span class="sd">    and may optionally have key-value pairs following the switch.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;^(?:--?\w+(?:\s+\w+(?:=[\w/%]+)?)?\s*)+$&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="rgx_starts">
+<a class="viewcode-back" href="../config_file.html#config_file.rgx_starts">[docs]</a>
+<span class="k">def</span> <span class="nf">rgx_starts</span><span class="p">(</span><span class="n">pattern</span><span
+        class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a regex pattern that starts with the specified pattern</span>
+<span class="sd">    followed by a whitespace and then a non-whitespace token.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        pattern (str): The initial pattern that the string must start with.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;^</span><span
+        class="si">{</span><span class="n">pattern</span><span class="si">}</span><span class="s2">\s+\S+$&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="rgx_includes">
+<a class="viewcode-back" href="../config_file.html#config_file.rgx_includes">[docs]</a>
+<span class="k">def</span> <span class="nf">rgx_includes</span><span class="p">(</span><span
+        class="n">pattern</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a regex pattern that includes the specified pattern anywhere.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        pattern (str): The pattern that must be included somewhere in the string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;.*</span><span
+        class="si">{</span><span class="n">pattern</span><span class="si">}</span><span class="s2">.*&quot;</span></div>
+
+</pre>
+                        </div>
+
+                    </div>
+                </div>
+                <footer>
+
+                    <hr/>
+
+                    <div role="contentinfo">
+                        <p>&#169; Copyright 2024, corb555.</p>
+                    </div>
+
+                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    jQuery(function () {
+        SphinxRtdTheme.Navigation.enable(true);
+    });
+</script>
+
+</body>
+</html>
