@@ -1,5 +1,7 @@
 import pytest
+
 from ConfigEditor.data_manager import DataManager, DictDataHandler, ListDataHandler
+
 
 # Mock implementation of DataManager for testing purposes
 class TestDataManager(DataManager):
@@ -34,10 +36,11 @@ def test_dict_data_handler_set_nested_key():
     handler.set(data, "outer.inner", "value")
     assert data["outer"]["inner"] == "value"
 
-def test_dict_data_handler_get_wildcard():
+
+def test_dict_data_handler_get_level():
     handler = DictDataHandler()
     data = {"files": {"layer1": "data1", "layer2": "data2"}}
-    items = handler.get(data, "files.*")
+    items = handler.get(data, "files")
     assert dict(items) == {"layer1": "data1", "layer2": "data2"}
 
 def test_dict_data_handler_indirect_key():
@@ -78,11 +81,16 @@ def test_data_manager_handler_initialization(dict_data_manager, list_data_manage
     assert isinstance(list_data_manager.handler, ListDataHandler)
 
 def test_data_manager_snapshot_limit():
+
     dm = TestDataManager()
     dm._data = {}
-    for i in range(7):  # Exceed max_snapshots
-        dm.create_snapshot()
-        dm._data["value"] = f"snapshot_{i}"
-    assert len(dm.snapshots) == 5  # max_snapshots limit
-    assert dm.snapshots[0] == {'value': 'snapshot_1'}
 
+    for i in range(dm.max_snapshots + 4):  # Exceed max_snapshots
+        # Set data and snapshot it
+        dm._data["value"] = f"snapshot_{i}"
+        dm.create_snapshot()
+
+    # After limit is reached: first item should still be item 0, last item should be last item
+    assert len(dm.snapshots) == dm.max_snapshots  # max_snapshots limit
+    assert dm.snapshots[0] == {'value': 'snapshot_0'}
+    assert dm.snapshots[dm.max_snapshots - 1] == {'value': f'snapshot_{dm.max_snapshots + 3}'}

@@ -29,43 +29,23 @@ class SettingsWidget(QWidget):
     """
     Provides a configurable user interface for editing settings in a YAML config file.
 
-    Key Features:
-    - Displays settings based on the user supplied layout which defines: type of
-    control (text field, combo box, etc.), and the key for retrieving each field.  See
-    config_item for list of supported widgets.
-    - Handles changes made to widgets by syncing the updated values back to Config.
-    - Config supports get, set, load and save to the YAML config file.
-    - Validates user input according to provided rules (regular expressions) and highlights
-      the entry if there is an error.
+    - Displays settings based on the user-supplied layout which defines:
+      type of control (text field, combo box, etc.) and the key for retrieving
+      each field. See project readme for a list of supported widgets and options.
+    - Handles changes made to widgets by syncing the updated values back to `Config` data.
+    - `Config` supports `get`, `set` data and `load`, and `save` to the YAML config file.
+    - Validates user input according to provided rules (regular expressions).
+    - Highlights the entry if there is an error.
     - Supports full redisplay if a specified configuration key changes.
-    - Supports data fields that are scalar (int, string, etc.), lists, or simple dictionaries.
+    - Supports data fields that are lists, dictionaries, or scalar (int, string, etc.)
     - Does not support fields that are complex nested data structures.
-    - Supports switching between multiple formats (e.g., "basic" vs "expert" format)
+    - Supports switching between multiple formats (e.g., "basic" vs "expert" format).
 
     Attributes:
-        config (Config): The configuration object that holds the settings in a Dict.  Needs to
-        support key/value get, set, load and save.
-        formats (dict): A dictionary that defines display formats and input validation rules. Can
-        contain multiple formats (e.g., "expert" mode, "basic" mode) for the same data.
-        ignore_changes (bool): A flag to temporarily disable change detection when updating widgets.
-        redisplay_keys (list of str): A list of configuration keys that trigger a full redisplay
-            of the UI when modified.
-
-    Format line:
-                dictionary_key: (DisplayName, WidgetType, Options, Size)
-
-    Sample format:
-        formats = {
-            "expert": {
-                "NAMES": ("Names", "read_only", None, 180),
-                "NAMES.@LAYER": ("Layer", "read_only", None, 180),
-                "HILLSHADE1": ("Shading", "combo", ["-igor", '-alg Horn', '-alg '], 180),
-                "HILLSHADE2": ("Z Factor", "text_edit", r'^w+$', 180),
-                }
-            }
-
-      NAMES.@LAYER reads the value of @LAYER and uses that appended to NAMES.
-      NAMES returns a list of all items under NAMES
+        config (Config): The config file handler object.  Supports get, set, save, load.
+        formats (dict): Defines display format and input validation rules for each field.
+        redisplay_keys (list of str): A list of keys that trigger a full redisplay of the UI
+    **Methods**:
     """
 
     def __init__(
@@ -96,7 +76,7 @@ class SettingsWidget(QWidget):
         self.redisplay_keys = redisplay_keys  # Keys that trigger full UI redisplay
         self.config_widgets = []
 
-    def setup_ui(self):
+    def _setup_ui(self):
         """
         Create and arrange widgets based on the format.
 
@@ -112,8 +92,7 @@ class SettingsWidget(QWidget):
         row, data_key, format_row = -1, None, None
 
         # Add widgets from format
-        # try:
-        if True:
+        try:
             for row, (data_key, format_row) in enumerate(self.format.items()):
                 # Unpack format row
                 label_text, widget_type, options, width = format_row
@@ -139,7 +118,7 @@ class SettingsWidget(QWidget):
                     1, 1, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum
                 )
                 self.grid_layout.addItem(h_spacer, row, 2)
-        """ 
+
         except Exception as e:
             raise Exception(
                 f"Error setting up widget at row {row} with key '{data_key}'\n"
@@ -147,7 +126,6 @@ class SettingsWidget(QWidget):
                 f"{format_row}'.\n"
                 f"{str(e)}"
             ) from e
-        """
 
         # Add an expanding spacer item
         # - QSizePolicy.Policy.Expanding: Allows the spacer to expand horizontally
@@ -168,7 +146,7 @@ class SettingsWidget(QWidget):
         """
         self.ignore_changes = True  # Temporarily ignore changes during synchronization
         if not self.grid_layout.count():
-            self.setup_ui()  # Initialize the UI if it hasn't been set up
+            self._setup_ui()  # Initialize the UI if it hasn't been set up
 
         # Iterate over each item in the layout to update widget values from config
         for widget_item in self.config_widgets:
@@ -180,22 +158,36 @@ class SettingsWidget(QWidget):
     def save(self):
         """
         Save the current data to the configuration file
-        Don't overwrite the storage if we haven't yet loaded from it
         """
         if self.is_loaded:
             self.config.save()
 
     def undo(self):
+        """
+        Reverts data to last snapshot and refreshes display
+        """
         self.config.undo()
         self.display()
 
     def on_change(self, key, value):
+        """
+        Do full redisplay if key is in redisplay_keys.  Called by ItemWidget
+        after it has updated data from a user edit.
+
+        Args:
+            key (str): The key that changed.
+            value (str): The value that changed.
+
+        """
         # Force full redisplay if the key is in the redisplay list
         if key and self.redisplay_keys is not None:
             if key in self.redisplay_keys:
                 self.display()
 
     def clear_layout(self):
+        """
+        Clear the current settings widget layout
+        """
         self._clear_layout(self.grid_layout)
 
     def _clear_layout(self, layout):
@@ -220,10 +212,15 @@ class SettingsWidget(QWidget):
 
     def validate_format(self, formats, mode):
         """
-        Validate that the display format is properly set up
-        Arguments
-            formats:
-            mode:
+        Validate the display format
+
+        Args:
+            formats (dict): A dictionary defining display formats.
+            mode (str): Used to select between multiple layout formats
+
+        Raises:
+            ValueError: If 'formats' is not formatted properly.
+            KeyError: If 'mode' is not a format in formats.
         """
         # Validate 'formats' as a non-empty dictionary
         if not formats or not isinstance(formats, dict):

@@ -1,28 +1,27 @@
+"""
+This module provides routines for formatting data structures as text and parsing text back to
+data structures.
+
+- Converts data structures to text for display or editing (`to_text`).
+- Parses text representations into structured data (`parse_dict`, `parse_list`, `parse_text`).
+- Validates text formats against regular expressions (`validate_format`).
+- Categorizes data into predefined types (`data_category`).
+- Supports dict, list, and scalar (int, float, bool, etc)
+
+"""
+
 from enum import Enum
 import re
-
-"""
-This module converts simple data structures to text for editing and then converts from text
-back to a data structure.
-
-Functions: 
-
-to_text - Converts a dict, list, scalar,etc into a string representation for display or editing.
-parse_text - Parses a string into the requested data structure (scalar, dictionary, list, etc.).
-data_category - Identifies the data category of a value (SCALAR, COMPLEX, LIST, DICT, etc.).
-validate_format - Validates if a string fully matches a specified regex pattern.
-
-"""
 
 
 class DataCategory(Enum):
     """
     Enum for representing different data types.
     """
-    SCALAR = "scalar"
-    LIST = "list"
-    DICT = "dict"
-    COMPLEX = "complex"
+    SCALAR = "scalar"  # int, float, bool, etc.
+    LIST = "list"  # list
+    DICT = "dict"  # dict
+    COMPLEX = "complex"  # complex data type
 
 
 # Regular expression patterns for parsing dict and list text formats
@@ -36,10 +35,10 @@ LIST_PATTERN = r"\s*\s*(['\"])([^'\"]*?)\1(?:\s*,\s*\1([^'\"]*?)\1)*\s*\s*"
 
 def to_text(item):
     """
-    Converts a dict, list, scalar, etc. into a string representation for display or editing.
+    Converts a dict, list, or other data into a string representation for display or editing.
 
     Parameters:
-        item: The data structure to format (dict, list, or scalar).
+        item: The data structure to format (dict, list, or other).
 
     Returns:
         str: A formatted string representation of the item.
@@ -53,9 +52,10 @@ def to_text(item):
           Each element is enclosed in single quotes and separated by commas.
           Example: ["item1", "item2", 3] -> "'item1', 'item2', '3'"
 
-        - For a scalar:
-          The scalar value is converted to a string.
-          Example: 42 -> "42"
+        - For other:
+          The  value is converted to a string where possible
+          Example: 42 -> "42".
+          If no str representation is available, "Unsupported type" is returned.
     """
 
     if isinstance(item, dict):
@@ -64,9 +64,12 @@ def to_text(item):
     elif isinstance(item, list):
         # Enclose each element in single quotes, separated by commas
         return ", ".join(f"'{str(element)}'" for element in item)
-    else:
-        # Convert scalar directly to string
+    elif hasattr(item, "__str__") or hasattr(item, "__repr__"):
+        # Return __str__ for other types
         return str(item)
+    else:
+        # Provide diagnostic information for unsupported types
+        return f"Unsupported type: {type(item).__name__}"
 
 
 def parse_text(text, category, rgx):
@@ -82,7 +85,7 @@ def parse_text(text, category, rgx):
 
     Returns:
         tuple: (data, is_valid), where data is the resulting data structure
-               and is_valid is a boolean indicating the validity of the format.
+        and is_valid is a boolean indicating the validity of the format.
     """
     if category in {DataCategory.DICT, DataCategory.LIST}:
         try:
@@ -165,16 +168,21 @@ def data_category(item):
     elif isinstance(item, (int, float, str, bool)):
         return DataCategory.SCALAR
     elif isinstance(item, list):
-        return DataCategory.LIST if all(isinstance(i, (int, float, str, bool)) for i in item) else DataCategory.COMPLEX
+        return DataCategory.LIST if all(
+            isinstance(i, (int, float, str, bool)) for i in item
+        ) else DataCategory.COMPLEX
     elif isinstance(item, dict):
-        return DataCategory.DICT if all(isinstance(v, (int, float, str, bool)) for v in item.values()) else DataCategory.COMPLEX
+        return DataCategory.DICT if all(
+            isinstance(v, (int, float, str, bool)) for v in item.values()
+        ) else DataCategory.COMPLEX
     else:
         return DataCategory.COMPLEX  # Fallback for unsupported or unknown types
 
 
 def get_regex(item):
     """
-    Provides the regex pattern for matching the format of a given item.
+    Provides the regex pattern for matching the format of the item where item
+    is a dict or list.
 
     Parameters:
         item: The data structure to determine the regex for.

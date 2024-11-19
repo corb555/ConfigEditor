@@ -27,13 +27,15 @@ from ConfigEditor.data_manager import DataManager
 
 class ConfigFile(DataManager):
     """
-    Handles loading and saving data for YAML files.
+    Handles loading and saving YAML files.
 
     Extends DataManager:
-        - Implements YAML specific file load, save
+        - Implements YAML specific file _load_data, _save_data
 
     Inherits DataManager base file handling functionality:
         - load, save, get, set, and undo.
+
+    **Methods**:
     """
 
     def _load_data(self, f):
@@ -42,25 +44,15 @@ class ConfigFile(DataManager):
 
         Args:
             f (file): The file object to read from.
-
-        Raises:
-            ValueError: If the file is empty.
-            RuntimeError: If the file cannot be parsed.
         """
-        try:
-            # This will load data from YAML files
-            data = yaml.safe_load(f)
+        # This will load data from YAML files
+        data = yaml.safe_load(f)
 
-            # Handle case where data is None (empty file) or incorrect format
-            if data is None:
-                if os.path.exists(self.file_path):
-                    os.remove(self.file_path)  # Delete corrupted file if it exists
-                raise ValueError(
-                    f"YAML file {self.file_path} is empty or could not be parsed correctly."
-                )
-            return data
-        except Exception as e:
-            raise RuntimeError(f"Error while loading data: {e}") from e
+        # Handle case where data is None (empty file) or incorrect format
+        if data is None:
+            if os.path.exists(self.file_path):
+                os.remove(self.file_path)  # Delete corrupted file if it exists
+        return data
 
     def _save_data(self, f, data):
         """
@@ -71,18 +63,14 @@ class ConfigFile(DataManager):
             data (dict): The modified data to save
 
         Raises:
-            ValueError: If _data is None.
-            RuntimeError: If the file cannot be written.
+            ValueError: If _data is empty
         """
-        try:
-            if data:
-                # Save the updated data to the file
-                yaml.safe_dump(data, f, sort_keys=False, default_flow_style=False)
-                self.unsaved_changes = False
-            else:
-                raise ValueError("_data is None")
-        except Exception as e:
-            raise RuntimeError(f"Error while saving data: {e}") from e
+        if data:
+            # Save the updated data to the file
+            yaml.safe_dump(data, f, sort_keys=False, default_flow_style=False)
+            self.unsaved_changes = False
+        else:
+            raise ValueError("_data is None")
 
 
 # Regex patterns

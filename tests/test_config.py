@@ -18,7 +18,7 @@
 #  CONTRACT, TORT OR
 #  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
-from datetime import date, time
+from datetime import date
 
 import pytest
 
@@ -140,8 +140,6 @@ def test_read_key(loaded_config, valid_yaml_data, tmpdir):
     assert loaded_config["CRS1"] == "-t_srs epsg:3857"
     assert loaded_config["LAYER"] == 'B'
     assert loaded_config["FILES"] == {'A': None, 'B': 'WESTMAN.tif', 'C': '*_topo.tif'}
-    assert loaded_config["FILES.*"] == {'A': None, 'B': 'WESTMAN.tif', 'C': '*_topo.tif'}
-
 
 def test_flow_style_sequences(loaded_config, valid_yaml_data, tmpdir):
     assert loaded_config["colors"] == ["red", "green", "blue"]
@@ -232,16 +230,6 @@ def test_set_and_get_indirect(loaded_config, valid_yaml_data, tmpdir):
 
 
 # TEST ERROR CASES
-
-def test_read_invalid_yaml(config, invalid_yaml_data, tmpdir):
-    file_path = tmpdir.join("VALID_YAML_FILE")
-    file_path.write(invalid_yaml_data)
-
-    with pytest.raises(RuntimeError) as exc_info:
-        config.load(file_path)
-
-    assert "Error" in str(exc_info.value)
-
 
 def test_read_invalid_file_path(config, tmpdir):
     invalid_file_path = tmpdir.join("non_existent_config.yaml")

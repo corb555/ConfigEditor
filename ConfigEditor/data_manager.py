@@ -22,25 +22,27 @@
 from abc import ABC, abstractmethod
 import copy
 import os
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Any
 
 
 class DataManager(ABC):
     """
-    Abstract base class for managing data loading, saving, and updating with
-    abstract methods for data-specific load/save operations to be implemented by subclasses.
-    Keeps a stack for each save in session.  undo() restores from stack.
+       Abstract base class for managing data, providing functions for: load, save, get, set, and
+       undo.
 
-    Attributes:
-        _data (Union[Dict, List]): Data  (either a dictionary or a list).
-        file_path (str): Path of the file being managed.
-        directory (str): Directory of the file being managed.
-        unsaved_changes (bool): Flag indicating if there are unsaved changes.
-        snapshots (List): Stack of snapshots for supporting undo functionality.
-        _handler (Union[DictDataHandler, ListDataHandler]): Handler to operate on `_data` based
-        on whether it's a Dict or a List.
-        max_snapshots (int): Maximum number of snapshots for undo functionality.
-    """
+       Subclasses must implement file-specific data handling methods: `_load_data` and `_save_data`.
+
+       Attributes:
+           _data (Union[Dict, List]): The main data structure being managed (dictionary or list).
+           file_path (str): Path to the file associated with the data.
+           directory (str): Directory containing the file.
+           unsaved_changes (bool): Indicates if there are unsaved changes in the data.
+           snapshots (List): Stack of snapshots for supporting undo functionality.
+           max_snapshots (int): Maximum number of snapshots retained for undo operations.
+           proxy_mapping (Dict): Maps keys to proxy files for granular build system dependencies.
+
+        **Methods**:
+       """
 
     def __init__(self):
         """Initialize """
@@ -53,66 +55,59 @@ class DataManager(ABC):
         self.max_snapshots = 6  # Maximum number of snapshots to retain for undo
         self.proxy_mapping = {}  # Dictionary to map keys to proxy files
 
-    @property
-    def handler(self):
-        """ Initialize the handler when it's accessed for the first time."""
-        if self._handler is None:
-            self._set_data_handler()
-        return self._handler
-
-    def _set_data_handler(self):
-        """Set the appropriate data handler based on _data type."""
-        if isinstance(self._data, dict):
-            self._handler = DictDataHandler()
-        else:
-            self._handler = ListDataHandler()
-
     @abstractmethod
     def _load_data(self, f) -> Union[Dict, List]:
         """
-        Load data from file into _data and return either a dictionary or a list.
-        """
+         Load data from a file and return as a dictionary or list.
+         Subclasses must implement this method to define file-specific behavior.
+
+         Args:
+             f: File object to load data from.
+
+         Returns:
+             Union[Dict, List]: The loaded data.
+
+         Raises:
+            ValueError: If the file is empty or cannot be parsed.
+         """
         raise NotImplementedError(
             f"Subclass must implement {self.__class__.__name__}._load_data()"
         )
 
     @abstractmethod
     def _save_data(self, f, data):
-        """Save _data to file. Must be implemented by subclasses."""
+        """
+        Save data to a file.
+        Subclasses must implement this method to define file-specific behavior.
+
+        Args:
+            f: File object to save data to.
+            data: Data to be saved.
+        Raises:
+            RuntimeError: If the file cannot be saved.
+        """
         raise NotImplementedError(
             f"Subclass must implement {self.__class__.__name__}._save_data()"
         )
 
-    def init_data(self, data):
-        """
-        Overwrite _data with data provided.  Set data_handler.
-        Args:
-            data:
-
-        Returns:
-
-        """
-        self._data = data
-        self._set_data_handler()
-        self.unsaved_changes = True
-
-    def create(self, data):
-        """
-        Create a new configuration file with the data provided and save it.
-
-        Args:
-            data (dict): The initial data to create
-        """
-        self.init_data(data)
-        self.save()
-
     def load(self, path):
         """
-        Load data from the specified file.
+        Load data from the specified file and initialize  state.
+        Create an initial snapshot for undo functionality.
+
+        Args:
+            path (str): Path to the file to load.
+
+        Returns:
+            bool: True if the file was loaded successfully.
+
+        Raises:
+            FileNotFoundError: If the file does not exist.
+            IOError: If there is an issue reading the file.
+            ValueError: If the file contents are invalid.
         """
         # Clear any proxy keys
         self.proxy_mapping = {}  # Dictionary to map keys to proxy files
-
         self.file_path = path
         self.directory = os.path.dirname(path)
 
@@ -127,44 +122,28 @@ class DataManager(ABC):
         except (FileNotFoundError, IOError, ValueError, Exception):
             raise
 
-    def add_proxy(self, proxy_file, proxy_update_keys):
+    def get_open_mode(self, write=False):
         """
-        Add a proxy file and its associated update keys.
-        If any of these keys are updated, they will trigger a touch to this proxy_file.
-        This can be used to improve the granularity of dependencies for build management systems.
-        The build system can set a dependency on the proxy_file which is only updated for a subset
-        of fields in the config file.
+        Provides the file mode for the data file.
+        Default is 'w' for write mode, 'r' for read mode.
+        Override for binary or other modes.
 
         Args:
-            proxy_file (str): The file to touch when any associated key is updated.
-            proxy_update_keys (List[str]): List of keys that trigger a touch to this proxy_file.
-        """
-        for key in proxy_update_keys:
-            if key in self.proxy_mapping:
-                raise ValueError(
-                    f"Key '{key}' is already associated with another proxy file: "
-                    f"{self.proxy_mapping[key]}"
-                )
-            self.proxy_mapping[key] = proxy_file
-
-    def get_proxy(self, key):
-        """
-        Retrieve the proxy file associated with a given key, if it exists.
-
-        Args:
-            key (str): The key to look up.
+            write (bool): Whether the file is being opened for writing.
 
         Returns:
-            str or None: The proxy file associated with the key, or None if not found.
+            str: 'w' for write mode, 'r' for read mode.
         """
-        return self.proxy_mapping.get(key)
-
-    def get_open_mode(self, write=False):
         return 'w' if write else 'r'
 
     def save(self):
         """
-        Manages the process of saving data to the file if there are unsaved changes.
+        Save the current data to the file if it has been modified.
+        Create a snapshot of the data for undo feature.
+
+        Raises:
+            ValueError: If the file path or data is None.
+            IOError: If there is an issue saving the file.
         """
         if self.file_path is None:
             raise ValueError("File path cannot be None")
@@ -181,10 +160,85 @@ class DataManager(ABC):
             except (FileNotFoundError, IOError, RuntimeError):
                 raise
 
+    def set(self, key, value):
+        """
+        Update the data with a new value and check for proxy updates.
+
+        Args:
+            key: Key for the data.
+            value: New value to set.
+        """
+        self.unsaved_changes = True
+        self.__setitem__(key, value)
+
+        # Check if updating this key should trigger a touch to a proxy_file
+        proxy_file = self._get_proxy(key)
+        if proxy_file is not None:
+            touch_file(proxy_file)
+
+    def get(self, key_or_index, default=None):
+        """
+        Retrieve a value from the data, returning a default if not found.
+
+        Args:
+            key_or_index: Key or index for the data.
+            default: Default value to return if the key or index is not found.
+
+        Returns:
+            The value associated with the key or index, or the default.
+        """
+        value = self.__getitem__(key_or_index)
+        return value if value is not None else default
+
+    def __getitem__(self, key_or_index):
+        """
+        Retrieve a value from the data using the specified key or index.
+
+        Args:
+            key_or_index: Key or index for the data.
+
+        Returns:
+            The value associated with the specified key or index.
+        """
+        return self.handler.get(self._data, key_or_index)
+
+    def __setitem__(self, key, value):
+        """
+        Update the data with a new value at the specified key or index.
+
+        Args:
+            key: Key or index for the data.
+            value: New value to set.
+        """
+        self.handler.set(self._data, key, value)
+        self.unsaved_changes = True
+
+    def insert(self, key, value):
+        """
+        Insert a new item into the data.
+
+        Args:
+            key: Key or index for the new item.
+            value: Value to insert.
+        """
+        self.handler.insert(self._data, key, value)
+        self.unsaved_changes = True
+
+    def delete(self, key):
+        """
+        Remove an item from the data.
+
+        Args:
+            key: Key or index of the item to remove.
+        """
+        self.handler.delete(self._data, key)
+        self.unsaved_changes = True
+
     def undo(self):
         """
-        Restore _data to the previous state from the snapshot stack.
-        Do not pop the last remaining snapshot.
+        Restore the data to the previous state using the snapshot stack.
+
+        The first snapshot remains in the stack to always allow undo to initial state.
         """
         if not self.snapshots:
             return
@@ -195,59 +249,107 @@ class DataManager(ABC):
 
     def create_snapshot(self):
         """
-        Add a snapshot of the current _data to the stack for undo functionality.
-        If the stack is full, retain the oldest snapshot and remove the second oldest
+        Save the current state of the data as a snapshot for undo functionality.
+
+        If the maximum number of snapshots is reached, the second oldest snapshot is removed.
         """
         if len(self.snapshots) >= self.max_snapshots:
-            # Remove the second oldest snapshot
+            # Remove the second-oldest snapshot
             self.snapshots.pop(1)
 
         # Create a deep copy of _data to store as a snapshot
         self.snapshots.append(copy.deepcopy(self._data))
 
-    def __getitem__(self, key_or_index):
-        """Retrieve data from the internal _data structure."""
-        return self.handler.get(self._data, key_or_index)
-
-    def __setitem__(self, key, value):
-        """Update data in the internal _data structure."""
-        self.handler.set(self._data, key, value)
-        self.unsaved_changes = True
-
     def __len__(self):
+        """
+        Get the number of items in the data.
+
+        Returns:
+            int: Number of items in the data.
+        """
         if self._data:
             return len(self._data)
         else:
             return 0
 
-    def insert(self, key, value):
-        """Insert data into the internal _data structure."""
-        self.handler.insert(self._data, key, value)
-        self.unsaved_changes = True
-
-    def delete(self, key):
-        """Delete data from the internal _data structure."""
-        self.handler.delete(self._data, key)
-        self.unsaved_changes = True
-
-    def set(self, key, value):
-        """Wrapper to update data using __setitem__."""
-        self.unsaved_changes = True
-        self.__setitem__(key, value)
-
-        # Check if updating this key should trigger a touch to a proxy_file
-        proxy_file = self.get_proxy(key)
-        if proxy_file is not None:
-            touch_file(proxy_file)
-
-    def get(self, key_or_index, default=None):
-        """Retrieve data from _data with a default if not found."""
-        value = self.__getitem__(key_or_index)
-        return value if value is not None else default
-
     def items(self):
-        """Return items from _data if it's a dictionary, or the list itself if it's a list."""
+        """
+        Get an iterator over the items in the data.
+
+        Returns:
+            Iterator: An iterator over the data items.
+        """
         return self.handler.items(self._data)
+
+    def init_data(self, data: Dict[str, Any]):
+        """
+        Initialize the data and set the appropriate data handler.
+
+        Args:
+            data (Dict[str, Any]): New data to initialize.
+        """
+        self._data = data
+        self._set_data_handler()
+        self.unsaved_changes = True
+
+    def create(self, data: Dict[str, Any]):
+        """
+        Create a new config file with the specified data.
+
+        Args:
+            data (Dict[str, Any]): Data to save in the new file.
+        """
+        self.init_data(data)
+        self.save()
+
+    def add_proxy(self, proxy_file, proxy_update_keys):
+        """
+        Add a proxy file and its associated update keys.
+        If any of these keys are updated, they will trigger a touch to this proxy_file.
+        This can be used to improve the granularity of dependencies for build management systems.
+        The build system can set a dependency on the proxy_file which is only updated for a subset
+        of fields in the config file rather than rebuilding from any change to the config file.
+
+        Args:
+            proxy_file (str): The file to touch when any associated key is updated.
+            proxy_update_keys (List[str]): List of keys that trigger a touch to this proxy_file.
+        """
+        for key in proxy_update_keys:
+            if key in self.proxy_mapping:
+                raise ValueError(
+                    f"Key '{key}' is already associated with another proxy file: "
+                    f"{self.proxy_mapping[key]}"
+                )
+            self.proxy_mapping[key] = proxy_file
+
+    def _get_proxy(self, key):
+        """
+        Retrieve the proxy file associated with a given key, if set.
+
+        Args:
+            key (str): The key to look up.
+
+        Returns:
+            str or None: The proxy file associated with the key, or None if not found.
+        """
+        return self.proxy_mapping.get(key)
+
+    @property
+    def handler(self):
+        """
+        Initialize the data handler when it's accessed for the first time.
+        There is a separate data handler for Dict data and List data
+        """
+        if self._handler is None:
+            self._set_data_handler()
+        return self._handler
+
+    def _set_data_handler(self):
+        """Set the appropriate data handler based on _data type."""
+        if isinstance(self._data, dict):
+            self._handler = DictDataHandler()
+        else:
+            self._handler = ListDataHandler()
 
 
 def touch_file(filename):
@@ -262,10 +364,8 @@ def touch_file(filename):
 
 
 class DataHandler(ABC):
-    """
-    Abstract base class with methods to get, set, and iterate over items within the data structure.
-    """
-
+    # Abstract base class with methods to get, set, and iterate over items within the data
+    # structure.
     @abstractmethod
     def get(self, data, key):
         """
@@ -397,12 +497,12 @@ class DictDataHandler(DataHandler):
 
 
 def insert(data, idx, value):
-    """Inserts a value into the list and tracks changes."""
+    """Inserts a value into the list"""
     data.insert(idx, value)
 
 
 def delete(data, idx):
-    """Deletes an item from the list and tracks changes."""
+    """Deletes an item from the list"""
     data.pop(idx)
 
 
