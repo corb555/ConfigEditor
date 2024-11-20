@@ -43,7 +43,8 @@ class SettingsWidget(QWidget):
 
     Attributes:
         config (Config): The config file handler object.  Supports get, set, save, load.
-        formats (dict): Defines display format and input validation rules for each field.
+        formats (dict): Defines display format and input validation rules for each field. See
+        project readme for details.
         redisplay_keys (list of str): A list of keys that trigger a full redisplay of the UI
     **Methods**:
     """
@@ -166,7 +167,7 @@ class SettingsWidget(QWidget):
         """
         Reverts data to last snapshot and refreshes display
         """
-        self.config.undo()
+        self.config.snapshot_undo()
         self.display()
 
     def on_change(self, key, value):

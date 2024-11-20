@@ -7,7 +7,9 @@ pyproject.toml
 ./ConfigEditor/structured_text.py
 ConfigEditor/config_file.py
 ConfigEditor/data_manager.py
+ConfigEditor/item_widget.py
 ConfigEditor/settings_widget.py
+ConfigEditor/structured_text.py
 ConfigEditor.egg-info/PKG-INFO
 ConfigEditor.egg-info/SOURCES.txt
 ConfigEditor.egg-info/dependency_links.txt
@@ -15,6 +17,6 @@ ConfigEditor.egg-info/requires.txt
 ConfigEditor.egg-info/top_level.txt
 tests/test_config.py
 tests/test_data_manager.py
-tests/test_interpolate.py
+tests/test_item_widget.py
 tests/test_list_data_manager.py
 tests/test_structured_text.py

@@ -119,7 +119,7 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        config (Config): The config file handler object.  Supports get, set, save, load.</span>
-<span class="sd">        formats (dict): Defines display format and input validation rules for each field.</span>
+<span class="sd">        formats (dict): Defines display format and input validation rules for each field. See project readme for details.</span>
 <span class="sd">        redisplay_keys (list of str): A list of keys that trigger a full redisplay of the UI</span>
 <span class="sd">    **Methods**:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -331,7 +331,7 @@
 <span class="sd">        Reverts data to last snapshot and refreshes display</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span
-        class="n">undo</span><span class="p">()</span>
+        class="n">snapshot_undo</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span
         class="p">()</span></div>
 

@@ -30,7 +30,8 @@ class DataManager(ABC):
        Abstract base class for managing data, providing functions for: load, save, get, set, and
        undo.
 
-       Subclasses must implement file-specific data handling methods: `_load_data` and `_save_data`.
+       Subclasses are created for specific file formats and must support: `_load_data` and
+       `_save_data`.
 
        Attributes:
            _data (Union[Dict, List]): The main data structure being managed (dictionary or list).
@@ -113,14 +114,17 @@ class DataManager(ABC):
 
         try:
             with open(path, self.get_open_mode()) as f:
-                self._data = self._load_data(f)
-                self._set_data_handler()
-            self.unsaved_changes = False
-            self.snapshots = []  # Clear snapshots
-            self.create_snapshot()  # Save the initial state
+                self.init_data(self._load_data(f))
             return True
-        except (FileNotFoundError, IOError, ValueError, Exception):
-            raise
+        except FileNotFoundError:
+            print(f"Error: File not found: {path}")
+        except IOError as e:
+            print(f"Error: File: {path}\n{e}")
+        except ValueError as e:
+            print(f"Error: Invalid file contents: {path}\n {e}")
+        except Exception as e:
+            print(f"Error while loading the file: {path}\n{e}")
+        return False
 
     def get_open_mode(self, write=False):
         """
@@ -141,28 +145,33 @@ class DataManager(ABC):
         Save the current data to the file if it has been modified.
         Create a snapshot of the data for undo feature.
 
+        Returns:
+            bool: True if the file was saved successfully.
+
         Raises:
             ValueError: If the file path or data is None.
-            IOError: If there is an issue saving the file.
         """
+        # todo create pytest for Save
         if self.file_path is None:
-            raise ValueError("File path cannot be None")
+            raise ValueError("Save Error: File path: cannot be None")
 
         if self._data is None:
-            raise ValueError("Data cannot be None")
+            raise ValueError("Save Error: Data cannot be None")
 
         if self.unsaved_changes:
-            self.create_snapshot()  # Save the current state to snapshot stack
+            self.snapshot_push()  # Push the current data to snapshot stack
             try:
                 with open(self.file_path, self.get_open_mode(write=True)) as f:
                     self._save_data(f, self._data)
                 self.unsaved_changes = False
-            except (FileNotFoundError, IOError, RuntimeError):
-                raise
+                return True
+            except Exception as e:
+                print(f"Error while saving: {self.file_path}\n{e}")
+                return False
 
     def set(self, key, value):
         """
-        Update the data with a new value and check for proxy updates.
+        Update the data with a new value and touch proxy file if key in proxy list.
 
         Args:
             key: Key for the data.
@@ -234,7 +243,7 @@ class DataManager(ABC):
         self.handler.delete(self._data, key)
         self.unsaved_changes = True
 
-    def undo(self):
+    def snapshot_undo(self):
         """
         Restore the data to the previous state using the snapshot stack.
 
@@ -243,18 +252,23 @@ class DataManager(ABC):
         if not self.snapshots:
             return
 
-        # Pop last snapshot unless it is the only one left
-        self._data = self.snapshots.pop() if len(self.snapshots) != 1 else self.snapshots[0]
-        self.unsaved_changes = True
+        # Pop last snapshot unless it is the only one left, always keep initial snapshot
+        if len(self.snapshots) > 1:
+            self._data = self.snapshots.pop()
+        else:
+            self._data = copy.deepcopy(self.snapshots[0])
 
-    def create_snapshot(self):
+        self.unsaved_changes = True  # Data has been modified
+
+    def snapshot_push(self):
         """
-        Save the current state of the data as a snapshot for undo functionality.
+        Push the current state of the data to snapshot stack for undo functionality.
 
         If the maximum number of snapshots is reached, the second oldest snapshot is removed.
+        The oldest is always retained for return to initial state.
         """
         if len(self.snapshots) >= self.max_snapshots:
-            # Remove the second-oldest snapshot
+            # Stack is full.  Remove the second-oldest snapshot
             self.snapshots.pop(1)
 
         # Create a deep copy of _data to store as a snapshot
@@ -288,7 +302,9 @@ class DataManager(ABC):
         Args:
             data (Dict[str, Any]): New data to initialize.
         """
+        self.snapshots = []
         self._data = data
+        self.snapshot_push()  # Save the initial state
         self._set_data_handler()
         self.unsaved_changes = True
 

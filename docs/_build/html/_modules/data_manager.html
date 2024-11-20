@@ -106,7 +106,7 @@
 <span class="sd">       Abstract base class for managing data, providing functions for: load, save, get, set, and</span>
 <span class="sd">       undo.</span>
 
-<span class="sd">       Subclasses must implement file-specific data handling methods: `_load_data` and `_save_data`.</span>
+<span class="sd">       Subclasses are created for specific file formats and must support: `_load_data` and `_save_data`.</span>
 
 <span class="sd">       Attributes:</span>
 <span class="sd">           _data (Union[Dict, List]): The main data structure being managed (dictionary or list).</span>
@@ -222,22 +222,33 @@
         class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span
         class="n">get_open_mode</span><span class="p">())</span> <span class="k">as</span> <span class="n">f</span><span
         class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span
-        class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span
-        class="p">(</span><span class="n">f</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_set_data_handler</span><span
-        class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">unsaved_changes</span> <span
-        class="o">=</span> <span class="kc">False</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">snapshots</span> <span
-        class="o">=</span> <span class="p">[]</span>  <span class="c1"># Clear snapshots</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_snapshot</span><span
-        class="p">()</span>  <span class="c1"># Save the initial state</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">init_data</span><span
+        class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span
+        class="p">(</span><span class="n">f</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span
-        class="p">,</span> <span class="ne">IOError</span><span class="p">,</span> <span
-        class="ne">ValueError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
-            <span class="k">raise</span></div>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: File not found: </span><span
+        class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span
+        class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span
+        class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: File: </span><span
+        class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span
+        class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span
+        class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span
+        class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Invalid file contents: </span><span
+        class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span
+        class="s2"> </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span
+        class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span
+        class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while loading the file: </span><span
+        class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span
+        class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span
+        class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="DataManager.get_open_mode">
@@ -268,24 +279,27 @@
 <span class="sd">        Save the current data to the file if it has been modified.</span>
 <span class="sd">        Create a snapshot of the data for undo feature.</span>
 
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the file was saved successfully.</span>
+
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: If the file path or data is None.</span>
-<span class="sd">            IOError: If there is an issue saving the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># todo create pytest for Save</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span
         class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;File path cannot be None&quot;</span><span
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Save Error: File path: cannot be None&quot;</span><span
         class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span
         class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be None&quot;</span><span
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Save Error: Data cannot be None&quot;</span><span
         class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span
         class="n">unsaved_changes</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_snapshot</span><span
-        class="p">()</span>  <span class="c1"># Save the current state to snapshot stack</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">snapshot_push</span><span
+        class="p">()</span>  <span class="c1"># Push the current data to snapshot stack</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span
         class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span
@@ -297,10 +311,14 @@
         class="o">.</span><span class="n">_data</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">unsaved_changes</span> <span
         class="o">=</span> <span class="kc">False</span>
-            <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span
-        class="p">,</span> <span class="ne">IOError</span><span class="p">,</span> <span
-        class="ne">RuntimeError</span><span class="p">):</span>
-                <span class="k">raise</span></div>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span
+        class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while saving: </span><span
+        class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span
+        class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span
+        class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="DataManager.set">
@@ -309,7 +327,7 @@
         class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span
         class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Update the data with a new value and check for proxy updates.</span>
+<span class="sd">        Update the data with a new value and touch proxy file if key in proxy list.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            key: Key for the data.</span>
@@ -422,9 +440,9 @@
         class="o">=</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="DataManager.undo">
-<a class="viewcode-back" href="../data_manager.html#data_manager.DataManager.undo">[docs]</a>
-    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span
+<div class="viewcode-block" id="DataManager.snapshot_undo">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DataManager.snapshot_undo">[docs]</a>
+    <span class="k">def</span> <span class="nf">snapshot_undo</span><span class="p">(</span><span class="bp">self</span><span
         class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restore the data to the previous state using the snapshot stack.</span>
@@ -435,31 +453,37 @@
         class="n">snapshots</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="c1"># Pop last snapshot unless it is the only one left</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span
-        class="bp">self</span><span class="o">.</span><span class="n">snapshots</span><span class="o">.</span><span
-        class="n">pop</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span
+        <span class="c1"># Pop last snapshot unless it is the only one left, always keep initial snapshot</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span
+        class="o">.</span><span class="n">snapshots</span><span class="p">)</span> <span class="o">&gt;</span> <span
+        class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span
+        class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">snapshots</span><span
+        class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span
+        class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span
         class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snapshots</span><span
-        class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">else</span> <span
-        class="bp">self</span><span class="o">.</span><span class="n">snapshots</span><span class="p">[</span><span
-        class="mi">0</span><span class="p">]</span>
+        class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">unsaved_changes</span> <span
-        class="o">=</span> <span class="kc">True</span></div>
+        class="o">=</span> <span class="kc">True</span>  <span class="c1"># Data has been modified</span></div>
 
 
-<div class="viewcode-block" id="DataManager.create_snapshot">
-<a class="viewcode-back" href="../data_manager.html#data_manager.DataManager.create_snapshot">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_snapshot</span><span class="p">(</span><span
-        class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DataManager.snapshot_push">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DataManager.snapshot_push">[docs]</a>
+    <span class="k">def</span> <span class="nf">snapshot_push</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Save the current state of the data as a snapshot for undo functionality.</span>
+<span class="sd">        Push the current state of the data to snapshot stack for undo functionality.</span>
 
 <span class="sd">        If the maximum number of snapshots is reached, the second oldest snapshot is removed.</span>
+<span class="sd">        The oldest is always retained for return to initial state.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span
         class="o">.</span><span class="n">snapshots</span><span class="p">)</span> <span class="o">&gt;=</span> <span
         class="bp">self</span><span class="o">.</span><span class="n">max_snapshots</span><span class="p">:</span>
-            <span class="c1"># Remove the second-oldest snapshot</span>
+            <span class="c1"># Stack is full.  Remove the second-oldest snapshot</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">snapshots</span><span class="o">.</span><span
         class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
@@ -512,8 +536,12 @@
 <span class="sd">        Args:</span>
 <span class="sd">            data (Dict[str, Any]): New data to initialize.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">snapshots</span> <span
+        class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span
         class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">snapshot_push</span><span
+        class="p">()</span>  <span class="c1"># Save the initial state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_data_handler</span><span
         class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unsaved_changes</span> <span
@@ -626,14 +654,18 @@
 
 
 
+<div class="viewcode-block" id="DataHandler">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DataHandler">[docs]</a>
 <span class="k">class</span> <span class="nc">DataHandler</span><span class="p">(</span><span class="n">ABC</span><span
-                                class="p">):</span>
+        class="p">):</span>
     <span class="c1"># Abstract base class with methods to get, set, and iterate over items within the data</span>
     <span class="c1"># structure.</span>
+<div class="viewcode-block" id="DataHandler.get">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DataHandler.get">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
-                                class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
+        class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve an item from the given data structure based on the provided key.</span>
 
@@ -644,12 +676,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The value corresponding to the key or index.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">pass</span></div>
 
+
+<div class="viewcode-block" id="DataHandler.set">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DataHandler.set">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
-                                class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
+        class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set an item in the data structure at the specified key or index.</span>
 
@@ -658,11 +693,14 @@
 <span class="sd">            key (str or int): The key or index where the value should be set.</span>
 <span class="sd">            value: The value to store at the specified location.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">pass</span></div>
 
+
+<div class="viewcode-block" id="DataHandler.items">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DataHandler.items">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return an iterator over the items in the data structure.</span>
 
@@ -673,19 +711,25 @@
 <span class="sd">            An iterator over the (key, value) pairs for dictionaries or (index, value) pairs for</span>
 <span class="sd">            lists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">pass</span></div>
+</div>
 
 
+
+<div class="viewcode-block" id="DictDataHandler">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DictDataHandler">[docs]</a>
 <span class="k">class</span> <span class="nc">DictDataHandler</span><span class="p">(</span><span
-                                class="n">DataHandler</span><span class="p">):</span>
+        class="n">DataHandler</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the DataHandler for handling dictionary data structures.</span>
 <span class="sd">    Supports both regular and nested dictionary access, as well as indirect key references.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="DictDataHandler.get">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DictDataHandler.get">[docs]</a>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
-                                class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
+        class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a value from a dictionary, supporting both nested keys, and indirect key</span>
 <span class="sd">        references.</span>
@@ -700,42 +744,41 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Handle indirect key references (e.g., FILES@LAYER)</span>
         <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span
-                                class="n">key</span><span class="p">:</span>
+        class="n">key</span><span class="p">:</span>
             <span class="n">main_key</span><span class="p">,</span> <span class="n">indirect_ref</span> <span class="o">=</span> <span
-                                class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span
-                                class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="mi">1</span><span
-                                class="p">)</span>
+        class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span
+        class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">ref</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span
-                                class="n">get</span><span class="p">(</span><span class="n">indirect_ref</span><span
-                                class="p">)</span>
+        class="n">get</span><span class="p">(</span><span class="n">indirect_ref</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span
-                                class="kc">None</span><span class="p">:</span>
+        class="kc">None</span><span class="p">:</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span
-                                class="s2">&quot;</span><span class="si">{</span><span class="n">main_key</span><span
-                                class="si">}{</span><span class="n">ref</span><span class="si">}</span><span class="s2">&quot;</span>
+        class="s2">&quot;</span><span class="si">{</span><span class="n">main_key</span><span class="si">}{</span><span
+        class="n">ref</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="c1"># Handle nested dictionaries, with each sub-key separated by &quot;.&quot;</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span
-                                class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span
-                                class="p">)</span>
+        class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">data</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span
-                                class="n">keys</span><span class="p">:</span>
+        class="n">keys</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span
-                                class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span
-                                class="p">):</span>
+        class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                     <span class="c1"># Ensure we are dereferencing a dictionary</span>
                     <span class="k">return</span> <span class="n">value</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span
-                                class="p">[</span><span class="n">k</span><span class="p">]</span>
+        class="p">[</span><span class="n">k</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">value</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
+
+<div class="viewcode-block" id="DictDataHandler.set">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DictDataHandler.set">[docs]</a>
     <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
-                                class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span
+        class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set a value in a dictionary, supporting nested key paths and indirect key references.</span>
 
@@ -748,58 +791,56 @@
 
         <span class="c1"># Handle indirect key case, e.g., FILES@LAYER</span>
         <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span
-                                class="n">key</span><span class="p">:</span>
+        class="n">key</span><span class="p">:</span>
             <span class="n">main_key</span><span class="p">,</span> <span class="n">indirect_ref</span> <span class="o">=</span> <span
-                                class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span
-                                class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="mi">1</span><span
-                                class="p">)</span>
+        class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span
+        class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">ref</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span
-                                class="n">get</span><span class="p">(</span><span class="n">indirect_ref</span><span
-                                class="p">)</span>  <span class="c1"># Resolve the indirect reference from data</span>
+        class="n">get</span><span class="p">(</span><span class="n">indirect_ref</span><span class="p">)</span>  <span
+        class="c1"># Resolve the indirect reference from data</span>
             <span class="k">if</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span
-                                class="kc">None</span><span class="p">:</span>
+        class="kc">None</span><span class="p">:</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span
-                                class="o">.</span><span class="n">replace</span><span class="p">(</span>
+        class="o">.</span><span class="n">replace</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">indirect_ref</span><span
-                                class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span
-                                class="n">ref</span>
+        class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref</span>
                 <span class="p">)</span>  <span
-                                class="c1"># Replace &#39;@LAYER&#39; with the value of &#39;LAYER&#39;</span>
+        class="c1"># Replace &#39;@LAYER&#39; with the value of &#39;LAYER&#39;</span>
 
         <span class="n">keys</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span
-                                class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span
-                                class="p">)</span>
+        class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">data</span>
 
         <span class="c1"># Traverse the dictionary to the correct level, except for the last key part</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span
-                                class="p">[:</span><span class="o">-</span><span class="mi">1</span><span
-                                class="p">]:</span>
+        class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">target</span> <span
-                                class="ow">and</span> <span class="ow">not</span> <span
-                                class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span
-                                class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">dict</span><span
-                                class="p">):</span>
+        class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span
+        class="p">(</span><span class="n">target</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span
+        class="nb">dict</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Cannot set value for </span><span
-                                class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: Intermediate key &#39;</span><span
-                                class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39; is not a dictionary.&quot;</span>
+        class="si">{</span><span class="n">key</span><span class="si">}</span><span
+        class="s2">: Intermediate key &#39;</span><span class="si">{</span><span class="n">k</span><span
+        class="si">}</span><span class="s2">&#39; is not a dictionary.&quot;</span>
                 <span class="p">)</span>
 
             <span class="c1"># Ensure intermediate dictionaries are created</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span
-                                class="n">setdefault</span><span class="p">(</span><span class="n">k</span><span
-                                class="p">,</span> <span class="p">{})</span>
+        class="n">setdefault</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span
+        class="p">{})</span>
 
         <span class="c1"># Set the value for the final key part</span>
         <span class="n">final_key</span> <span class="o">=</span> <span class="n">keys</span><span
-                                class="p">[</span><span class="o">-</span><span class="mi">1</span><span
-                                class="p">]</span>
+        class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">target</span><span class="p">[</span><span class="n">final_key</span><span
-                                class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
+
+<div class="viewcode-block" id="DictDataHandler.items">
+<a class="viewcode-back" href="../data_manager.html#data_manager.DictDataHandler.items">[docs]</a>
     <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return an iterator over the key-value pairs in the dictionary.</span>
 
@@ -810,7 +851,9 @@
 <span class="sd">            Iterator of (key, value) pairs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span
-                                class="n">items</span><span class="p">()</span>
+        class="n">items</span><span class="p">()</span></div>
+</div>
+
 
 
 <div class="viewcode-block" id="insert">
@@ -834,16 +877,20 @@
 
 
 
+<div class="viewcode-block" id="ListDataHandler">
+<a class="viewcode-back" href="../data_manager.html#data_manager.ListDataHandler">[docs]</a>
 <span class="k">class</span> <span class="nc">ListDataHandler</span><span class="p">(</span><span
-                                class="n">DataHandler</span><span class="p">):</span>
+        class="n">DataHandler</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the DataHandler for handling list-like data structures.</span>
 <span class="sd">    Provides basic get, set, and iteration functionality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="ListDataHandler.get">
+<a class="viewcode-back" href="../data_manager.html#data_manager.ListDataHandler.get">[docs]</a>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span
-                                class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span
+        class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve an item from a list by index.</span>
 
@@ -856,16 +903,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span
-                                class="n">index</span><span class="p">]</span> <span class="k">if</span> <span
-                                class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span
-                                class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">else</span> <span
-                                class="kc">None</span>
+        class="n">index</span><span class="p">]</span> <span class="k">if</span> <span class="n">index</span> <span
+        class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span
+        class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
+
+<div class="viewcode-block" id="ListDataHandler.set">
+<a class="viewcode-back" href="../data_manager.html#data_manager.ListDataHandler.set">[docs]</a>
     <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span
-                                class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span
+        class="p">,</span> <span class="n">item</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set an item in a list at the specified index.</span>
 
@@ -880,22 +929,24 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span
-                                class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
                 <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span
-                                class="o">=</span> <span class="n">item</span>  <span class="c1"># todo self.unsaved_changes = True</span>
+        class="o">=</span> <span class="n">item</span>  <span class="c1"># todo self.unsaved_changes = True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="sa">f</span><span
-                                class="s2">&quot;List index out of range: </span><span class="si">{</span><span
-                                class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span
-                                class="p">)</span>
+        class="s2">&quot;List index out of range: </span><span class="si">{</span><span class="n">index</span><span
+        class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span
-                                class="sa">f</span><span
-                                class="s2">&quot;Cannot set value on empty data&quot;</span><span class="p">)</span>
+        class="sa">f</span><span class="s2">&quot;Cannot set value on empty data&quot;</span><span
+        class="p">)</span></div>
 
+
+<div class="viewcode-block" id="ListDataHandler.insert">
+<a class="viewcode-back" href="../data_manager.html#data_manager.ListDataHandler.insert">[docs]</a>
     <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span
-                                class="n">idx</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">idx</span><span
+        class="p">,</span> <span class="n">item</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert an item in a list at the specified index.</span>
 
@@ -911,29 +962,29 @@
         <span class="c1"># Validate that data_list is non-empty</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data_list</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot insert into an empty list&quot;</span><span
-                                class="p">)</span>
+        class="p">)</span>
 
         <span class="c1"># Ensure idx is within the acceptable range for insertion</span>
         <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span> <span
-                                class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;</span> <span
-                                class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span
-                                class="p">):</span>
+        class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="nb">len</span><span
+        class="p">(</span><span class="n">data_list</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">idx</span><span
-                                class="si">}</span><span
-                                class="s2"> is out of range for insertion in a list of length </span><span
-                                class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span
-                                class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        class="si">}</span><span class="s2"> is out of range for insertion in a list of length </span><span
+        class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span
+        class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
         <span class="c1"># Insert the item at the specified index</span>
         <span class="n">data_list</span><span class="o">.</span><span class="n">insert</span><span
-                                class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">item</span><span
-                                class="p">)</span>
+        class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="ListDataHandler.delete">
+<a class="viewcode-back" href="../data_manager.html#data_manager.ListDataHandler.delete">[docs]</a>
     <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span
-                                class="n">idx</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">idx</span><span
+        class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the item in the list at the specified index.</span>
 
@@ -948,27 +999,28 @@
         <span class="c1"># Check if data_list is empty</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data_list</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot delete from an empty list&quot;</span><span
-                                class="p">)</span>
+        class="p">)</span>
 
         <span class="c1"># Ensure idx is within the allowable range for deletion</span>
         <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span> <span
-                                class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span
-                                class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span
-                                class="p">):</span>
+        class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span
+        class="p">(</span><span class="n">data_list</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">idx</span><span
-                                class="si">}</span><span
-                                class="s2"> is out of range for deletion in a list of length </span><span
-                                class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span
-                                class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        class="si">}</span><span class="s2"> is out of range for deletion in a list of length </span><span
+        class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span
+        class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
         <span class="c1"># Delete the item at the specified index</span>
         <span class="k">del</span> <span class="n">data_list</span><span class="p">[</span><span
-                                class="n">idx</span><span class="p">]</span>
+        class="n">idx</span><span class="p">]</span></div>
 
+
+<div class="viewcode-block" id="ListDataHandler.items">
+<a class="viewcode-back" href="../data_manager.html#data_manager.ListDataHandler.items">[docs]</a>
     <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span
-                                class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return an iterator over the index-value pairs in the list.</span>
 
@@ -979,7 +1031,9 @@
 <span class="sd">            Iterator of (index, value) pairs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">enumerate</span><span class="p">(</span><span
-                                class="n">data</span><span class="p">)</span>
+        class="n">data</span><span class="p">)</span></div>
+</div>
+
 
 
 <span class="k">def</span> <span class="nf">_validate_file_exists</span><span class="p">(</span><span

@@ -22,7 +22,7 @@ from datetime import date
 
 import pytest
 
-from ConfigEditor.config_file import ConfigFile
+from ConfigEditor.yaml_config import YamlConfig
 
 # Define constants for YAML file content
 VALID_YAML_FILE = "config.yaml"
@@ -123,7 +123,7 @@ unbalanced brackets: ][
 
 @pytest.fixture
 def config():
-    return ConfigFile()
+    return YamlConfig()
 
 
 @pytest.fixture
@@ -233,6 +233,4 @@ def test_set_and_get_indirect(loaded_config, valid_yaml_data, tmpdir):
 
 def test_read_invalid_file_path(config, tmpdir):
     invalid_file_path = tmpdir.join("non_existent_config.yaml")
-
-    with pytest.raises(FileNotFoundError):
-        config.load(invalid_file_path)
+    assert config.load(invalid_file_path) == False

@@ -2,15 +2,14 @@ import sys
 
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHBoxLayout
 
-from ConfigEditor.config_file import ConfigFile
+from ConfigEditor.yaml_config import YamlConfig
 from ConfigEditor.settings_widget import SettingsWidget
 
 """
-A sample application that loads  data from a YAML file, initializes
+A sample application that loads  data from a config file, initializes
 the SettingsWidget for displaying and editing settings, and provides a save button
 and an undo button.
 """
-
 
 def create_window(settings):
     # Create Save button
@@ -41,8 +40,11 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # Load YAML file
-    config = ConfigFile()
-    config.load("tests/sample.yml")
+    config = YamlConfig()
+    success = config.load("tests/sample.yml")
+
+    if not success:
+        sys.exit()
 
     # Create the UI layout for the fields in the YML file.
     formats = {

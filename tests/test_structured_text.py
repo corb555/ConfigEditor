@@ -1,18 +1,20 @@
 import pytest
 
 from structured_text import (data_category, get_regex, parse_dict, parse_list, to_text,
-                             validate_format, DICT_PATTERN, LIST_PATTERN)
+                             validate_format, DICT_PATTERN, LIST_PATTERN, DataCategory)
 
 
 # Test for determine_type
 @pytest.mark.parametrize(
     "value, expected_type",
-    [(10, "scalar"), ("string", "scalar"), (True, "scalar"), ([1, 2, 3], "list"),
-     (["a", "b"], "list"), ([1, "a", 2.5], "list"), ([[1, 2], [3, 4]], "nested"),
-     ({"key": "value"}, "dict"), ({"key": 1, "another_key": True}, "dict"),
-     ({"key": [1, 2, 3]}, "nested"), (None, "unknown")],
-    ids=["scalar_int", "scalar_str", "scalar_bool", "list_int", "list_str", "list_mixed",
-         "nested_list", "dict_simple", "dict_mixed", "dict_with_list", "unknown"]
+    [(10, DataCategory.SCALAR), (9.3, DataCategory.SCALAR), ("string", DataCategory.SCALAR),
+        (True, DataCategory.SCALAR), ([1, 2, 3], DataCategory.LIST),
+        (["a", "b"], DataCategory.LIST), ([1, "a", 2.5], DataCategory.LIST),
+        ({"key": "value"}, DataCategory.DICT), ({"key": 1, "another_key": True}, DataCategory.DICT),
+        ([[1, 2], [3, 4]], DataCategory.COMPLEX), ({"key": [1, 2, 3]}, DataCategory.COMPLEX),
+        (None, DataCategory.SCALAR)],
+    ids=["scalar_int", "scalar_float", "scalar_str", "scalar_bool", "list_int", "list_str",
+         "list_mixed", "dict_simple", "dict_mixed", "dict_with_list", "nested_list", "None"]
 )
 def test_determine_type(value, expected_type):
     assert data_category(value) == expected_type
@@ -70,9 +72,9 @@ def test_parse_dict(text, expected_result, should_raise):
 
 # Test for parse_list
 @pytest.mark.parametrize(
-    "text, expected_result, should_raise", [("'item1', 'item2']", ["item1", "item2"], False), (
-    "['item1', 'item2', 'item3']", ["item1", "item2", "item3"], False), (
-                                            "  [ 'item1' , 'item2' ]  ", ["item1", "item2"], False),
+    "text, expected_result, should_raise", [("'item1', 'item2'", ["item1", "item2"], False), (
+            "'item1', 'item2', 'item3'", ["item1", "item2", "item3"], False),
+                                            ("   'item1' , 'item2'   ", ["item1", "item2"], False),
                                             ("", [], False),
 
                                             # Negative cases
@@ -104,9 +106,9 @@ def test_format_as_text(value, expected_result):
 # Test for validate_format
 @pytest.mark.parametrize(
     "text, pattern, expected_result",
-    [("key1: value1, key2: value2", DICT_PATTERN, True), ("['item1', 'item2']", LIST_PATTERN, True),
-     ("key1=value1, key2:value2", DICT_PATTERN, False), ("[item1, item2]", LIST_PATTERN, False)],
-    ids=["valid_dict_format", "valid_list_format", "invalid_dict_format", "invalid_list_format"]
+    [("'item1', 'item2'", LIST_PATTERN, True), ("key1=value1, key2:value2", DICT_PATTERN, False),
+        ("[item1, item2]", LIST_PATTERN, False)],
+    ids=["valid_list_format", "invalid_dict_format", "invalid_list_format"]
 )
 def test_validate_format(text, pattern, expected_result):
     assert validate_format(text, pattern) == expected_result

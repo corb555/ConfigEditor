@@ -39,6 +39,7 @@
             <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="modules.html">ConfigEditor</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
                 </ul>
 
             </div>
@@ -76,7 +77,9 @@
                             | <a href="#E"><strong>E</strong></a>
                             | <a href="#F"><strong>F</strong></a>
                             | <a href="#G"><strong>G</strong></a>
+                            | <a href="#H"><strong>H</strong></a>
                             | <a href="#I"><strong>I</strong></a>
+                            | <a href="#J"><strong>J</strong></a>
                             | <a href="#K"><strong>K</strong></a>
                             | <a href="#L"><strong>L</strong></a>
                             | <a href="#M"><strong>M</strong></a>
@@ -88,6 +91,7 @@
                             | <a href="#U"><strong>U</strong></a>
                             | <a href="#V"><strong>V</strong></a>
                             | <a href="#W"><strong>W</strong></a>
+                            | <a href="#Y"><strong>Y</strong></a>
 
                         </div>
                         <h2 id="_">_</h2>
@@ -127,6 +131,10 @@
                                         <li><a href="structured_text.html#structured_text.DataCategory.COMPLEX">COMPLEX
                                             (structured_text.DataCategory attribute)</a>
                                         </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
                                         <li><a href="item_widget.html#item_widget.ItemWidget.config">config
                                             (item_widget.ItemWidget attribute)</a>
 
@@ -137,25 +145,7 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
-                                        <li>
-                                            config_file
-
-                                            <ul>
-                                                <li><a href="config_file.html#module-config_file">module</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="config_file.html#config_file.ConfigFile">ConfigFile (class in
-                                            config_file)</a>
-                                        </li>
                                         <li><a href="data_manager.html#data_manager.DataManager.create">create()
-                                            (data_manager.DataManager method)</a>
-                                        </li>
-                                        <li><a href="data_manager.html#data_manager.DataManager.create_snapshot">create_snapshot()
                                             (data_manager.DataManager method)</a>
                                         </li>
                                     </ul>
@@ -182,24 +172,33 @@
                                         <li><a href="structured_text.html#structured_text.DataCategory">DataCategory
                                             (class in structured_text)</a>
                                         </li>
+                                        <li><a href="data_manager.html#data_manager.DataHandler">DataHandler (class in
+                                            data_manager)</a>
+                                        </li>
                                         <li><a href="data_manager.html#data_manager.DataManager">DataManager (class in
                                             data_manager)</a>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
                                         <li><a href="data_manager.html#data_manager.DataManager.delete">delete()
                                             (data_manager.DataManager method)</a>
 
                                             <ul>
+                                                <li><a href="data_manager.html#data_manager.ListDataHandler.delete">(data_manager.ListDataHandler
+                                                    method)</a>
+                                                </li>
                                                 <li><a href="data_manager.html#data_manager.delete">(in module
                                                     data_manager)</a>
                                                 </li>
                                             </ul>
                                         </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
                                         <li><a href="structured_text.html#structured_text.DataCategory.DICT">DICT
                                             (structured_text.DataCategory attribute)</a>
+                                        </li>
+                                        <li><a href="data_manager.html#data_manager.DictDataHandler">DictDataHandler
+                                            (class in data_manager)</a>
                                         </li>
                                         <li><a href="data_manager.html#data_manager.DataManager.directory">directory
                                             (data_manager.DataManager attribute)</a>
@@ -257,21 +256,46 @@
                             <tr>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="data_manager.html#data_manager.DataManager.get">get()
-                                            (data_manager.DataManager method)</a>
-                                        </li>
-                                        <li><a href="data_manager.html#data_manager.DataManager.get_open_mode">get_open_mode()
-                                            (data_manager.DataManager method)</a>
+                                        <li><a href="data_manager.html#data_manager.DataHandler.get">get()
+                                            (data_manager.DataHandler method)</a>
+
+                                            <ul>
+                                                <li><a href="data_manager.html#data_manager.DataManager.get">(data_manager.DataManager
+                                                    method)</a>
+                                                </li>
+                                                <li><a href="data_manager.html#data_manager.DictDataHandler.get">(data_manager.DictDataHandler
+                                                    method)</a>
+                                                </li>
+                                                <li><a href="data_manager.html#data_manager.ListDataHandler.get">(data_manager.ListDataHandler
+                                                    method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
+                                        <li><a href="data_manager.html#data_manager.DataManager.get_open_mode">get_open_mode()
+                                            (data_manager.DataManager method)</a>
+                                        </li>
                                         <li><a href="structured_text.html#structured_text.get_regex">get_regex() (in
                                             module structured_text)</a>
                                         </li>
                                         <li><a href="item_widget.html#item_widget.get_text">get_text() (in module
                                             item_widget)</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h2 id="H">H</h2>
+                        <table style="width: 100%" class="indextable genindextable">
+                            <tr>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="data_manager.html#data_manager.DataManager.handler">handler
+                                            (data_manager.DataManager property)</a>
                                         </li>
                                     </ul>
                                 </td>
@@ -290,15 +314,14 @@
                                             (data_manager.DataManager method)</a>
 
                                             <ul>
+                                                <li><a href="data_manager.html#data_manager.ListDataHandler.insert">(data_manager.ListDataHandler
+                                                    method)</a>
+                                                </li>
                                                 <li><a href="data_manager.html#data_manager.insert">(in module
                                                     data_manager)</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
                                         <li>
                                             item_widget
 
@@ -307,11 +330,52 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="data_manager.html#data_manager.DataManager.items">items()
-                                            (data_manager.DataManager method)</a>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="data_manager.html#data_manager.DataHandler.items">items()
+                                            (data_manager.DataHandler method)</a>
+
+                                            <ul>
+                                                <li><a href="data_manager.html#data_manager.DataManager.items">(data_manager.DataManager
+                                                    method)</a>
+                                                </li>
+                                                <li><a href="data_manager.html#data_manager.DictDataHandler.items">(data_manager.DictDataHandler
+                                                    method)</a>
+                                                </li>
+                                                <li><a href="data_manager.html#data_manager.ListDataHandler.items">(data_manager.ListDataHandler
+                                                    method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li><a href="item_widget.html#item_widget.ItemWidget">ItemWidget (class in
                                             item_widget)</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h2 id="J">J</h2>
+                        <table style="width: 100%" class="indextable genindextable">
+                            <tr>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li>
+                                            json_config
+
+                                            <ul>
+                                                <li><a href="json_config.html#module-json_config">module</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="json_config.html#json_config.JsonConfig">JsonConfig (class in
+                                            json_config)</a>
                                         </li>
                                     </ul>
                                 </td>
@@ -343,6 +407,9 @@
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
+                                        <li><a href="data_manager.html#data_manager.ListDataHandler">ListDataHandler
+                                            (class in data_manager)</a>
+                                        </li>
                                         <li><a href="data_manager.html#data_manager.DataManager.load">load()
                                             (data_manager.DataManager method)</a>
                                         </li>
@@ -363,15 +430,17 @@
                                             module
 
                                             <ul>
-                                                <li><a href="config_file.html#module-config_file">config_file</a>
-                                                </li>
                                                 <li><a href="data_manager.html#module-data_manager">data_manager</a>
                                                 </li>
                                                 <li><a href="item_widget.html#module-item_widget">item_widget</a>
                                                 </li>
+                                                <li><a href="json_config.html#module-json_config">json_config</a>
+                                                </li>
                                                 <li><a href="settings_widget.html#module-settings_widget">settings_widget</a>
                                                 </li>
                                                 <li><a href="structured_text.html#module-structured_text">structured_text</a>
+                                                </li>
+                                                <li><a href="yaml_config.html#module-yaml_config">yaml_config</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -428,24 +497,12 @@
                                             <a href="settings_widget.html#settings_widget.SettingsWidget.redisplay_keys">redisplay_keys
                                                 (settings_widget.SettingsWidget attribute)</a>
                                         </li>
-                                        <li><a href="item_widget.html#item_widget.ItemWidget.rgx">rgx
-                                            (item_widget.ItemWidget attribute)</a>
-                                        </li>
-                                        <li><a href="config_file.html#config_file.rgx_includes">rgx_includes() (in
-                                            module config_file)</a>
-                                        </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="config_file.html#config_file.rgx_multiple_switches">rgx_multiple_switches()
-                                            (in module config_file)</a>
-                                        </li>
-                                        <li><a href="config_file.html#config_file.rgx_starts">rgx_starts() (in module
-                                            config_file)</a>
-                                        </li>
-                                        <li><a href="config_file.html#config_file.rgx_token_suffix">rgx_token_suffix()
-                                            (in module config_file)</a>
+                                        <li><a href="item_widget.html#item_widget.ItemWidget.rgx">rgx
+                                            (item_widget.ItemWidget attribute)</a>
                                         </li>
                                     </ul>
                                 </td>
@@ -469,8 +526,20 @@
                                         <li><a href="structured_text.html#structured_text.DataCategory.SCALAR">SCALAR
                                             (structured_text.DataCategory attribute)</a>
                                         </li>
-                                        <li><a href="data_manager.html#data_manager.DataManager.set">set()
-                                            (data_manager.DataManager method)</a>
+                                        <li><a href="data_manager.html#data_manager.DataHandler.set">set()
+                                            (data_manager.DataHandler method)</a>
+
+                                            <ul>
+                                                <li><a href="data_manager.html#data_manager.DataManager.set">(data_manager.DataManager
+                                                    method)</a>
+                                                </li>
+                                                <li><a href="data_manager.html#data_manager.DictDataHandler.set">(data_manager.DictDataHandler
+                                                    method)</a>
+                                                </li>
+                                                <li><a href="data_manager.html#data_manager.ListDataHandler.set">(data_manager.ListDataHandler
+                                                    method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li><a href="item_widget.html#item_widget.ItemWidget.set_error_style">set_error_style()
                                             (item_widget.ItemWidget method)</a>
@@ -495,6 +564,12 @@
                                         </li>
                                         <li><a href="settings_widget.html#settings_widget.SettingsWidget">SettingsWidget
                                             (class in settings_widget)</a>
+                                        </li>
+                                        <li><a href="data_manager.html#data_manager.DataManager.snapshot_push">snapshot_push()
+                                            (data_manager.DataManager method)</a>
+                                        </li>
+                                        <li><a href="data_manager.html#data_manager.DataManager.snapshot_undo">snapshot_undo()
+                                            (data_manager.DataManager method)</a>
                                         </li>
                                         <li><a href="data_manager.html#data_manager.DataManager.snapshots">snapshots
                                             (data_manager.DataManager attribute)</a>
@@ -537,14 +612,8 @@
                             <tr>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="data_manager.html#data_manager.DataManager.undo">undo()
-                                            (data_manager.DataManager method)</a>
-
-                                            <ul>
-                                                <li><a href="settings_widget.html#settings_widget.SettingsWidget.undo">(settings_widget.SettingsWidget
-                                                    method)</a>
-                                                </li>
-                                            </ul>
+                                        <li><a href="settings_widget.html#settings_widget.SettingsWidget.undo">undo()
+                                            (settings_widget.SettingsWidget method)</a>
                                         </li>
                                     </ul>
                                 </td>
@@ -585,6 +654,31 @@
                                     <ul>
                                         <li><a href="item_widget.html#item_widget.ItemWidget.widget_type">widget_type
                                             (item_widget.ItemWidget attribute)</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h2 id="Y">Y</h2>
+                        <table style="width: 100%" class="indextable genindextable">
+                            <tr>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li>
+                                            yaml_config
+
+                                            <ul>
+                                                <li><a href="yaml_config.html#module-yaml_config">module</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="yaml_config.html#yaml_config.YamlConfig">YamlConfig (class in
+                                            yaml_config)</a>
                                         </li>
                                     </ul>
                                 </td>

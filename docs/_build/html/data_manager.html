@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html"/>
     <link rel="search" title="Search" href="search.html"/>
-    <link rel="next" title="config_file module" href="config_file.html"/>
+    <link rel="next" title="yaml_config module" href="yaml_config.html"/>
     <link rel="prev" title="item_widget module" href="item_widget.html"/>
 </head>
 
@@ -51,6 +51,25 @@
                             <li class="toctree-l2 current"><a class="current reference internal" href="#">data_manager
                                 module</a>
                                 <ul>
+                                    <li class="toctree-l3"><a class="reference internal"
+                                                              href="#data_manager.DataHandler"><code
+                                            class="docutils literal notranslate"><span
+                                            class="pre">DataHandler</span></code></a>
+                                        <ul>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DataHandler.get"><code
+                                                    class="docutils literal notranslate"><span class="pre">DataHandler.get()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DataHandler.items"><code
+                                                    class="docutils literal notranslate"><span class="pre">DataHandler.items()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DataHandler.set"><code
+                                                    class="docutils literal notranslate"><span class="pre">DataHandler.set()</span></code></a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="toctree-l3"><a class="reference internal"
                                                               href="#data_manager.DataManager"><code
                                             class="docutils literal notranslate"><span
@@ -93,10 +112,6 @@
                                                     class="docutils literal notranslate"><span class="pre">DataManager.create()</span></code></a>
                                             </li>
                                             <li class="toctree-l4"><a class="reference internal"
-                                                                      href="#data_manager.DataManager.create_snapshot"><code
-                                                    class="docutils literal notranslate"><span class="pre">DataManager.create_snapshot()</span></code></a>
-                                            </li>
-                                            <li class="toctree-l4"><a class="reference internal"
                                                                       href="#data_manager.DataManager.delete"><code
                                                     class="docutils literal notranslate"><span class="pre">DataManager.delete()</span></code></a>
                                             </li>
@@ -107,6 +122,10 @@
                                             <li class="toctree-l4"><a class="reference internal"
                                                                       href="#data_manager.DataManager.get_open_mode"><code
                                                     class="docutils literal notranslate"><span class="pre">DataManager.get_open_mode()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DataManager.handler"><code
+                                                    class="docutils literal notranslate"><span class="pre">DataManager.handler</span></code></a>
                                             </li>
                                             <li class="toctree-l4"><a class="reference internal"
                                                                       href="#data_manager.DataManager.init_data"><code
@@ -133,8 +152,58 @@
                                                     class="docutils literal notranslate"><span class="pre">DataManager.set()</span></code></a>
                                             </li>
                                             <li class="toctree-l4"><a class="reference internal"
-                                                                      href="#data_manager.DataManager.undo"><code
-                                                    class="docutils literal notranslate"><span class="pre">DataManager.undo()</span></code></a>
+                                                                      href="#data_manager.DataManager.snapshot_push"><code
+                                                    class="docutils literal notranslate"><span class="pre">DataManager.snapshot_push()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DataManager.snapshot_undo"><code
+                                                    class="docutils literal notranslate"><span class="pre">DataManager.snapshot_undo()</span></code></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="toctree-l3"><a class="reference internal"
+                                                              href="#data_manager.DictDataHandler"><code
+                                            class="docutils literal notranslate"><span
+                                            class="pre">DictDataHandler</span></code></a>
+                                        <ul>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DictDataHandler.get"><code
+                                                    class="docutils literal notranslate"><span class="pre">DictDataHandler.get()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DictDataHandler.items"><code
+                                                    class="docutils literal notranslate"><span class="pre">DictDataHandler.items()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.DictDataHandler.set"><code
+                                                    class="docutils literal notranslate"><span class="pre">DictDataHandler.set()</span></code></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="toctree-l3"><a class="reference internal"
+                                                              href="#data_manager.ListDataHandler"><code
+                                            class="docutils literal notranslate"><span
+                                            class="pre">ListDataHandler</span></code></a>
+                                        <ul>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.ListDataHandler.delete"><code
+                                                    class="docutils literal notranslate"><span class="pre">ListDataHandler.delete()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.ListDataHandler.get"><code
+                                                    class="docutils literal notranslate"><span class="pre">ListDataHandler.get()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.ListDataHandler.insert"><code
+                                                    class="docutils literal notranslate"><span class="pre">ListDataHandler.insert()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.ListDataHandler.items"><code
+                                                    class="docutils literal notranslate"><span class="pre">ListDataHandler.items()</span></code></a>
+                                            </li>
+                                            <li class="toctree-l4"><a class="reference internal"
+                                                                      href="#data_manager.ListDataHandler.set"><code
+                                                    class="docutils literal notranslate"><span class="pre">ListDataHandler.set()</span></code></a>
                                             </li>
                                         </ul>
                                     </li>
@@ -152,12 +221,15 @@
                                             class="pre">touch_file()</span></code></a></li>
                                 </ul>
                             </li>
-                            <li class="toctree-l2"><a class="reference internal" href="config_file.html">config_file
+                            <li class="toctree-l2"><a class="reference internal" href="yaml_config.html">yaml_config
+                                module</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="json_config.html">json_config
                                 module</a></li>
                             <li class="toctree-l2"><a class="reference internal" href="structured_text.html">structured_text
                                 module</a></li>
                         </ul>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="readme.html">ConfigEditor</a></li>
                 </ul>
 
             </div>
@@ -191,6 +263,116 @@
                             <h1>data_manager module<a class="headerlink" href="#module-data_manager"
                                                       title="Link to this heading"></a></h1>
                             <dl class="py class">
+                                <dt class="sig sig-object py" id="data_manager.DataHandler">
+                                    <em class="property"><span class="pre">class</span><span
+                                            class="w"> </span></em><span class="sig-prename descclassname"><span
+                                        class="pre">data_manager.</span></span><span class="sig-name descname"><span
+                                        class="pre">DataHandler</span></span><a class="reference internal"
+                                                                                href="_modules/data_manager.html#DataHandler"><span
+                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                        class="headerlink" href="#data_manager.DataHandler"
+                                        title="Link to this definition"></a></dt>
+                                <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span
+                                        class="pre">ABC</span></code></p>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DataHandler.get">
+                                            <em class="property"><span class="pre">abstract</span><span
+                                                    class="w"> </span></em><span class="sig-name descname"><span
+                                                class="pre">get</span></span><span class="sig-paren">(</span><em
+                                                class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">key</span></span></em><span
+                                                class="sig-paren">)</span><a class="reference internal"
+                                                                             href="_modules/data_manager.html#DataHandler.get"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DataHandler.get"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Retrieve an item from the given data structure based on the provided
+                                            key.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data</strong> (<em>dict</em><em>
+                                                            or </em><em>list</em>) – The data structure to retrieve the
+                                                            item from.</p></li>
+                                                        <li><p><strong>key</strong> (<em>str</em><em>
+                                                            or </em><em>int</em>) – The key or index to access the item.
+                                                        </p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>The value corresponding to the key or
+                                                    index.</p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DataHandler.items">
+                                            <em class="property"><span class="pre">abstract</span><span
+                                                    class="w"> </span></em><span class="sig-name descname"><span
+                                                class="pre">items</span></span><span class="sig-paren">(</span><em
+                                                class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em><span class="sig-paren">)</span><a
+                                                class="reference internal"
+                                                href="_modules/data_manager.html#DataHandler.items"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DataHandler.items"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Return an iterator over the items in the data structure.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd"><p><strong>data</strong> (<em>dict</em><em>
+                                                    or </em><em>list</em>) – The data structure to iterate over.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>An iterator over the (key, value) pairs for
+                                                    dictionaries or (index, value) pairs for
+                                                    lists.</p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DataHandler.set">
+                                            <em class="property"><span class="pre">abstract</span><span
+                                                    class="w"> </span></em><span class="sig-name descname"><span
+                                                class="pre">set</span></span><span class="sig-paren">(</span><em
+                                                class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">key</span></span></em>, <em
+                                                class="sig-param"><span class="n"><span class="pre">value</span></span></em><span
+                                                class="sig-paren">)</span><a class="reference internal"
+                                                                             href="_modules/data_manager.html#DataHandler.set"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DataHandler.set"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Set an item in the data structure at the specified key or index.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data</strong> (<em>dict</em><em>
+                                                            or </em><em>list</em>) – The data structure to modify.</p>
+                                                        </li>
+                                                        <li><p><strong>key</strong> (<em>str</em><em>
+                                                            or </em><em>int</em>) – The key or index where the value
+                                                            should be set.</p></li>
+                                                        <li><p><strong>value</strong> – The value to store at the
+                                                            specified location.</p></li>
+                                                    </ul>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                            <dl class="py class">
                                 <dt class="sig sig-object py" id="data_manager.DataManager">
                                     <em class="property"><span class="pre">class</span><span
                                             class="w"> </span></em><span class="sig-prename descclassname"><span
@@ -205,8 +387,8 @@
                                     <p>Abstract base class for managing data, providing functions for: load, save, get,
                                         set, and
                                         undo.</p>
-                                    <p>Subclasses must implement file-specific data handling methods:
-                                        <cite>_load_data</cite> and <cite>_save_data</cite>.</p>
+                                    <p>Subclasses are created for specific file formats and must support: <cite>_load_data</cite>
+                                        and <cite>_save_data</cite>.</p>
                                     <dl class="py attribute">
                                         <dt class="sig sig-object py" id="data_manager.DataManager._data">
                                             <span class="sig-name descname"><span class="pre">_data</span></span><a
@@ -380,23 +562,6 @@
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="data_manager.DataManager.create_snapshot">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">create_snapshot</span></span><span
-                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
-                                                class="reference internal"
-                                                href="_modules/data_manager.html#DataManager.create_snapshot"><span
-                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                                class="headerlink" href="#data_manager.DataManager.create_snapshot"
-                                                title="Link to this definition"></a></dt>
-                                        <dd><p>Save the current state of the data as a snapshot for undo
-                                            functionality.</p>
-                                            <p>If the maximum number of snapshots is reached, the second oldest snapshot
-                                                is removed.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
                                         <dt class="sig sig-object py" id="data_manager.DataManager.delete">
                                             <span class="sig-name descname"><span class="pre">delete</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
@@ -476,6 +641,19 @@
                                                 <dd class="field-odd"><p>str</p>
                                                 </dd>
                                             </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="data_manager.DataManager.handler">
+                                            <em class="property"><span class="pre">property</span><span
+                                                    class="w"> </span></em><span class="sig-name descname"><span
+                                                class="pre">handler</span></span><a class="headerlink"
+                                                                                    href="#data_manager.DataManager.handler"
+                                                                                    title="Link to this definition"></a>
+                                        </dt>
+                                        <dd><p>Initialize the data handler when it’s accessed for the first time.
+                                            There is a separate data handler for Dict data and List data</p>
                                         </dd>
                                     </dl>
 
@@ -602,14 +780,15 @@
                                         <dd><p>Save the current data to the file if it has been modified.
                                             Create a snapshot of the data for undo feature.</p>
                                             <dl class="field-list simple">
+                                                <dt class="field-odd">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-odd"><p>True if the file was saved successfully.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>bool</p>
+                                                </dd>
                                                 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-                                                <dd class="field-odd">
-                                                    <ul class="simple">
-                                                        <li><p><strong>ValueError</strong> – If the file path or data is
-                                                            None.</p></li>
-                                                        <li><p><strong>IOError</strong> – If there is an issue saving
-                                                            the file.</p></li>
-                                                    </ul>
+                                                <dd class="field-odd"><p><strong>ValueError</strong> – If the file path
+                                                    or data is None.</p>
                                                 </dd>
                                             </dl>
                                         </dd>
@@ -626,7 +805,8 @@
                                                 class="viewcode-link"><span class="pre">[source]</span></span></a><a
                                                 class="headerlink" href="#data_manager.DataManager.set"
                                                 title="Link to this definition"></a></dt>
-                                        <dd><p>Update the data with a new value and check for proxy updates.</p>
+                                        <dd><p>Update the data with a new value and touch proxy file if key in proxy
+                                            list.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
                                                 <dd class="field-odd">
@@ -640,17 +820,329 @@
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="data_manager.DataManager.undo">
-                                            <span class="sig-name descname"><span class="pre">undo</span></span><span
+                                        <dt class="sig sig-object py" id="data_manager.DataManager.snapshot_push">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">snapshot_push</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
                                                 class="reference internal"
-                                                href="_modules/data_manager.html#DataManager.undo"><span
+                                                href="_modules/data_manager.html#DataManager.snapshot_push"><span
                                                 class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                                class="headerlink" href="#data_manager.DataManager.undo"
+                                                class="headerlink" href="#data_manager.DataManager.snapshot_push"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Push the current state of the data to snapshot stack for undo
+                                            functionality.</p>
+                                            <p>If the maximum number of snapshots is reached, the second oldest snapshot
+                                                is removed.
+                                                The oldest is always retained for return to initial state.</p>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DataManager.snapshot_undo">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">snapshot_undo</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="reference internal"
+                                                href="_modules/data_manager.html#DataManager.snapshot_undo"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DataManager.snapshot_undo"
                                                 title="Link to this definition"></a></dt>
                                         <dd><p>Restore the data to the previous state using the snapshot stack.</p>
                                             <p>The first snapshot remains in the stack to always allow undo to initial
                                                 state.</p>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="data_manager.DictDataHandler">
+                                    <em class="property"><span class="pre">class</span><span
+                                            class="w"> </span></em><span class="sig-prename descclassname"><span
+                                        class="pre">data_manager.</span></span><span class="sig-name descname"><span
+                                        class="pre">DictDataHandler</span></span><a class="reference internal"
+                                                                                    href="_modules/data_manager.html#DictDataHandler"><span
+                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                        class="headerlink" href="#data_manager.DictDataHandler"
+                                        title="Link to this definition"></a></dt>
+                                <dd><p>Bases: <a class="reference internal" href="#data_manager.DataHandler"
+                                                 title="data_manager.DataHandler"><code
+                                        class="xref py py-class docutils literal notranslate"><span class="pre">DataHandler</span></code></a>
+                                </p>
+                                    <p>Implementation of the DataHandler for handling dictionary data structures.
+                                        Supports both regular and nested dictionary access, as well as indirect key
+                                        references.</p>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DictDataHandler.get">
+                                            <span class="sig-name descname"><span class="pre">get</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">key</span></span></em><span
+                                                class="sig-paren">)</span><a class="reference internal"
+                                                                             href="_modules/data_manager.html#DictDataHandler.get"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DictDataHandler.get"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Retrieve a value from a dictionary, supporting both nested keys, and
+                                            indirect key
+                                            references.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data</strong> (<em>dict</em>) – The dictionary to
+                                                            retrieve the value from.</p></li>
+                                                        <li><p><strong>key</strong> (<em>str</em>) – The key to access
+                                                            the value. Supports ‘.’ for nested keys, ‘&#64;’ for</p>
+                                                        </li>
+                                                        <li><p><strong>keys.</strong> (<em>indirect</em>)</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>The value associated with the key, or None if
+                                                    the key is not found.</p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DictDataHandler.items">
+                                            <span class="sig-name descname"><span class="pre">items</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em><span class="sig-paren">)</span><a
+                                                class="reference internal"
+                                                href="_modules/data_manager.html#DictDataHandler.items"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DictDataHandler.items"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Return an iterator over the key-value pairs in the dictionary.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – The
+                                                    dictionary to iterate over.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>Iterator of (key, value) pairs.</p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.DictDataHandler.set">
+                                            <span class="sig-name descname"><span class="pre">set</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">key</span></span></em>, <em
+                                                class="sig-param"><span class="n"><span class="pre">value</span></span></em><span
+                                                class="sig-paren">)</span><a class="reference internal"
+                                                                             href="_modules/data_manager.html#DictDataHandler.set"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.DictDataHandler.set"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Set a value in a dictionary, supporting nested key paths and indirect key
+                                            references.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data</strong> (<em>dict</em>) – The dictionary to
+                                                            modify.</p></li>
+                                                        <li><p><strong>key</strong> (<em>str</em>) – The key to set the
+                                                            value at. Supports ‘.’ for nested keys and ‘&#64;’ for</p>
+                                                        </li>
+                                                        <li><p><strong>keys.</strong> (<em>indirect</em>)</p></li>
+                                                        <li><p><strong>value</strong> – The value to store in the
+                                                            dictionary.</p></li>
+                                                    </ul>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="data_manager.ListDataHandler">
+                                    <em class="property"><span class="pre">class</span><span
+                                            class="w"> </span></em><span class="sig-prename descclassname"><span
+                                        class="pre">data_manager.</span></span><span class="sig-name descname"><span
+                                        class="pre">ListDataHandler</span></span><a class="reference internal"
+                                                                                    href="_modules/data_manager.html#ListDataHandler"><span
+                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                        class="headerlink" href="#data_manager.ListDataHandler"
+                                        title="Link to this definition"></a></dt>
+                                <dd><p>Bases: <a class="reference internal" href="#data_manager.DataHandler"
+                                                 title="data_manager.DataHandler"><code
+                                        class="xref py py-class docutils literal notranslate"><span class="pre">DataHandler</span></code></a>
+                                </p>
+                                    <p>Implementation of the DataHandler for handling list-like data structures.
+                                        Provides basic get, set, and iteration functionality.</p>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.ListDataHandler.delete">
+                                            <span class="sig-name descname"><span class="pre">delete</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data_list</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">idx</span></span></em><span
+                                                class="sig-paren">)</span><a class="reference internal"
+                                                                             href="_modules/data_manager.html#ListDataHandler.delete"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.ListDataHandler.delete"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Delete the item in the list at the specified index.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data_list</strong> (<em>list</em>) – The list to
+                                                            modify.</p></li>
+                                                        <li><p><strong>idx</strong> (<em>int</em>) – The index of the
+                                                            item to delete.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Raises<span class="colon">:</span></dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>IndexError</strong> – If the index is out of
+                                                            range for deletion.</p></li>
+                                                        <li><p><strong>ValueError</strong> – If data_list is empty.</p>
+                                                        </li>
+                                                    </ul>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.ListDataHandler.get">
+                                            <span class="sig-name descname"><span class="pre">get</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">index</span></span></em><span
+                                                class="sig-paren">)</span><a class="reference internal"
+                                                                             href="_modules/data_manager.html#ListDataHandler.get"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.ListDataHandler.get"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Retrieve an item from a list by index.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data</strong> (<em>list</em>) – The list to
+                                                            retrieve the item from.</p></li>
+                                                        <li><p><strong>index</strong> (<em>int</em>) – The index of the
+                                                            item to retrieve.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>The value at the specified index, or None if
+                                                    the index is out of bounds.</p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.ListDataHandler.insert">
+                                            <span class="sig-name descname"><span class="pre">insert</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data_list</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">idx</span></span></em>, <em
+                                                class="sig-param"><span class="n"><span
+                                                class="pre">item</span></span></em><span class="sig-paren">)</span><a
+                                                class="reference internal"
+                                                href="_modules/data_manager.html#ListDataHandler.insert"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.ListDataHandler.insert"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Insert an item in a list at the specified index.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data_list</strong> (<em>list</em>) – The list to
+                                                            modify.</p></li>
+                                                        <li><p><strong>idx</strong> (<em>int</em>) – The index at which
+                                                            to insert the value.</p></li>
+                                                        <li><p><strong>item</strong> – The value to store at the
+                                                            specified index.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Raises<span class="colon">:</span></dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>IndexError</strong> – If the index is out of
+                                                            range for insertion.</p></li>
+                                                        <li><p><strong>ValueError</strong> – If data_list is empty.</p>
+                                                        </li>
+                                                    </ul>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.ListDataHandler.items">
+                                            <span class="sig-name descname"><span class="pre">items</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em><span class="sig-paren">)</span><a
+                                                class="reference internal"
+                                                href="_modules/data_manager.html#ListDataHandler.items"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.ListDataHandler.items"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Return an iterator over the index-value pairs in the list.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd"><p><strong>data</strong> (<em>list</em>) – The
+                                                    list to iterate over.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns<span class="colon">:</span></dt>
+                                                <dd class="field-even"><p>Iterator of (index, value) pairs.</p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="data_manager.ListDataHandler.set">
+                                            <span class="sig-name descname"><span class="pre">set</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">data</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">index</span></span></em>, <em
+                                                class="sig-param"><span class="n"><span
+                                                class="pre">item</span></span></em><span class="sig-paren">)</span><a
+                                                class="reference internal"
+                                                href="_modules/data_manager.html#ListDataHandler.set"><span
+                                                class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                                class="headerlink" href="#data_manager.ListDataHandler.set"
+                                                title="Link to this definition"></a></dt>
+                                        <dd><p>Set an item in a list at the specified index.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>data</strong> (<em>list</em>) – The list to
+                                                            modify.</p></li>
+                                                        <li><p><strong>index</strong> (<em>int</em>) – The index at
+                                                            which to set the value.</p></li>
+                                                        <li><p><strong>item</strong> – The item to store at the
+                                                            specified index.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Raises<span class="colon">:</span></dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>IndexError</strong> – If the index is out of
+                                                            range of the list.</p></li>
+                                                        <li><p><strong>ValueError</strong> – If data is empty</p></li>
+                                                    </ul>
+                                                </dd>
+                                            </dl>
                                         </dd>
                                     </dl>
 
@@ -721,7 +1213,7 @@
                         <a href="item_widget.html" class="btn btn-neutral float-left" title="item_widget module"
                            accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span>
                             Previous</a>
-                        <a href="config_file.html" class="btn btn-neutral float-right" title="config_file module"
+                        <a href="yaml_config.html" class="btn btn-neutral float-right" title="yaml_config module"
                            accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"
                                                                aria-hidden="true"></span></a>
                     </div>

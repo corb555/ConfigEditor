@@ -1,0 +1,11 @@
+{
+  "DESSERT": "Cheesecake",
+  "TIP": "22",
+  "HOME": "A",
+  "SITES": {
+    "A": "New Orleans",
+    "B": "Boston",
+    "C": "Jacksonville",
+    "D": "Albany"
+  }
+}

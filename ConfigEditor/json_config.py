@@ -18,19 +18,18 @@
 #  CONTRACT, TORT OR
 #  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
+import json
 import os
-
-import yaml
 
 from ConfigEditor.data_manager import DataManager
 
 
-class ConfigFile(DataManager):
+class JsonConfig(DataManager):
     """
-    Handles loading and saving YAML files.
+    Handles loading and saving JSON files.
 
     Extends DataManager:
-        - Implements YAML specific file _load_data, _save_data
+        - Implements JSON specific file _load_data, _save_data
 
     Inherits DataManager base file handling functionality:
         - load, save, get, set, and undo.
@@ -45,18 +44,19 @@ class ConfigFile(DataManager):
         Args:
             f (file): The file object to read from.
         """
-        # This will load data from YAML files
-        data = yaml.safe_load(f)
+        # Load data from JSON file
+        data = json.load(f)
 
         # Handle case where data is None (empty file) or incorrect format
         if data is None:
             if os.path.exists(self.file_path):
-                os.remove(self.file_path)  # Delete corrupted file if it exists
+                # File is unreadable
+                print(f"WARNING: {self.file_path} is not a valid file.")
         return data
 
     def _save_data(self, f, data):
         """
-        Save data in YAML format
+        Save data in JSON format
 
         Args:
             f (file): The file object to write to.
@@ -66,51 +66,8 @@ class ConfigFile(DataManager):
             ValueError: If _data is empty
         """
         if data:
-            # Save the updated data to the file
-            yaml.safe_dump(data, f, sort_keys=False, default_flow_style=False)
+            # Save the data to the file
+            json.dump(data, f, indent=4)
             self.unsaved_changes = False
         else:
             raise ValueError("_data is None")
-
-
-# Regex patterns
-def rgx_token_suffix(token_suffix):
-    """
-    Returns a regex pattern where all tokens must end with token_suffix.
-
-    Parameters:
-        token_suffix (str): The required suffix for each token.
-    """
-    return rf"^(?:\S*{token_suffix}\s*)+$"
-
-
-def rgx_multiple_switches():
-    """
-    Returns a regex pattern containing multiple switches,
-    where each switch is optional and may include arguments.
-
-    The pattern matches switches that may start with either one or two hyphens
-    and may optionally have key-value pairs following the switch.
-    """
-    return r"^(?:--?\w+(?:\s+\w+(?:=[\w/%]+)?)?\s*)+$"
-
-
-def rgx_starts(pattern):
-    """
-    Returns a regex pattern that starts with the specified pattern
-    followed by a whitespace and then a non-whitespace token.
-
-    Parameters:
-        pattern (str): The initial pattern that the string must start with.
-    """
-    return rf"^{pattern}\s+\S+$"
-
-
-def rgx_includes(pattern):
-    """
-    Returns a regex pattern that includes the specified pattern anywhere.
-
-    Parameters:
-        pattern (str): The pattern that must be included somewhere in the string.
-    """
-    return rf".*{pattern}.*"

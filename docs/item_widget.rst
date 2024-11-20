@@ -1,7 +1,7 @@
-config\_file module
+item\_widget module
 ===================
 
-.. automodule:: config_file
+.. automodule:: item_widget
    :members:
    :undoc-members:
    :show-inheritance:
