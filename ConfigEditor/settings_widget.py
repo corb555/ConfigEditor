@@ -1,28 +1,37 @@
-#  Copyright (c) 2024. Permission is hereby granted, free of charge, to any person obtaining a
-#  copy of this software and associated
-#  documentation files (the “Software”), to deal in the Software without restriction, including
-#  without limitation the
-#  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
-#  Software, and to permit
-#  persons to whom the Software is furnished to do so, subject to the following conditions:
+#  Copyright (c) 2024.
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the “Software”), to deal in the
+#   Software without restriction,
+#   including without limitation the rights to use, copy, modify, merge, publish, distribute,
+#   sublicense, and/or sell copies
+#   of the Software, and to permit persons to whom the Software is furnished to do so, subject to
+#   the following conditions:
+#  #
+#   The above copyright notice and this permission notice shall be included in all copies or
+#   substantial portions of the Software.
+#  #
+#   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+#   BUT NOT LIMITED TO THE
+#   WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+#   EVENT SHALL THE AUTHORS OR
+#   COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+#   CONTRACT, TORT OR
+#   OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#  #
+#   This uses QT for some components which has the primary open-source license is the GNU Lesser
+#   General Public License v. 3 (“LGPL”).
+#   With the LGPL license option, you can use the essential libraries and some add-on libraries
+#   of Qt.
+#   See https://www.qt.io/licensing/open-source-lgpl-obligations for QT details.
+
 #
-#  The above copyright notice and this permission notice shall be included in all copies or
-#  substantial portions of the
-#  Software.
 #
-#  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-#  BUT NOT LIMITED TO THE
-#  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
-#  EVENT SHALL THE AUTHORS OR
-#  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-#  CONTRACT, TORT OR
-#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-#  DEALINGS IN THE SOFTWARE.
 from typing import List
 
-from PyQt6.QtWidgets import QWidget, QLabel, QGridLayout, QSpacerItem, QSizePolicy
+from PyQt6.QtWidgets import QWidget, QLabel, QGridLayout, QSpacerItem, QSizePolicy, QVBoxLayout
 
-from item_widget import ItemWidget
+from ConfigEditor.item_widget import ItemWidget
 
 
 class SettingsWidget(QWidget):
@@ -46,40 +55,38 @@ class SettingsWidget(QWidget):
         formats (dict): Defines display format and input validation rules for each field. See
         project readme for details.
         redisplay_keys (list of str): A list of keys that trigger a full redisplay of the UI
+
     **Methods**:
     """
 
-    def __init__(
-            self, config, formats, mode, redisplay_keys=None
-    ):
+    def __init__(self, config, formats, mode, redisplay_keys=None):
         """
         Initialize the settings widget.
 
         Args:
             config (Config): Configuration object to load, update, and store settings.
             formats (dict): Display formats for different modes.
-            mode (str): Used to select between multiple layout formats
-            redisplay_keys(List): Updates to these keys will trigger a full redisplay
+            mode (str): Used to select between multiple layout formats.
+            redisplay_keys(List): Updates to these keys will trigger a full redisplay.
         """
         super().__init__()
-        self.grid_layout = QGridLayout(self)
-        self.config = config
 
+        self.config = config
         self.formats = formats
         self.mode = mode  # Select which format within formats to use
         self.validate_format(formats, mode)
         self.format = self.formats[mode]  # Get format for the current mode
-
-        # todo implement ignore_changes
         self.ignore_changes = False
         self.is_loaded = False
-
         self.redisplay_keys = redisplay_keys  # Keys that trigger full UI redisplay
         self.config_widgets = []
+        self._setup_ui()
 
     def _setup_ui(self):
         """
         Create and arrange widgets based on the format.
+
+        Args:
 
         Raises:
             ValueError: If 'self.formats' is not set or is not a dictionary.
@@ -87,15 +94,19 @@ class SettingsWidget(QWidget):
             Exception: If an error occurs while setting up a widget, with details on the row and
             key.
         """
+        # Top-level layout for the entire widget
+        main_layout = QVBoxLayout(self)
+
+        self.grid_layout = QGridLayout()
+        main_layout.addLayout(self.grid_layout)
+
         self.grid_layout.setSpacing(10)
         self.clear_layout()
 
         row, data_key, format_row = -1, None, None
 
-        # Add widgets from format
         try:
             for row, (data_key, format_row) in enumerate(self.format.items()):
-                # Unpack format row
                 label_text, widget_type, options, width = format_row
 
                 # Create specified ConfigWidget
@@ -103,7 +114,6 @@ class SettingsWidget(QWidget):
                     self.config, widget_type, None, options, self.on_change, width, data_key
                 )
 
-                # Add to config list
                 self.config_widgets.append(config_item)
 
                 # Add label to col 0
@@ -129,15 +139,7 @@ class SettingsWidget(QWidget):
             ) from e
 
         # Add an expanding spacer item
-        # - QSizePolicy.Policy.Expanding: Allows the spacer to expand horizontally
-        # - QSizePolicy.Policy.Minimum: Ensures that the spacer occupies only its minimal
-        # required vertical space
         v_spacer = QSpacerItem(1, 1, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        # Add the spacer item to the grid layout:
-        # - self.grid_layout.rowCount(): Places the spacer after other rows.
-        # - Column 0: Starts the spacer at the column 0.
-        # - Row span of 1, Column span of 3: Spans the spacer across one row and three columns
         self.grid_layout.addItem(v_spacer, self.grid_layout.rowCount(), 0, 1, 3)
 
     def display(self):

@@ -1,523 +1,281 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>structured_text module &mdash; ConfigEditor 0.11 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1"/>
-    <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>structured_text module &mdash; ConfigEditor 0.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
-
-    <script src="_static/jquery.js?v=5d32c60e"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=086c1757"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=086c1757"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html"/>
-    <link rel="search" title="Search" href="search.html"/>
-    <link rel="next" title="ConfigEditor" href="readme.html"/>
-    <link rel="prev" title="json_config module" href="json_config.html"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Readme" href="readme.html" />
+    <link rel="prev" title="yaml_config module" href="yaml_config.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-<div class="wy-grid-for-nav">
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-        <div class="wy-side-scroll">
-            <div class="wy-side-nav-search">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ConfigEditor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ConfigEditor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_widget.html">settings_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_widget.html">item_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html">data_manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yaml_config.html">yaml_config module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">structured_text module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#structured_text.data_type"><code class="docutils literal notranslate"><span class="pre">data_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structured_text.get_regex"><code class="docutils literal notranslate"><span class="pre">get_regex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structured_text.parse_text"><code class="docutils literal notranslate"><span class="pre">parse_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structured_text.to_text"><code class="docutils literal notranslate"><span class="pre">to_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structured_text.validate_text"><code class="docutils literal notranslate"><span class="pre">validate_text()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
+</ul>
 
-                <a href="index.html" class="icon icon-home">
-                    ConfigEditor
-                </a>
-                <div role="search">
-                    <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-                        <input type="text" name="q" placeholder="Search docs" aria-label="Search docs"/>
-                        <input type="hidden" name="check_keywords" value="yes"/>
-                        <input type="hidden" name="area" value="default"/>
-                    </form>
-                </div>
-            </div>
-            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal" href="modules.html">ConfigEditor</a>
-                        <ul class="current">
-                            <li class="toctree-l2"><a class="reference internal" href="settings_widget.html">settings_widget
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="item_widget.html">item_widget
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="data_manager.html">data_manager
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="yaml_config.html">yaml_config
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="json_config.html">json_config
-                                module</a></li>
-                            <li class="toctree-l2 current"><a class="current reference internal" href="#">structured_text
-                                module</a>
-                                <ul>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.DataCategory"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">DataCategory</span></code></a>
-                                        <ul>
-                                            <li class="toctree-l4"><a class="reference internal"
-                                                                      href="#structured_text.DataCategory.COMPLEX"><code
-                                                    class="docutils literal notranslate"><span class="pre">DataCategory.COMPLEX</span></code></a>
-                                            </li>
-                                            <li class="toctree-l4"><a class="reference internal"
-                                                                      href="#structured_text.DataCategory.DICT"><code
-                                                    class="docutils literal notranslate"><span class="pre">DataCategory.DICT</span></code></a>
-                                            </li>
-                                            <li class="toctree-l4"><a class="reference internal"
-                                                                      href="#structured_text.DataCategory.LIST"><code
-                                                    class="docutils literal notranslate"><span class="pre">DataCategory.LIST</span></code></a>
-                                            </li>
-                                            <li class="toctree-l4"><a class="reference internal"
-                                                                      href="#structured_text.DataCategory.SCALAR"><code
-                                                    class="docutils literal notranslate"><span class="pre">DataCategory.SCALAR</span></code></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.data_category"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">data_category()</span></code></a></li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.get_regex"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">get_regex()</span></code></a></li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.parse_dict"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">parse_dict()</span></code></a></li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.parse_list"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">parse_list()</span></code></a></li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.parse_text"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">parse_text()</span></code></a></li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.to_text"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">to_text()</span></code></a></li>
-                                    <li class="toctree-l3"><a class="reference internal"
-                                                              href="#structured_text.validate_format"><code
-                                            class="docutils literal notranslate"><span
-                                            class="pre">validate_format()</span></code></a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="readme.html">ConfigEditor</a></li>
-                </ul>
-
-            </div>
         </div>
+      </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-        <nav class="wy-nav-top" aria-label="Mobile navigation menu">
-            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-            <a href="index.html">ConfigEditor</a>
-        </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ConfigEditor</a>
+      </nav>
 
-        <div class="wy-nav-content">
-            <div class="rst-content">
-                <div role="navigation" aria-label="Page navigation">
-                    <ul class="wy-breadcrumbs">
-                        <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-                        <li class="breadcrumb-item"><a href="modules.html">ConfigEditor</a></li>
-                        <li class="breadcrumb-item active">structured_text module</li>
-                        <li class="wy-breadcrumbs-aside">
-                            <a href="_sources/structured_text.rst.txt" rel="nofollow"> View page source</a>
-                        </li>
-                    </ul>
-                    <hr/>
-                </div>
-                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-                    <div itemprop="articleBody">
-
-                        <section id="module-structured_text">
-                            <span id="structured-text-module"></span>
-                            <h1>structured_text module<a class="headerlink" href="#module-structured_text"
-                                                         title="Link to this heading"></a></h1>
-                            <p>This module provides routines for formatting data structures as text and parsing text
-                                back to
-                                data structures.</p>
-                            <ul class="simple">
-                                <li><p>Converts data structures to text for display or editing (<cite>to_text</cite>).
-                                </p></li>
-                                <li><p>Parses text representations into structured data (<cite>parse_dict</cite>, <cite>parse_list</cite>,
-                                    <cite>parse_text</cite>).</p></li>
-                                <li><p>Validates text formats against regular expressions (<cite>validate_format</cite>).
-                                </p></li>
-                                <li><p>Categorizes data into predefined types (<cite>data_category</cite>).</p></li>
-                                <li><p>Supports dict, list, and scalar (int, float, bool, etc)</p></li>
-                            </ul>
-                            <dl class="py class">
-                                <dt class="sig sig-object py" id="structured_text.DataCategory">
-                                    <em class="property"><span class="pre">class</span><span
-                                            class="w"> </span></em><span class="sig-prename descclassname"><span
-                                        class="pre">structured_text.</span></span><span class="sig-name descname"><span
-                                        class="pre">DataCategory</span></span><span class="sig-paren">(</span><em
-                                        class="sig-param"><span class="n"><span class="pre">value</span></span></em>,
-                                    <em class="sig-param"><span class="n"><span class="pre">names</span></span><span
-                                            class="o"><span class="pre">=</span></span><span class="default_value"><span
-                                            class="pre">None</span></span></em>, <em class="sig-param"><span
-                                        class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>,
-                                    <em class="sig-param"><span class="n"><span class="pre">module</span></span><span
-                                            class="o"><span class="pre">=</span></span><span class="default_value"><span
-                                            class="pre">None</span></span></em>, <em class="sig-param"><span
-                                        class="n"><span class="pre">qualname</span></span><span class="o"><span
-                                        class="pre">=</span></span><span class="default_value"><span
-                                        class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span
-                                        class="pre">type</span></span><span class="o"><span
-                                        class="pre">=</span></span><span class="default_value"><span
-                                        class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span
-                                        class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span
-                                        class="default_value"><span class="pre">1</span></span></em>, <em
-                                        class="sig-param"><span class="n"><span class="pre">boundary</span></span><span
-                                        class="o"><span class="pre">=</span></span><span class="default_value"><span
-                                        class="pre">None</span></span></em><span class="sig-paren">)</span><a
-                                        class="reference internal"
-                                        href="_modules/structured_text.html#DataCategory"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.DataCategory"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span
-                                        class="pre">Enum</span></code></p>
-                                    <p>Enum for representing different data types.</p>
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="structured_text.DataCategory.COMPLEX">
-                                            <span class="sig-name descname"><span class="pre">COMPLEX</span></span><em
-                                                class="property"><span class="w"> </span><span class="p"><span
-                                                class="pre">=</span></span><span class="w"> </span><span class="pre">'complex'</span></em><a
-                                                class="headerlink" href="#structured_text.DataCategory.COMPLEX"
-                                                title="Link to this definition"></a></dt>
-                                        <dd></dd>
-                                    </dl>
-
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="structured_text.DataCategory.DICT">
-                                            <span class="sig-name descname"><span class="pre">DICT</span></span><em
-                                                class="property"><span class="w"> </span><span class="p"><span
-                                                class="pre">=</span></span><span class="w"> </span><span class="pre">'dict'</span></em><a
-                                                class="headerlink" href="#structured_text.DataCategory.DICT"
-                                                title="Link to this definition"></a></dt>
-                                        <dd></dd>
-                                    </dl>
-
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="structured_text.DataCategory.LIST">
-                                            <span class="sig-name descname"><span class="pre">LIST</span></span><em
-                                                class="property"><span class="w"> </span><span class="p"><span
-                                                class="pre">=</span></span><span class="w"> </span><span class="pre">'list'</span></em><a
-                                                class="headerlink" href="#structured_text.DataCategory.LIST"
-                                                title="Link to this definition"></a></dt>
-                                        <dd></dd>
-                                    </dl>
-
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="structured_text.DataCategory.SCALAR">
-                                            <span class="sig-name descname"><span class="pre">SCALAR</span></span><em
-                                                class="property"><span class="w"> </span><span class="p"><span
-                                                class="pre">=</span></span><span class="w"> </span><span class="pre">'scalar'</span></em><a
-                                                class="headerlink" href="#structured_text.DataCategory.SCALAR"
-                                                title="Link to this definition"></a></dt>
-                                        <dd></dd>
-                                    </dl>
-
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.data_category">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">data_category</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">item</span></span></em><span class="sig-paren">)</span><a
-                                        class="reference internal"
-                                        href="_modules/structured_text.html#data_category"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.data_category"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Identifies the data category of an item (SCALAR, LIST, DICT, or COMPLEX).</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p><strong>item</strong> – The item to categorize.</p>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>The identified data category.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p><a class="reference internal"
-                                                                    href="#structured_text.DataCategory"
-                                                                    title="structured_text.DataCategory">DataCategory</a>
-                                        </p>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.get_regex">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">get_regex</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">item</span></span></em><span class="sig-paren">)</span><a
-                                        class="reference internal" href="_modules/structured_text.html#get_regex"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.get_regex"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Provides the regex pattern for matching the format of the item where item
-                                    is a dict or list.</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p><strong>item</strong> – The data structure to determine
-                                            the regex for.</p>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>The regex pattern for matching the item’s format, or
-                                            None if unsupported.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p>str</p>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.parse_dict">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">parse_dict</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">text</span></span></em><span class="sig-paren">)</span><a
-                                        class="reference internal" href="_modules/structured_text.html#parse_dict"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.parse_dict"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Parses a string in the format “key1: value1, key2: value2” into a dictionary.</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The string to
-                                            parse.</p>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>A dictionary of key-value pairs.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p>dict</p>
-                                        </dd>
-                                        <dt class="field-even">Raises<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p><strong>ValueError</strong> – If the text format does
-                                            not match the expected key-value structure.</p>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.parse_list">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">parse_list</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">text</span></span></em><span class="sig-paren">)</span><a
-                                        class="reference internal" href="_modules/structured_text.html#parse_list"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.parse_list"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Parses a comma-separated string like ‘item1’, ‘item2’ into a list.</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The string to
-                                            parse.</p>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>A list of items.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p>list</p>
-                                        </dd>
-                                        <dt class="field-even">Raises<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p><strong>ValueError</strong> – If the string format
-                                            does not match the expected quoted list structure.</p>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.parse_text">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">parse_text</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span
-                                        class="pre">category</span></span></em>, <em class="sig-param"><span
-                                        class="n"><span class="pre">rgx</span></span></em><span
-                                        class="sig-paren">)</span><a class="reference internal"
-                                                                     href="_modules/structured_text.html#parse_text"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.parse_text"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Parses text into the requested data structure (dictionary, list, or scalar).
-                                    Scalar
-                                    returns a string and is validated against the supplied regex pattern. Complex data
-                                    structures are not supported.</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd">
-                                            <ul class="simple">
-                                                <li><p><strong>text</strong> (<em>str</em>) – The string to parse.</p>
-                                                </li>
-                                                <li><p><strong>category</strong> (<a class="reference internal"
-                                                                                     href="#structured_text.DataCategory"
-                                                                                     title="structured_text.DataCategory"><em>DataCategory</em></a>)
-                                                    – The target data category (SCALAR, LIST, DICT).</p></li>
-                                                <li><p><strong>rgx</strong> (<em>str</em>) – A regular expression to
-                                                    validate the input text format for scalars.</p></li>
-                                            </ul>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>(data, is_valid), where data is the resulting data
-                                            structure
-                                            and is_valid is a boolean indicating the validity of the format.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p>tuple</p>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.to_text">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">to_text</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">item</span></span></em><span class="sig-paren">)</span><a
-                                        class="reference internal" href="_modules/structured_text.html#to_text"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.to_text"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Converts a dict, list, or other data into a string representation for display or
-                                    editing.</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p><strong>item</strong> – The data structure to format
-                                            (dict, list, or other).</p>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>A formatted string representation of the item.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p>str</p>
-                                        </dd>
-                                    </dl>
-                                    <dl class="simple">
-                                        <dt>Output Format:</dt>
-                                        <dd>
-                                            <ul class="simple">
-                                                <li><p>For a dictionary:
-                                                    Each key-value pair is formatted as <cite>key: value</cite> and
-                                                    pairs are separated by commas.
-                                                    Example: {“key1”: “value1”, “key2”: 42} -&gt; “key1: value1, key2:
-                                                    42”</p></li>
-                                                <li><p>For a list:
-                                                    Each element is enclosed in single quotes and separated by commas.
-                                                    Example: [“item1”, “item2”, 3] -&gt; “‘item1’, ‘item2’, ‘3’”</p>
-                                                </li>
-                                                <li><p>For other:
-                                                    The value is converted to a string where possible
-                                                    Example: 42 -&gt; “42”.
-                                                    If no str representation is available, “Unsupported type” is
-                                                    returned.</p></li>
-                                            </ul>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                            <dl class="py function">
-                                <dt class="sig sig-object py" id="structured_text.validate_format">
-                                    <span class="sig-prename descclassname"><span
-                                            class="pre">structured_text.</span></span><span
-                                        class="sig-name descname"><span class="pre">validate_format</span></span><span
-                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">value</span></span></em>, <em class="sig-param"><span
-                                        class="n"><span class="pre">regex</span></span></em><span
-                                        class="sig-paren">)</span><a class="reference internal"
-                                                                     href="_modules/structured_text.html#validate_format"><span
-                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
-                                        class="headerlink" href="#structured_text.validate_format"
-                                        title="Link to this definition"></a></dt>
-                                <dd><p>Validates if a string fully matches a specified regex pattern.</p>
-                                    <dl class="field-list simple">
-                                        <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                                        <dd class="field-odd">
-                                            <ul class="simple">
-                                                <li><p><strong>value</strong> (<em>str</em>) – The string to validate.
-                                                </p></li>
-                                                <li><p><strong>regex</strong> (<em>str</em>) – The regex pattern to
-                                                    match.</p></li>
-                                            </ul>
-                                        </dd>
-                                        <dt class="field-even">Returns<span class="colon">:</span></dt>
-                                        <dd class="field-even"><p>True if the string matches the regex, False
-                                            otherwise.</p>
-                                        </dd>
-                                        <dt class="field-odd">Return type<span class="colon">:</span></dt>
-                                        <dd class="field-odd"><p>bool</p>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-
-                        </section>
-
-
-                    </div>
-                </div>
-                <footer>
-                    <div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-                        <a href="json_config.html" class="btn btn-neutral float-left" title="json_config module"
-                           accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span>
-                            Previous</a>
-                        <a href="readme.html" class="btn btn-neutral float-right" title="ConfigEditor" accesskey="n"
-                           rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-                    </div>
-
-                    <hr/>
-
-                    <div role="contentinfo">
-                        <p>&#169; Copyright 2024, corb555.</p>
-                    </div>
-
-                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
-
-                </footer>
-            </div>
-        </div>
-    </section>
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">ConfigEditor</a></li>
+      <li class="breadcrumb-item active">structured_text module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/structured_text.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
 </div>
-<script>
-    jQuery(function () {
-        SphinxRtdTheme.Navigation.enable(true);
-    });
-</script>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-structured_text">
+<span id="structured-text-module"></span><h1>structured_text module<a class="headerlink" href="#module-structured_text" title="Link to this heading"></a></h1>
+<p>This module provides routines for formatting data structures as text and parsing text back to
+data structures.  This is designed to present the data to a user for editing in a somewhat human
+friendly text format.</p>
+<ul class="simple">
+<li><p>Converts data structures to text for display or editing (<cite>to_text</cite>).</p></li>
+<li><p>Parses text representations into structured data (<cite>parse_text</cite>).</p></li>
+<li><p>Text must be in Python/AST format</p></li>
+<li><p>Validates text formats against regular expressions (<cite>validate_format</cite>).</p></li>
+<li><p>Supports simple dict, list, and scalar (int, float, bool, etc.)</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="structured_text.data_type">
+<span class="sig-prename descclassname"><span class="pre">structured_text.</span></span><span class="sig-name descname"><span class="pre">data_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structured_text.html#data_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structured_text.data_type" title="Link to this definition"></a></dt>
+<dd><p>Identifies the item’s data type (List, Dict, int, float, bool, str).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> – The item to categorize.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The identified data type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="structured_text.get_regex">
+<span class="sig-prename descclassname"><span class="pre">structured_text.</span></span><span class="sig-name descname"><span class="pre">get_regex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structured_text.html#get_regex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structured_text.get_regex" title="Link to this definition"></a></dt>
+<dd><p>Provides the regex pattern for matching the format of the item where item
+is a dict or list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> – The data structure to determine the regex for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The regex pattern for matching the item’s format, or None if unsupported.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="structured_text.parse_text">
+<span class="sig-prename descclassname"><span class="pre">structured_text.</span></span><span class="sig-name descname"><span class="pre">parse_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fallbacks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structured_text.html#parse_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structured_text.parse_text" title="Link to this definition"></a></dt>
+<dd><p>Parse a string into a Python object (e.g., dictionary, list, scalar, or nested structure).
+The input string must be in a format compatible with Python’s <cite>ast.literal_eval</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The input string to parse.</p></li>
+<li><p><strong>target_type</strong> (<em>type</em>) – The desired type of the output (e.g., int, float, str, bool, date,</p></li>
+<li><p><strong>etc.</strong><strong>)</strong><strong>.</strong></p></li>
+<li><p><strong>rgx</strong> – Optional parameter for additional handling (not implemented in this version).</p></li>
+<li><p><strong>fallbacks</strong> – Override default fallbacks.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>(error_flag, result)</dt><dd><ul class="simple">
+<li><p>error_flag (bool): Indicates if parsing errors or type mismatches occurred.</p></li>
+<li><p>result: The parsed object if successful, or a fallback value if parsing fails.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>None</strong> – Any exceptions during parsing are handled internally and result in a fallback value.</p>
+</dd>
+</dl>
+<dl>
+<dt>Fallback Handling:</dt><dd><p>If parsing fails or the result does not match the desired target type:
+- The function assigns a default fallback value from <cite>DEFAULT_FALLBACKS</cite> based on the</p>
+<blockquote>
+<div><p>specified <cite>target_type</cite>.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>If <cite>target_type</cite> is not in <cite>DEFAULT_FALLBACKS</cite>, <cite>None</cite> is returned as the fallback value.</p></li>
+<li><p>The DEFAULT_FALLBACKS can be overridden with <cite>fallbacks</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Parsing is performed using <cite>ast.literal_eval</cite> for security and compatibility.</p></li>
+<li><p>Nested structures (e.g., lists or dictionaries) are handled recursively.</p></li>
+<li><p>Scalar values are converted to the <cite>target_type</cite> if specified.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="structured_text.to_text">
+<span class="sig-prename descclassname"><span class="pre">structured_text.</span></span><span class="sig-name descname"><span class="pre">to_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structured_text.html#to_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structured_text.to_text" title="Link to this definition"></a></dt>
+<dd><p>Converts a Python object into a string representation that is compatible with
+<cite>ast.literal_eval</cite>.
+This function handles common Python types including nested hierarchies and ensures proper
+formatting for
+compatibility with evaluation and representation needs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> – The data structure to format. Supported types include:
+- <cite>dict</cite>: Converted into a string with properly formatted key-value pairs.
+- <cite>list</cite>: Converted into a string representation of a list.
+- <cite>str</cite>: Encased in single quotes, ensuring compatibility with evaluators.
+- <cite>int</cite> or <cite>float</cite>: Directly converted into their string representations.
+- <cite>bool</cite>: Represented as <cite>True</cite> or <cite>False</cite> in the string.
+- <cite>None</cite>: Represented as the string <cite>None</cite>.
+- <cite>date</cite>: Converted to an ISO-formatted string enclosed in single quotes.</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em>) – If <cite>True</cite>, applies normalization rules to standardize strings for</p></li>
+<li><p><strong>when</strong> (<em>certain cases.  Ensures proper escaping</em><em> of </em><em>characters in strings using repr</em>)</p></li>
+<li><p><strong>normalizing.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representation of the object, formatted to be compatible with
+<cite>ast.literal_eval</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If the input object is of an unsupported type.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Nested structures (e.g., lists within dictionaries) are handled recursively.</p></li>
+<li><p>The <cite>normalize</cite> flag affects how strings are represented, enabling additional</p></li>
+</ul>
+<p>standardization when needed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="structured_text.validate_text">
+<span class="sig-prename descclassname"><span class="pre">structured_text.</span></span><span class="sig-name descname"><span class="pre">validate_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structured_text.html#validate_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structured_text.validate_text" title="Link to this definition"></a></dt>
+<dd><p>Validates if a string fully matches a specified regex pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The string to validate.</p></li>
+<li><p><strong>regex</strong> (<em>str</em>) – The regex pattern to match.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the string matches the regex or regex is None, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="yaml_config.html" class="btn btn-neutral float-left" title="yaml_config module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="readme.html" class="btn btn-neutral float-right" title="Readme" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, corb555.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
 </body>
 </html>

@@ -1,7 +1,9 @@
 DESSERT: Cheesecake
-TIP: '18'
-HOME: A
+TIP: 15
+HOME: C
 SITES:
-  A: New Orleans
-  B: Chicago
-  C: Yaml
+  A: Atlanta
+  B: Boston
+  C: Chicago
+  D: Detroit
+date: 1989-05-23

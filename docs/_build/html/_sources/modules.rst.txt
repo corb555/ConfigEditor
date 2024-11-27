@@ -8,5 +8,4 @@ ConfigEditor
    item_widget
    data_manager
    yaml_config
-   json_config
    structured_text

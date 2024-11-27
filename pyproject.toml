@@ -13,7 +13,7 @@ name = "ConfigEditor"
 version = "0.1.11"
 description = "Editor routines for text config and YAML config files"
 authors = [{ name = "corb" }]
-readme = "README.md"
+readme = "docs/readme.md"
 requires-python = ">=3.10"
 dependencies = [
     "PyYAML>=6.0.1",

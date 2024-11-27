@@ -1,0 +1,89 @@
+FILES:
+  A: _topo.tif
+  B: WESTMAN.tif
+  C: ''
+languages2:
+- YAML
+- JAVA
+- XML
+- null
+- null
+name: '''i''m a string'''
+rank: 1
+truth: false
+approved: true
+date: 1987-05-24
+time: 10:00
+hash_example: 'This string contains # as text'
+'[part1, part2]': This is a complex key with a sequence
+quote: "\u2018YAML is the \u201Cbest\u201D configuration language\u2019"
+doublequote: "\u201C Yes, the \u2018best\u2019 \u201C"
+colors:
+- red
+- green
+- blue
+person:
+  name: Alice
+  age: 30
+  location: Wonderland
+items:
+- id: 1
+  name: Item A
+- id: 2
+  name: Item B
+key_with_empty_value: null
+key_with_null_value: null
+another_null_value: null
+languages:
+- Python
+- null
+- Java
+- null
+message1: '''even though it looks like this is a multiline message, it is actually
+  not
+
+  '''
+message2: '''this is
+
+  a real multiline
+
+  message
+
+  '''
+message3: '''This block line Will be interpreted as a single line with a newline character
+  at the  end
+
+
+  '''
+vars:
+  service1:
+    config:
+      env: prod
+      retries: 3
+      version: 4.8
+  service2:
+    config:
+      env: prod
+      retries: 3
+      version: 4.8
+  service3:
+    config:
+      env: prod
+      retries: 3
+      version: 4.8
+vars2:
+  service1:
+    config:
+      env: prod
+      retries: 3
+      version: 4.8
+  service2:
+    config:
+      env: prod
+      retries: 3
+      version: 5
+  service3:
+    config:
+      env: prod
+      retries: 3
+      version: 4.2

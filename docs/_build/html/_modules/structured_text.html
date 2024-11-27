@@ -1,101 +1,434 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>structured_text &mdash; ConfigEditor 0.11 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1"/>
-    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>structured_text &mdash; ConfigEditor 0.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
-
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=086c1757"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=086c1757"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html"/>
-    <link rel="search" title="Search" href="../search.html"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-<div class="wy-grid-for-nav">
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-        <div class="wy-side-scroll">
-            <div class="wy-side-nav-search">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ConfigEditor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">ConfigEditor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Readme</a></li>
+</ul>
 
-                <a href="../index.html" class="icon icon-home">
-                    ConfigEditor
-                </a>
-                <div role="search">
-                    <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-                        <input type="text" name="q" placeholder="Search docs" aria-label="Search docs"/>
-                        <input type="hidden" name="check_keywords" value="yes"/>
-                        <input type="hidden" name="area" value="default"/>
-                    </form>
-                </div>
-            </div>
-            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../modules.html">ConfigEditor</a></li>
-                </ul>
-
-            </div>
         </div>
+      </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-        <nav class="wy-nav-top" aria-label="Mobile navigation menu">
-            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-            <a href="../index.html">ConfigEditor</a>
-        </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ConfigEditor</a>
+      </nav>
 
-        <div class="wy-nav-content">
-            <div class="rst-content">
-                <div role="navigation" aria-label="Page navigation">
-                    <ul class="wy-breadcrumbs">
-                        <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-                        <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
-                        <li class="breadcrumb-item active">structured_text</li>
-                        <li class="wy-breadcrumbs-aside">
-                        </li>
-                    </ul>
-                    <hr/>
-                </div>
-                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-                    <div itemprop="articleBody">
-
-                        <h1>Source code for structured_text</h1>
-                        <div class="highlight"><pre>
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">structured_text</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for structured_text</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module provides routines for formatting data structures as text and parsing text back to</span>
-<span class="sd">data structures.</span>
+<span class="sd">data structures.  This is designed to present the data to a user for editing in a somewhat human</span>
+<span class="sd">friendly text format.</span>
 
 <span class="sd">- Converts data structures to text for display or editing (`to_text`).</span>
-<span class="sd">- Parses text representations into structured data (`parse_dict`, `parse_list`, `parse_text`).</span>
+<span class="sd">- Parses text representations into structured data (`parse_text`).</span>
+<span class="sd">- Text must be in Python/AST format</span>
 <span class="sd">- Validates text formats against regular expressions (`validate_format`).</span>
-<span class="sd">- Categorizes data into predefined types (`data_category`).</span>
-<span class="sd">- Supports dict, list, and scalar (int, float, bool, etc)</span>
+<span class="sd">- Supports simple dict, list, and scalar (int, float, bool, etc.)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#  Copyright (c) 2024.</span>
+<span class="c1">#   Permission is hereby granted, free of charge, to any person obtaining a</span>
+<span class="c1">#   copy of this software and associated documentation files (the “Software”), to deal in the</span>
+<span class="c1">#   Software without restriction,</span>
+<span class="c1">#   including without limitation the rights to use, copy, modify, merge, publish, distribute,</span>
+<span class="c1">#   sublicense, and/or sell copies</span>
+<span class="c1">#   of the Software, and to permit persons to whom the Software is furnished to do so, subject to</span>
+<span class="c1">#   the following conditions:</span>
+<span class="c1">#  #</span>
+<span class="c1">#   The above copyright notice and this permission notice shall be included in all copies or</span>
+<span class="c1">#   substantial portions of the Software.</span>
+<span class="c1">#  #</span>
+<span class="c1">#   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING</span>
+<span class="c1">#   BUT NOT LIMITED TO THE</span>
+<span class="c1">#   WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO</span>
+<span class="c1">#   EVENT SHALL THE AUTHORS OR</span>
+<span class="c1">#   COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF</span>
+<span class="c1">#   CONTRACT, TORT OR</span>
+<span class="c1">#   OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="c1">#   DEALINGS IN THE SOFTWARE.</span>
+<span class="c1">#  #</span>
+<span class="c1">#   This uses QT for some components which has the primary open-source license is the GNU Lesser</span>
+<span class="c1">#   General Public License v. 3 (“LGPL”).</span>
+<span class="c1">#   With the LGPL license option, you can use the essential libraries and some add-on libraries</span>
+<span class="c1">#   of Qt.</span>
+<span class="c1">#   See https://www.qt.io/licensing/open-source-lgpl-obligations for QT details.</span>
 
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
 
-<div class="viewcode-block" id="DataCategory">
-<a class="viewcode-back" href="../structured_text.html#structured_text.DataCategory">[docs]</a>
-<span class="k">class</span> <span class="nc">DataCategory</span><span class="p">(</span><span
-        class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="to_text">
+<a class="viewcode-back" href="../structured_text.html#structured_text.to_text">[docs]</a>
+<span class="k">def</span> <span class="nf">to_text</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Enum for representing different data types.</span>
+<span class="sd">    Converts a Python object into a string representation that is compatible with</span>
+<span class="sd">    `ast.literal_eval`.</span>
+<span class="sd">    This function handles common Python types including nested hierarchies and ensures proper</span>
+<span class="sd">    formatting for</span>
+<span class="sd">    compatibility with evaluation and representation needs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        item: The data structure to format. Supported types include:</span>
+<span class="sd">            - `dict`: Converted into a string with properly formatted key-value pairs.</span>
+<span class="sd">            - `list`: Converted into a string representation of a list.</span>
+<span class="sd">            - `str`: Encased in single quotes, ensuring compatibility with evaluators.</span>
+<span class="sd">            - `int` or `float`: Directly converted into their string representations.</span>
+<span class="sd">            - `bool`: Represented as `True` or `False` in the string.</span>
+<span class="sd">            - `None`: Represented as the string `None`.</span>
+<span class="sd">            - `date`: Converted to an ISO-formatted string enclosed in single quotes.</span>
+
+<span class="sd">        normalize (bool): If `True`, applies normalization rules to standardize strings for</span>
+<span class="sd">        certain cases.  Ensures proper escaping of characters in strings using `repr` when</span>
+<span class="sd">        normalizing.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: A string representation of the object, formatted to be compatible with</span>
+<span class="sd">        `ast.literal_eval`.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: If the input object is of an unsupported type.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - Nested structures (e.g., lists within dictionaries) are handled recursively.</span>
+<span class="sd">        - The `normalize` flag affects how strings are represented, enabling additional</span>
+<span class="sd">        standardization when needed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">SCALAR</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span>  <span class="c1"># int, float, bool, etc.</span>
-    <span class="n">LIST</span> <span class="o">=</span> <span class="s2">&quot;list&quot;</span>  <span class="c1"># list</span>
-    <span class="n">DICT</span> <span class="o">=</span> <span class="s2">&quot;dict&quot;</span>  <span class="c1"># dict</span>
-    <span class="n">COMPLEX</span> <span class="o">=</span> <span class="s2">&quot;complex&quot;</span>  <span
-        class="c1"># complex data type</span></div>
+    <span class="c1"># Handle dictionaries by converting each key-value pair into a formatted string</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">formatted_pairs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">to_text</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted_pairs</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
+
+    <span class="c1"># Handle lists by converting each element into its formatted string representation</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">formatted_elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_text</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted_elements</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+
+    <span class="c1"># Handle booleans by mapping them to their Python string equivalents</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;True&quot;</span> <span class="k">if</span> <span class="n">item</span> <span class="k">else</span> <span class="s2">&quot;False&quot;</span>
+
+    <span class="c1"># Handle numbers (int and float) by converting directly to their string representation</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="c1"># Handle strings, optionally normalizing if the flag is set</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+            <span class="c1"># Use `repr` to ensure proper quoting and escaping of special characters, e.g., &#39;\n&#39;,</span>
+            <span class="c1"># &#39;\t&#39;</span>
+            <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="c1"># Default behavior, return as-is</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Handle NoneType as the string &quot;None&quot;</span>
+    <span class="k">elif</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;None&quot;</span>
+
+    <span class="c1"># Handle date objects by formatting them into ISO 8601 strings wrapped in single quotes</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">date</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+
+    <span class="c1"># Handle tuples</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">formatted_elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_text</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted_elements</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;,&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+
+
+    <span class="c1"># Raise an error for unsupported types</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Fallback values for when the item can&#39;t be parsed</span>
+<span class="n">DEFAULT_FALLBACKS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nb">int</span><span class="p">:</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>  <span class="c1"># Default fallback for integers</span>
+    <span class="nb">float</span><span class="p">:</span> <span class="o">-</span><span class="mf">9999.9</span><span class="p">,</span>  <span class="c1"># Default fallback for floats</span>
+    <span class="nb">bool</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Default fallback for booleans</span>
+    <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>  <span class="c1"># Default fallback for strings</span>
+    <span class="n">date</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># Default fallback for dates</span>
+    <span class="nb">dict</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Default fallback for dictionaries</span>
+    <span class="nb">list</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Default fallback for lists</span>
+    <span class="nb">tuple</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="parse_text">
+<a class="viewcode-back" href="../structured_text.html#structured_text.parse_text">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">target_type</span><span class="p">,</span> <span class="n">rgx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fallbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse a string into a Python object (e.g., dictionary, list, scalar, or nested structure).</span>
+<span class="sd">    The input string must be in a format compatible with Python&#39;s `ast.literal_eval`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The input string to parse.</span>
+<span class="sd">        target_type (type): The desired type of the output (e.g., int, float, str, bool, date,</span>
+<span class="sd">        etc.).</span>
+<span class="sd">        rgx: Optional parameter for additional handling (not implemented in this version).</span>
+<span class="sd">        fallbacks: Override default fallbacks.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (error_flag, result)</span>
+<span class="sd">            - error_flag (bool): Indicates if parsing errors or type mismatches occurred.</span>
+<span class="sd">            - result: The parsed object if successful, or a fallback value if parsing fails.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        None: Any exceptions during parsing are handled internally and result in a fallback value.</span>
+
+<span class="sd">    Fallback Handling:</span>
+<span class="sd">        If parsing fails or the result does not match the desired target type:</span>
+<span class="sd">        - The function assigns a default fallback value from `DEFAULT_FALLBACKS` based on the</span>
+<span class="sd">          specified `target_type`.</span>
+<span class="sd">        - If `target_type` is not in `DEFAULT_FALLBACKS`, `None` is returned as the fallback value.</span>
+<span class="sd">        - The DEFAULT_FALLBACKS can be overridden with `fallbacks`.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - Parsing is performed using `ast.literal_eval` for security and compatibility.</span>
+<span class="sd">        - Nested structures (e.g., lists or dictionaries) are handled recursively.</span>
+<span class="sd">        - Scalar values are converted to the `target_type` if specified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Use the provided fallbacks or default to `DEFAULT_FALLBACKS` if not provided</span>
+    <span class="n">fallbacks</span> <span class="o">=</span> <span class="n">fallbacks</span> <span class="ow">or</span> <span class="n">DEFAULT_FALLBACKS</span>
+
+    <span class="c1"># Validate against rgx</span>
+    <span class="k">if</span> <span class="n">rgx</span><span class="p">:</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">validate_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">rgx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+            <span class="c1"># Assign fallback value based on the target type</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed rgx.  Text: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2"> Rgx: </span><span class="si">{</span><span class="n">rgx</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">fallbacks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">target_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">error_flag</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="n">error_flag</span><span class="p">,</span> <span class="n">value</span>
+
+    <span class="k">if</span> <span class="n">target_type</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># Strings are always returned as-is</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">text</span>
+
+    <span class="c1"># Attempt parsing and initial type matching</span>
+    <span class="n">error_flag</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_parse_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">target_type</span><span class="p">,</span> <span class="n">rgx</span><span class="p">)</span>
+
+    <span class="c1"># If parsing fails or the result does not match the target type</span>
+    <span class="k">if</span> <span class="n">error_flag</span> <span class="ow">or</span> <span class="p">(</span><span class="n">target_type</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">target_type</span><span class="p">)):</span>
+        <span class="c1"># Assign fallback value based on the target type</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">fallbacks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">target_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">error_flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">error_flag</span><span class="p">,</span> <span class="n">value</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_parse_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">target_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rgx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal recursive function to parse a string into a Python object (e.g., dictionary, list,</span>
+<span class="sd">    or scalar).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The input string to parse.</span>
+<span class="sd">        target_type (type, optional): Desired data type for the result.</span>
+<span class="sd">        rgx: Optional parameter for additional handling (not implemented in this version).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (error_flag, result)</span>
+<span class="sd">            - error_flag (bool): True if parsing errors or mismatches occurred, False otherwise.</span>
+<span class="sd">            - result: The parsed object, or None if parsing fails.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - Handles dictionaries and lists recursively.</span>
+<span class="sd">        - Uses `_convert_value` to ensure scalar values match the desired target type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Attempt parsing the string with `ast.literal_eval`</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="c1"># Handle dictionaries by recursively parsing keys and values</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">parsed_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">error_flag</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">sub_error</span><span class="p">,</span> <span class="n">sub_result</span> <span class="o">=</span> <span class="n">_parse_text</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rgx</span><span class="p">)</span>
+                <span class="n">error_flag</span> <span class="o">|=</span> <span class="n">sub_error</span>
+                <span class="n">parsed_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_result</span>
+            <span class="k">return</span> <span class="n">error_flag</span><span class="p">,</span> <span class="n">parsed_dict</span>
+
+        <span class="c1"># Handle lists by recursively parsing each element</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">parsed_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">error_flag</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">sub_error</span><span class="p">,</span> <span class="n">sub_result</span> <span class="o">=</span> <span class="n">_parse_text</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rgx</span><span class="p">)</span>
+                <span class="n">error_flag</span> <span class="o">|=</span> <span class="n">sub_error</span>
+                <span class="n">parsed_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_result</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">error_flag</span><span class="p">,</span> <span class="n">parsed_list</span>
+
+        <span class="c1"># Handle tuples</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">parsed_tuple</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">error_flag</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">sub_error</span><span class="p">,</span> <span class="n">sub_result</span> <span class="o">=</span> <span class="n">_parse_text</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rgx</span><span class="p">)</span>
+                <span class="n">error_flag</span> <span class="o">|=</span> <span class="n">sub_error</span>
+                <span class="n">parsed_tuple</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_result</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">error_flag</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">parsed_tuple</span><span class="p">)</span>
+
+        <span class="c1"># Scalar values: Convert to target type if specified</span>
+        <span class="k">if</span> <span class="n">target_type</span><span class="p">:</span>
+            <span class="n">type_error</span><span class="p">,</span> <span class="n">converted</span> <span class="o">=</span> <span class="n">_convert_value</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">target_type</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">type_error</span><span class="p">,</span> <span class="n">converted</span>
+
+        <span class="c1"># Return the scalar value as-is if no target type is specified</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">result</span>
+
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="c1"># Handle parsing errors by returning an error flag and None</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="validate_text">
+<a class="viewcode-back" href="../structured_text.html#structured_text.validate_text">[docs]</a>
+<span class="k">def</span> <span class="nf">validate_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates if a string fully matches a specified regex pattern.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        text (str): The string to validate.</span>
+<span class="sd">        regex (str): The regex pattern to match.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the string matches the regex or regex is None, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span> <span class="k">if</span> <span class="n">text</span> <span class="ow">and</span> <span class="n">regex</span> <span class="k">else</span> <span class="kc">True</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_convert_value</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">target_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a scalar value to the specified target type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value: The input scalar value to convert.</span>
+<span class="sd">        target_type (type): The desired type of the output.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (error_flag, result)</span>
+<span class="sd">            - error_flag (bool): True if conversion fails, False otherwise.</span>
+<span class="sd">            - result: The converted value, or None if conversion fails.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - Includes specific logic for converting to `int`, `float`, `bool`, `str`, and `date`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Convert to integer if possible</span>
+        <span class="k">if</span> <span class="n">target_type</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">value</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Convert to float if possible</span>
+        <span class="k">elif</span> <span class="n">target_type</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Convert to boolean if possible</span>
+        <span class="k">elif</span> <span class="n">target_type</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">value</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Convert to string</span>
+        <span class="k">elif</span> <span class="n">target_type</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Convert to date</span>
+        <span class="k">elif</span> <span class="n">target_type</span> <span class="o">==</span> <span class="n">date</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Unsupported target types</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="c1"># Handle conversion errors</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="data_type">
+<a class="viewcode-back" href="../structured_text.html#structured_text.data_type">[docs]</a>
+<span class="k">def</span> <span class="nf">data_type</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identifies the item&#39;s data type (List, Dict, int, float, bool, str).</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        item: The item to categorize.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The identified data type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
 
 
@@ -105,250 +438,12 @@
 <span class="n">DICT_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\s*([^\s:,][^:,]*?)\s*:\s*([^,]+?)\s*(?:,|$)&quot;</span>
 
 <span class="c1"># Regex for list: &#39;item1&#39;,&#39;item2&#39; format</span>
-<span class="n">LIST_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\s*\s*([&#39;</span><span
-                                class="se">\&quot;</span><span class="s2">])([^&#39;</span><span
-                                class="se">\&quot;</span><span class="s2">]*?)\1(?:\s*,\s*\1([^&#39;</span><span
-                                class="se">\&quot;</span><span class="s2">]*?)\1)*\s*\s*&quot;</span>
-
-
-<div class="viewcode-block" id="to_text">
-<a class="viewcode-back" href="../structured_text.html#structured_text.to_text">[docs]</a>
-<span class="k">def</span> <span class="nf">to_text</span><span class="p">(</span><span class="n">item</span><span
-        class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Converts a dict, list, or other data into a string representation for display or editing.</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        item: The data structure to format (dict, list, or other).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str: A formatted string representation of the item.</span>
-
-<span class="sd">    Output Format:</span>
-<span class="sd">        - For a dictionary:</span>
-<span class="sd">          Each key-value pair is formatted as `key: value` and pairs are separated by commas.</span>
-<span class="sd">          Example: {&quot;key1&quot;: &quot;value1&quot;, &quot;key2&quot;: 42} -&gt; &quot;key1: value1, key2: 42&quot;</span>
-
-<span class="sd">        - For a list:</span>
-<span class="sd">          Each element is enclosed in single quotes and separated by commas.</span>
-<span class="sd">          Example: [&quot;item1&quot;, &quot;item2&quot;, 3] -&gt; &quot;&#39;item1&#39;, &#39;item2&#39;, &#39;3&#39;&quot;</span>
-
-<span class="sd">        - For other:</span>
-<span class="sd">          The  value is converted to a string where possible</span>
-<span class="sd">          Example: 42 -&gt; &quot;42&quot;.</span>
-<span class="sd">          If no str representation is available, &quot;Unsupported type&quot; is returned.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span
-        class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="c1"># Format each key-value pair as &quot;key: value&quot;, separated by commas</span>
-        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span
-        class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span
-        class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span
-        class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span> <span
-        class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span
-        class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">items</span><span
-        class="p">())</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span
-        class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="c1"># Enclose each element in single quotes, separated by commas</span>
-        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span
-        class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span
-        class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">element</span><span
-        class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span
-        class="n">element</span> <span class="ow">in</span> <span class="n">item</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span
-        class="p">,</span> <span class="s2">&quot;__str__&quot;</span><span class="p">)</span> <span
-        class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span
-        class="p">,</span> <span class="s2">&quot;__repr__&quot;</span><span class="p">):</span>
-        <span class="c1"># Return __str__ for other types</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span
-        class="n">item</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Provide diagnostic information for unsupported types</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Unsupported type: </span><span
-        class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span
-        class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span
-        class="s2">&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="parse_text">
-<a class="viewcode-back" href="../structured_text.html#structured_text.parse_text">[docs]</a>
-<span class="k">def</span> <span class="nf">parse_text</span><span class="p">(</span><span class="n">text</span><span
-        class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">rgx</span><span
-        class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parses text into the requested data structure (dictionary, list, or scalar). Scalar</span>
-<span class="sd">    returns a string and is validated against the supplied regex pattern. Complex data</span>
-<span class="sd">    structures are not supported.</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        text (str): The string to parse.</span>
-<span class="sd">        category (DataCategory): The target data category (SCALAR, LIST, DICT).</span>
-<span class="sd">        rgx (str): A regular expression to validate the input text format for scalars.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: (data, is_valid), where data is the resulting data structure</span>
-<span class="sd">        and is_valid is a boolean indicating the validity of the format.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">category</span> <span class="ow">in</span> <span class="p">{</span><span
-        class="n">DataCategory</span><span class="o">.</span><span class="n">DICT</span><span class="p">,</span> <span
-        class="n">DataCategory</span><span class="o">.</span><span class="n">LIST</span><span class="p">}:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span
-        class="o">.</span><span class="n">LIST</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">parse_list</span><span class="p">(</span><span class="n">text</span><span
-        class="p">),</span> <span class="kc">True</span>
-            <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span
-        class="o">.</span><span class="n">DICT</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">parse_dict</span><span class="p">(</span><span class="n">text</span><span
-        class="p">),</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span
-        class="kc">False</span>
-    <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span
-        class="n">DataCategory</span><span class="o">.</span><span class="n">SCALAR</span><span class="p">:</span>
-        <span class="n">is_valid</span> <span class="o">=</span> <span class="n">validate_format</span><span
-        class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">rgx</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span
-        class="n">is_valid</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Complex structures are not supported for parsing: </span><span
-        class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span
-        class="p">)</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span
-        class="n">text</span><span class="p">),</span> <span class="kc">False</span></div>
-
-
-
-<div class="viewcode-block" id="parse_dict">
-<a class="viewcode-back" href="../structured_text.html#structured_text.parse_dict">[docs]</a>
-<span class="k">def</span> <span class="nf">parse_dict</span><span class="p">(</span><span class="n">text</span><span
-        class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parses a string in the format &quot;key1: value1, key2: value2&quot; into a dictionary.</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        text (str): The string to parse.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: A dictionary of key-value pairs.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If the text format does not match the expected key-value structure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{}</span>
-
-    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span
-        class="n">fullmatch</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;(</span><span
-        class="si">{</span><span class="n">DICT_PATTERN</span><span class="si">}</span><span
-        class="s2">)*&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid dictionary format. Expected &#39;key1: value1, key2: value2&#39;.&quot;</span><span
-        class="p">)</span>
-
-    <span class="n">pairs</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span
-        class="n">findall</span><span class="p">(</span><span class="n">DICT_PATTERN</span><span
-        class="p">,</span> <span class="n">text</span><span class="p">)</span>
-
-    <span class="c1"># Format the returned dict</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span
-        class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span
-        class="n">value</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">}</span></div>
-
-
-
-<div class="viewcode-block" id="parse_list">
-<a class="viewcode-back" href="../structured_text.html#structured_text.parse_list">[docs]</a>
-<span class="k">def</span> <span class="nf">parse_list</span><span class="p">(</span><span class="n">text</span><span
-        class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parses a comma-separated string like &#39;item1&#39;, &#39;item2&#39; into a list.</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        text (str): The string to parse.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of items.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If the string format does not match the expected quoted list structure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span
-        class="n">fullmatch</span><span class="p">(</span><span class="n">LIST_PATTERN</span><span
-        class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid list format. Expected &#39;item1&#39;, &#39;item2&#39;.&quot;</span><span
-        class="p">)</span>
-
-    <span class="c1"># Format the returned list</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span
-        class="p">(</span><span class="sa">r</span><span class="s2">&quot;[&#39;</span><span
-        class="se">\&quot;</span><span class="s2">](.*?)[&#39;</span><span class="se">\&quot;</span><span class="s2">]&quot;</span><span
-        class="p">,</span> <span class="n">text</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="data_category">
-<a class="viewcode-back" href="../structured_text.html#structured_text.data_category">[docs]</a>
-<span class="k">def</span> <span class="nf">data_category</span><span class="p">(</span><span class="n">item</span><span
-        class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Identifies the data category of an item (SCALAR, LIST, DICT,  or COMPLEX).</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        item: The item to categorize.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        DataCategory: The identified data category.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span
-        class="p">:</span>
-        <span class="k">return</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">SCALAR</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span
-        class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span
-        class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span
-        class="p">,</span> <span class="nb">bool</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">SCALAR</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span
-        class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">LIST</span> <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span
-        class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span
-        class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span
-        class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span
-        class="n">item</span>
-        <span class="p">)</span> <span class="k">else</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">COMPLEX</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span
-        class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">DICT</span> <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span
-        class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span
-        class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span
-        class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span
-        class="n">item</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-        <span class="p">)</span> <span class="k">else</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">COMPLEX</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">DataCategory</span><span class="o">.</span><span
-        class="n">COMPLEX</span>  <span class="c1"># Fallback for unsupported or unknown types</span></div>
-
+<span class="n">LIST_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\s*\s*([&#39;</span><span class="se">\&quot;</span><span class="s2">])([^&#39;</span><span class="se">\&quot;</span><span class="s2">]*?)\1(?:\s*,\s*\1([^&#39;</span><span class="se">\&quot;</span><span class="s2">]*?)\1)*\s*\s*&quot;</span>
 
 
 <div class="viewcode-block" id="get_regex">
 <a class="viewcode-back" href="../structured_text.html#structured_text.get_regex">[docs]</a>
-<span class="k">def</span> <span class="nf">get_regex</span><span class="p">(</span><span class="n">item</span><span
-        class="p">):</span>
+<span class="k">def</span> <span class="nf">get_regex</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Provides the regex pattern for matching the format of the item where item</span>
 <span class="sd">    is a dict or list.</span>
@@ -359,66 +454,39 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        str: The regex pattern for matching the item&#39;s format, or None if unsupported.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">value_type</span> <span class="o">=</span> <span class="n">data_category</span><span
-        class="p">(</span><span class="n">item</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">value_type</span> <span class="o">==</span> <span
-        class="n">DataCategory</span><span class="o">.</span><span class="n">DICT</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">DICT_PATTERN</span>
-    <span class="k">elif</span> <span class="n">value_type</span> <span class="o">==</span> <span
-        class="n">DataCategory</span><span class="o">.</span><span class="n">LIST</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">LIST_PATTERN</span>
     <span class="k">return</span> <span class="kc">None</span></div>
 
+</pre></div>
 
+           </div>
+          </div>
+          <footer>
 
-<div class="viewcode-block" id="validate_format">
-<a class="viewcode-back" href="../structured_text.html#structured_text.validate_format">[docs]</a>
-<span class="k">def</span> <span class="nf">validate_format</span><span class="p">(</span><span
-        class="n">value</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Validates if a string fully matches a specified regex pattern.</span>
+  <hr/>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        value (str): The string to validate.</span>
-<span class="sd">        regex (str): The regex pattern to match.</span>
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, corb555.</p>
+  </div>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        bool: True if the string matches the regex, False otherwise.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span
-        class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">regex</span><span
-        class="p">,</span> <span class="n">value</span><span class="p">))</span> <span class="k">if</span> <span
-        class="n">value</span> <span class="ow">and</span> <span class="n">regex</span> <span
-        class="k">else</span> <span class="kc">True</span></div>
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-</pre>
-                        </div>
-
-                    </div>
-                </div>
-                <footer>
-
-                    <hr/>
-
-                    <div role="contentinfo">
-                        <p>&#169; Copyright 2024, corb555.</p>
-                    </div>
-
-                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
-
-                </footer>
-            </div>
+</footer>
         </div>
+      </div>
     </section>
-</div>
-<script>
-    jQuery(function () {
-        SphinxRtdTheme.Navigation.enable(true);
-    });
-</script>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
 </body>
 </html>

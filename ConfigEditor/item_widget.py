@@ -1,9 +1,36 @@
+#  Copyright (c) 2024.
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the “Software”), to deal in the
+#   Software without restriction,
+#   including without limitation the rights to use, copy, modify, merge, publish, distribute,
+#   sublicense, and/or sell copies
+#   of the Software, and to permit persons to whom the Software is furnished to do so, subject to
+#   the following conditions:
+#  #
+#   The above copyright notice and this permission notice shall be included in all copies or
+#   substantial portions of the Software.
+#  #
+#   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+#   BUT NOT LIMITED TO THE
+#   WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+#   EVENT SHALL THE AUTHORS OR
+#   COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+#   CONTRACT, TORT OR
+#   OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#  #
+#   This uses QT for some components which has the primary open-source license is the GNU Lesser
+#   General Public License v. 3 (“LGPL”).
+#   With the LGPL license option, you can use the essential libraries and some add-on libraries
+#   of Qt.
+#   See https://www.qt.io/licensing/open-source-lgpl-obligations for QT details.
+
 from functools import partial
 from typing import Union, List
 
 from PyQt6.QtWidgets import QWidget, QLabel, QComboBox, QLineEdit, QSizePolicy, QTextEdit
 
-from structured_text import to_text, data_category, get_regex, parse_text
+from ConfigEditor.structured_text import to_text, data_type, parse_text
 
 
 class ItemWidget(QWidget):
@@ -16,10 +43,13 @@ class ItemWidget(QWidget):
 
     Attributes:
         config(Config): The config file object.  Must support get, set, save, load.
-        widget_type (str): The type of widget ("text_edit", "line_edit", etc.).
+        widget_type (str): The type of widget ("text_edit", "line_edit", "read_only", "label",
+        or "combo_box").
         key (str): Key for the field in the config data.
         error_style (str):  style for indicating an error.
         rgx (str): Regex pattern for validating text fields. Set in options parameter.
+        _data_category (type) : data type of the item
+
     **Methods**:
     """
 
@@ -51,7 +81,7 @@ class ItemWidget(QWidget):
         self.key = key
         self.config = config
         self._is_valid = False
-        self._value_type = None
+        self._data_category = None
 
         self._create_widget(widget_type, initial_value, options, width, text_edit_height)
 
@@ -114,10 +144,10 @@ class ItemWidget(QWidget):
                 if key:
                     val = self.config.get(key)
                     if val:
-                        if not self._value_type:
-                            self._value_type = data_category(val)
-                        if self.rgx is None:
-                            self.rgx = get_regex(val)
+                        if not self._data_category:
+                            self._data_category = data_type(val)
+                        # if self.rgx is None:
+                        #    self.rgx = get_regex(val)
                         self.set_text(self.widget, val)
                     else:
                         print(f"Warning: Key '{key}' not found in config data.")
@@ -125,27 +155,28 @@ class ItemWidget(QWidget):
             key = key or "None"
             val = val or "None"
             print(
-                f"Error displaying widget for key '{key}', value '{val}': {e}"
+                f"Error: displaying widget for key '{key}', value '{val}': {e}"
             )
 
     def _on_widget_changed(self, widget):
         """
-        Handle changes to the widget's value: update the config data, validate it,
-        and set style appropriately.
+        Handle changes to the widget's value:  validate text. If valid,
+        update the config data. Set style appropriately.
 
         Args:
             widget (QWidget): The widget whose value was changed.
         """
         key = widget.objectName()
         text = get_text(widget)
-        self._is_valid = True
-        data_value, self._is_valid = parse_text(text, self._value_type, self.rgx)
+        error_flag, data_value = parse_text(text, self._data_category, self.rgx)
+        self._is_valid = not error_flag
+
         if self._is_valid:
             self.config.set(key, data_value)
             self.set_normal_style(widget)
+            self.callback(key, text)
         else:
             self.set_error_style(widget)
-        self.callback(key, text)
 
     def set_error_style(self, widget, message=None):
         """

@@ -1,478 +1,215 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ConfigEditor &mdash; ConfigEditor 0.11 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1"/>
-    <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConfigEditor &mdash; ConfigEditor 0.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
-
-    <script src="_static/jquery.js?v=5d32c60e"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=086c1757"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=086c1757"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html"/>
-    <link rel="search" title="Search" href="search.html"/>
-    <link rel="next" title="settings_widget module" href="settings_widget.html"/>
-    <link rel="prev" title="ConfigEditor Documentation" href="index.html"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="settings_widget module" href="settings_widget.html" />
+    <link rel="prev" title="ConfigEditor Documentation" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-<div class="wy-grid-for-nav">
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-        <div class="wy-side-scroll">
-            <div class="wy-side-nav-search">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ConfigEditor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ConfigEditor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings_widget.html">settings_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_widget.html">item_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html">data_manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yaml_config.html">yaml_config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structured_text.html">structured_text module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
+</ul>
 
-                <a href="index.html" class="icon icon-home">
-                    ConfigEditor
-                </a>
-                <div role="search">
-                    <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-                        <input type="text" name="q" placeholder="Search docs" aria-label="Search docs"/>
-                        <input type="hidden" name="check_keywords" value="yes"/>
-                        <input type="hidden" name="area" value="default"/>
-                    </form>
-                </div>
-            </div>
-            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="current reference internal" href="#">ConfigEditor</a>
-                        <ul>
-                            <li class="toctree-l2"><a class="reference internal" href="settings_widget.html">settings_widget
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="item_widget.html">item_widget
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="data_manager.html">data_manager
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="yaml_config.html">yaml_config
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="json_config.html">json_config
-                                module</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="structured_text.html">structured_text
-                                module</a></li>
-                        </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="readme.html">ConfigEditor</a></li>
-                </ul>
-
-            </div>
         </div>
+      </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-        <nav class="wy-nav-top" aria-label="Mobile navigation menu">
-            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-            <a href="index.html">ConfigEditor</a>
-        </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ConfigEditor</a>
+      </nav>
 
-        <div class="wy-nav-content">
-            <div class="rst-content">
-                <div role="navigation" aria-label="Page navigation">
-                    <ul class="wy-breadcrumbs">
-                        <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-                        <li class="breadcrumb-item active">ConfigEditor</li>
-                        <li class="wy-breadcrumbs-aside">
-                            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
-                        </li>
-                    </ul>
-                    <hr/>
-                </div>
-                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-                    <div itemprop="articleBody">
-
-                        <section id="configeditor">
-                            <h1>ConfigEditor<a class="headerlink" href="#configeditor"
-                                               title="Link to this heading"></a></h1>
-                            <div class="toctree-wrapper compound">
-                                <ul>
-                                    <li class="toctree-l1"><a class="reference internal" href="settings_widget.html">settings_widget
-                                        module</a>
-                                        <ul>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="settings_widget.html#settings_widget.SettingsWidget"><code
-                                                    class="docutils literal notranslate"><span class="pre">SettingsWidget</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.config"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.config</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.formats"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.formats</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.redisplay_keys"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.redisplay_keys</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.clear_layout"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.clear_layout()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.display"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.display()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.on_change"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.on_change()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.save"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.save()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.undo"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.undo()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="settings_widget.html#settings_widget.SettingsWidget.validate_format"><code
-                                                            class="docutils literal notranslate"><span class="pre">SettingsWidget.validate_format()</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="toctree-l1"><a class="reference internal" href="item_widget.html">item_widget
-                                        module</a>
-                                        <ul>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="item_widget.html#item_widget.ItemWidget"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">ItemWidget</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.config"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.config</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.widget_type"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.widget_type</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.key"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.key</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.error_style"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.error_style</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.rgx"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.rgx</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.display"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.display()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.set_error_style"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.set_error_style()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.set_normal_style"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.set_normal_style()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="item_widget.html#item_widget.ItemWidget.set_text"><code
-                                                            class="docutils literal notranslate"><span class="pre">ItemWidget.set_text()</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="item_widget.html#item_widget.get_text"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">get_text()</span></code></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="toctree-l1"><a class="reference internal" href="data_manager.html">data_manager
-                                        module</a>
-                                        <ul>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.DataHandler"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">DataHandler</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataHandler.get"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataHandler.get()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataHandler.items"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataHandler.items()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataHandler.set"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataHandler.set()</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.DataManager"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">DataManager</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager._data"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager._data</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.file_path"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.file_path</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.directory"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.directory</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.unsaved_changes"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.unsaved_changes</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.snapshots"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.snapshots</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.max_snapshots"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.max_snapshots</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.proxy_mapping"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.proxy_mapping</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.add_proxy"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.add_proxy()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.create"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.create()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.delete"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.delete()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.get"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.get()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.get_open_mode"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.get_open_mode()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.handler"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.handler</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.init_data"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.init_data()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.insert"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.insert()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.items"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.items()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.load"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.load()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.save"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.save()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.set"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.set()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.snapshot_push"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.snapshot_push()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DataManager.snapshot_undo"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataManager.snapshot_undo()</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.DictDataHandler"><code
-                                                    class="docutils literal notranslate"><span class="pre">DictDataHandler</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DictDataHandler.get"><code
-                                                            class="docutils literal notranslate"><span class="pre">DictDataHandler.get()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DictDataHandler.items"><code
-                                                            class="docutils literal notranslate"><span class="pre">DictDataHandler.items()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.DictDataHandler.set"><code
-                                                            class="docutils literal notranslate"><span class="pre">DictDataHandler.set()</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.ListDataHandler"><code
-                                                    class="docutils literal notranslate"><span class="pre">ListDataHandler</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.ListDataHandler.delete"><code
-                                                            class="docutils literal notranslate"><span class="pre">ListDataHandler.delete()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.ListDataHandler.get"><code
-                                                            class="docutils literal notranslate"><span class="pre">ListDataHandler.get()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.ListDataHandler.insert"><code
-                                                            class="docutils literal notranslate"><span class="pre">ListDataHandler.insert()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.ListDataHandler.items"><code
-                                                            class="docutils literal notranslate"><span class="pre">ListDataHandler.items()</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="data_manager.html#data_manager.ListDataHandler.set"><code
-                                                            class="docutils literal notranslate"><span class="pre">ListDataHandler.set()</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.delete"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">delete()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.insert"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">insert()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="data_manager.html#data_manager.touch_file"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">touch_file()</span></code></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="toctree-l1"><a class="reference internal" href="yaml_config.html">yaml_config
-                                        module</a>
-                                        <ul>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="yaml_config.html#yaml_config.YamlConfig"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">YamlConfig</span></code></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="toctree-l1"><a class="reference internal" href="json_config.html">json_config
-                                        module</a>
-                                        <ul>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="json_config.html#json_config.JsonConfig"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">JsonConfig</span></code></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="toctree-l1"><a class="reference internal" href="structured_text.html">structured_text
-                                        module</a>
-                                        <ul>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.DataCategory"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">DataCategory</span></code></a>
-                                                <ul>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="structured_text.html#structured_text.DataCategory.COMPLEX"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataCategory.COMPLEX</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="structured_text.html#structured_text.DataCategory.DICT"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataCategory.DICT</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="structured_text.html#structured_text.DataCategory.LIST"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataCategory.LIST</span></code></a>
-                                                    </li>
-                                                    <li class="toctree-l3"><a class="reference internal"
-                                                                              href="structured_text.html#structured_text.DataCategory.SCALAR"><code
-                                                            class="docutils literal notranslate"><span class="pre">DataCategory.SCALAR</span></code></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.data_category"><code
-                                                    class="docutils literal notranslate"><span class="pre">data_category()</span></code></a>
-                                            </li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.get_regex"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">get_regex()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.parse_dict"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">parse_dict()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.parse_list"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">parse_list()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.parse_text"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">parse_text()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.to_text"><code
-                                                    class="docutils literal notranslate"><span
-                                                    class="pre">to_text()</span></code></a></li>
-                                            <li class="toctree-l2"><a class="reference internal"
-                                                                      href="structured_text.html#structured_text.validate_format"><code
-                                                    class="docutils literal notranslate"><span class="pre">validate_format()</span></code></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-
-
-                    </div>
-                </div>
-                <footer>
-                    <div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-                        <a href="index.html" class="btn btn-neutral float-left" title="ConfigEditor Documentation"
-                           accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span>
-                            Previous</a>
-                        <a href="settings_widget.html" class="btn btn-neutral float-right"
-                           title="settings_widget module" accesskey="n" rel="next">Next <span
-                                class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-                    </div>
-
-                    <hr/>
-
-                    <div role="contentinfo">
-                        <p>&#169; Copyright 2024, corb555.</p>
-                    </div>
-
-                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
-
-                </footer>
-            </div>
-        </div>
-    </section>
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ConfigEditor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
 </div>
-<script>
-    jQuery(function () {
-        SphinxRtdTheme.Navigation.enable(true);
-    });
-</script>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configeditor">
+<h1>ConfigEditor<a class="headerlink" href="#configeditor" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="settings_widget.html">settings_widget module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget"><code class="docutils literal notranslate"><span class="pre">SettingsWidget</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.config"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.formats"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.formats</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.redisplay_keys"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.redisplay_keys</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.clear_layout"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.clear_layout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.display"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.display()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.on_change"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.on_change()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.save"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.undo"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.undo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_widget.html#settings_widget.SettingsWidget.validate_format"><code class="docutils literal notranslate"><span class="pre">SettingsWidget.validate_format()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="item_widget.html">item_widget module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget"><code class="docutils literal notranslate"><span class="pre">ItemWidget</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.config"><code class="docutils literal notranslate"><span class="pre">ItemWidget.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.widget_type"><code class="docutils literal notranslate"><span class="pre">ItemWidget.widget_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.key"><code class="docutils literal notranslate"><span class="pre">ItemWidget.key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.error_style"><code class="docutils literal notranslate"><span class="pre">ItemWidget.error_style</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.rgx"><code class="docutils literal notranslate"><span class="pre">ItemWidget.rgx</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget._data_category"><code class="docutils literal notranslate"><span class="pre">ItemWidget._data_category</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.display"><code class="docutils literal notranslate"><span class="pre">ItemWidget.display()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.set_error_style"><code class="docutils literal notranslate"><span class="pre">ItemWidget.set_error_style()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.set_normal_style"><code class="docutils literal notranslate"><span class="pre">ItemWidget.set_normal_style()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="item_widget.html#item_widget.ItemWidget.set_text"><code class="docutils literal notranslate"><span class="pre">ItemWidget.set_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="item_widget.html#item_widget.get_text"><code class="docutils literal notranslate"><span class="pre">get_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_manager.html">data_manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.AnyDataHandler"><code class="docutils literal notranslate"><span class="pre">AnyDataHandler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.AnyDataHandler.get"><code class="docutils literal notranslate"><span class="pre">AnyDataHandler.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.AnyDataHandler.items"><code class="docutils literal notranslate"><span class="pre">AnyDataHandler.items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.AnyDataHandler.replace_indirect"><code class="docutils literal notranslate"><span class="pre">AnyDataHandler.replace_indirect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.AnyDataHandler.set"><code class="docutils literal notranslate"><span class="pre">AnyDataHandler.set()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.DataHandler"><code class="docutils literal notranslate"><span class="pre">DataHandler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataHandler.get"><code class="docutils literal notranslate"><span class="pre">DataHandler.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataHandler.items"><code class="docutils literal notranslate"><span class="pre">DataHandler.items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataHandler.set"><code class="docutils literal notranslate"><span class="pre">DataHandler.set()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.DataManager"><code class="docutils literal notranslate"><span class="pre">DataManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager._data"><code class="docutils literal notranslate"><span class="pre">DataManager._data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.file_path"><code class="docutils literal notranslate"><span class="pre">DataManager.file_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.directory"><code class="docutils literal notranslate"><span class="pre">DataManager.directory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.unsaved_changes"><code class="docutils literal notranslate"><span class="pre">DataManager.unsaved_changes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.snapshots"><code class="docutils literal notranslate"><span class="pre">DataManager.snapshots</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.max_snapshots"><code class="docutils literal notranslate"><span class="pre">DataManager.max_snapshots</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.proxy_mapping"><code class="docutils literal notranslate"><span class="pre">DataManager.proxy_mapping</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.add_proxy"><code class="docutils literal notranslate"><span class="pre">DataManager.add_proxy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.create"><code class="docutils literal notranslate"><span class="pre">DataManager.create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.delete"><code class="docutils literal notranslate"><span class="pre">DataManager.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.get"><code class="docutils literal notranslate"><span class="pre">DataManager.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.get_open_mode"><code class="docutils literal notranslate"><span class="pre">DataManager.get_open_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.handler"><code class="docutils literal notranslate"><span class="pre">DataManager.handler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.init_data"><code class="docutils literal notranslate"><span class="pre">DataManager.init_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.insert"><code class="docutils literal notranslate"><span class="pre">DataManager.insert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.items"><code class="docutils literal notranslate"><span class="pre">DataManager.items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.load"><code class="docutils literal notranslate"><span class="pre">DataManager.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.save"><code class="docutils literal notranslate"><span class="pre">DataManager.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.set"><code class="docutils literal notranslate"><span class="pre">DataManager.set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.snapshot_push"><code class="docutils literal notranslate"><span class="pre">DataManager.snapshot_push()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.DataManager.snapshot_undo"><code class="docutils literal notranslate"><span class="pre">DataManager.snapshot_undo()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.ListDataHandler"><code class="docutils literal notranslate"><span class="pre">ListDataHandler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.ListDataHandler.delete"><code class="docutils literal notranslate"><span class="pre">ListDataHandler.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.ListDataHandler.get"><code class="docutils literal notranslate"><span class="pre">ListDataHandler.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.ListDataHandler.insert"><code class="docutils literal notranslate"><span class="pre">ListDataHandler.insert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.ListDataHandler.items"><code class="docutils literal notranslate"><span class="pre">ListDataHandler.items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_manager.html#data_manager.ListDataHandler.set"><code class="docutils literal notranslate"><span class="pre">ListDataHandler.set()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.delete"><code class="docutils literal notranslate"><span class="pre">delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.insert"><code class="docutils literal notranslate"><span class="pre">insert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_manager.html#data_manager.touch_file"><code class="docutils literal notranslate"><span class="pre">touch_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="yaml_config.html">yaml_config module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="yaml_config.html#yaml_config.YamlConfig"><code class="docutils literal notranslate"><span class="pre">YamlConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="structured_text.html">structured_text module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structured_text.html#structured_text.data_type"><code class="docutils literal notranslate"><span class="pre">data_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="structured_text.html#structured_text.get_regex"><code class="docutils literal notranslate"><span class="pre">get_regex()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="structured_text.html#structured_text.parse_text"><code class="docutils literal notranslate"><span class="pre">parse_text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="structured_text.html#structured_text.to_text"><code class="docutils literal notranslate"><span class="pre">to_text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="structured_text.html#structured_text.validate_text"><code class="docutils literal notranslate"><span class="pre">validate_text()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="ConfigEditor Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="settings_widget.html" class="btn btn-neutral float-right" title="settings_widget module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, corb555.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
 </body>
 </html>

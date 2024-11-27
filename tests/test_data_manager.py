@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import mock_open, patch
 
-from ConfigEditor.data_manager import DataManager, DictDataHandler, ListDataHandler
+from ConfigEditor.data_manager import DataManager, AnyDataHandler, ListDataHandler
 
 
 # Mock implementation of DataManager for testing purposes
@@ -101,25 +101,25 @@ def test_dict_data_manager_len(dict_data_manager):
     assert len(dict_data_manager._data) == 2, "Incorrect length for dictionary data"
 
 def test_dict_data_handler_get_nested_key():
-    handler = DictDataHandler()
+    handler = AnyDataHandler()
     data = {"outer": {"inner": "value"}}
     assert handler.get(data, "outer.inner") == "value"
     assert handler.get(data, "outer.nonexistent") is None
 
 def test_dict_data_handler_set_nested_key():
-    handler = DictDataHandler()
+    handler = AnyDataHandler()
     data = {}
     handler.set(data, "outer.inner", "value")
     assert data["outer"]["inner"] == "value"
 
 def test_dict_data_handler_get_level():
-    handler = DictDataHandler()
+    handler = AnyDataHandler()
     data = {"files": {"layer1": "data1", "layer2": "data2"}}
     items = handler.get(data, "files")
     assert dict(items) == {"layer1": "data1", "layer2": "data2"}
 
 def test_dict_data_handler_indirect_key():
-    handler = DictDataHandler()
+    handler = AnyDataHandler()
     data = {"files": {"A": "dataA"}, "current_layer": "A"}
     result = handler.get(data, "files.@current_layer")
     assert result == "dataA"
@@ -156,7 +156,7 @@ def test_data_manager_get_open_mode(dict_data_manager):
 
 # Test DataManager property and internal methods
 def test_data_manager_handler_initialization(dict_data_manager, list_data_manager):
-    assert isinstance(dict_data_manager.handler, DictDataHandler)
+    assert isinstance(dict_data_manager.handler, AnyDataHandler)
     assert isinstance(list_data_manager.handler, ListDataHandler)
 
 

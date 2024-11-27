@@ -1,24 +1,24 @@
-#  Copyright (c) 2024. Permission is hereby granted, free of charge, to any person obtaining a
-#  copy of this software and associated
-#  documentation files (the “Software”), to deal in the Software without restriction, including
-#  without limitation the
-#  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
-#  Software, and to permit
-#  persons to whom the Software is furnished to do so, subject to the following conditions:
+#  Copyright (c) 2024.
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the “Software”), to deal in the
+#   Software without restriction,
+#   including without limitation the rights to use, copy, modify, merge, publish, distribute,
+#   sublicense, and/or sell copies
+#   of the Software, and to permit persons to whom the Software is furnished to do so, subject to
+#   the following conditions:
+#  #
+#   The above copyright notice and this permission notice shall be included in all copies or
+#   substantial portions of the Software.
+#  #
+#   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+#   BUT NOT LIMITED TO THE
+#   WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+#   EVENT SHALL THE AUTHORS OR
+#   COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+#   CONTRACT, TORT OR
+#   OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
 #
-#  The above copyright notice and this permission notice shall be included in all copies or
-#  substantial portions of the
-#  Software.
-#
-#  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-#  BUT NOT LIMITED TO THE
-#  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
-#  EVENT SHALL THE AUTHORS OR
-#  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-#  CONTRACT, TORT OR
-#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-#  DEALINGS IN THE SOFTWARE.
-
 from abc import ABC, abstractmethod
 import copy
 import os
@@ -51,7 +51,7 @@ class DataManager(ABC):
         self.file_path = None
         self.directory = None
         self.unsaved_changes = False
-        self.snapshots = []  # Stack to store snapshots of _data for undo
+        self.snapshots = []  # stack to store snapshots of _data for undo
         self._handler = None  # the handler for our data type
         self.max_snapshots = 6  # Maximum number of snapshots to retain for undo
         self.proxy_mapping = {}  # Dictionary to map keys to proxy files
@@ -121,9 +121,9 @@ class DataManager(ABC):
         except IOError as e:
             print(f"Error: File: {path}\n{e}")
         except ValueError as e:
-            print(f"Error: Invalid file contents: {path}\n {e}")
+            print(f"Error: Invalid file contents using {self.__class__.__name__}: {path}\n{e}")
         except Exception as e:
-            print(f"Error while loading the file: {path}\n{e}")
+            print(f"Error loading: the file using {self.__class__.__name__}: {path}\n{e}")
         return False
 
     def get_open_mode(self, write=False):
@@ -151,7 +151,6 @@ class DataManager(ABC):
         Raises:
             ValueError: If the file path or data is None.
         """
-        # todo create pytest for Save
         if self.file_path is None:
             raise ValueError("Save Error: File path: cannot be None")
 
@@ -166,7 +165,7 @@ class DataManager(ABC):
                 self.unsaved_changes = False
                 return True
             except Exception as e:
-                print(f"Error while saving: {self.file_path}\n{e}")
+                print(f"Error saving: {self.file_path}\n{e}")
                 return False
 
     def set(self, key, value):
@@ -264,7 +263,7 @@ class DataManager(ABC):
         """
         Push the current state of the data to snapshot stack for undo functionality.
 
-        If the maximum number of snapshots is reached, the second oldest snapshot is removed.
+        If the maximum number of snapshots is reached, the second-oldest snapshot is removed.
         The oldest is always retained for return to initial state.
         """
         if len(self.snapshots) >= self.max_snapshots:
@@ -362,10 +361,7 @@ class DataManager(ABC):
 
     def _set_data_handler(self):
         """Set the appropriate data handler based on _data type."""
-        if isinstance(self._data, dict):
-            self._handler = DictDataHandler()
-        else:
-            self._handler = ListDataHandler()
+        self._handler = AnyDataHandler()
 
 
 def touch_file(filename):
@@ -423,81 +419,183 @@ class DataHandler(ABC):
         pass
 
 
-class DictDataHandler(DataHandler):
+class AnyDataHandler(DataHandler):
     """
-    Implementation of the DataHandler for handling dictionary data structures.
+    Implementation of the DataHandler for handling nested dict/list/scalar data hierarchies.
     Supports both regular and nested dictionary access, as well as indirect key references.
     """
 
-    def get(self, data, key):
+    def _access_item(self, data, key, value=None, set_item=False):
         """
-        Retrieve a value from a dictionary, supporting both nested keys, and indirect key
-        references.
+        Shared logic for getting or setting a value in a nested dictionary or list.
 
         Args:
-            data (dict): The dictionary to retrieve the value from.
-            key (str): The key to access the value. Supports '.' for nested keys, '@' for
-            indirect keys.
+            data (dict | list): The data structure to access or modify.
+            key (str): The key or key path to access.
+            value: The value to set (only used if `set_item` is True).
+            set_item (bool): Whether this is a `set` operation.
+
+        Returns:
+            The retrieved value for `get` operations, or None for `set` operations.
+        """
+
+        # Replace indirect keys (e.g. XYZ.@SITENAME)
+        key = self.replace_indirect(data, key)
+        if key is None:
+            return None if not set_item else None
+
+        try:
+            # Navigate to the appropriate container and key
+            container, final_key = self._navigate_hierarchy(
+                data, key, create_missing=set_item
+            )
+
+            if isinstance(container, dict):
+                if set_item:
+                    container[final_key] = value
+                else:
+                    return container[final_key]
+            elif isinstance(container, list):
+                index = self._validate_index(final_key)
+                if set_item:
+                    while index >= len(container):
+                        container.append(None)
+                    container[index] = value
+                else:
+                    return container[index]
+            elif isinstance(container, tuple):
+                index = self._validate_index(final_key)
+                if set_item:
+                    # Replace the tuple with a new one that includes the updated value
+                    container = list(container)
+                    while index >= len(container):
+                        container.append(None)
+                    container[index] = value
+                    parent_container, parent_key = self._navigate_hierarchy(
+                        data, ".".join(key.split(".")[:-1]), create_missing=True
+                    )
+                    if isinstance(parent_container, dict):
+                        parent_container[parent_key] = tuple(container)
+                    elif isinstance(parent_container, list):
+                        parent_index = self._validate_index(parent_key)
+                        while parent_index >= len(parent_container):
+                            parent_container.append(None)
+                        parent_container[parent_index] = tuple(container)
+                else:
+                    return container[index]
+        except (KeyError, IndexError, ValueError, TypeError) as e:
+            print(f"Error: Unable to {'set' if set_item else 'get'} '{key}'. Error: {e}")
+            return None
+
+    def get(self, data, key):
+        """
+        Retrieve a value from a nested dictionary or list, supporting nested keys and indirect
+        key references.
+
+        Args:
+            data (dict | list): The data structure to retrieve the value from.
+            key (str): The key to access the value. Supports '.' for nested keys.
 
         Returns:
             The value associated with the key, or None if the key is not found.
         """
-        # Handle indirect key references (e.g., FILES@LAYER)
+        return self._access_item(data, key, set_item=False)
+
+    def set(self, data, key, value):
+        """
+        Set a value in a nested dictionary or list, supporting nested key paths and indirect key
+        references.
+
+        Args:
+            data (dict | list): The data structure to modify.
+            key (str): The key to set the value at. Supports '.' for nested keys.
+            value: The value to store in the data structure.
+        """
+        self._access_item(data, key, value=value, set_item=True)
+
+    def _navigate_hierarchy(self, data, key, create_missing=False):
+        """
+        Navigate through a nested hierarchy of dictionaries and lists based on the provided key.
+
+        Args:
+            data (dict | list): The data structure to navigate.
+            key (str): The key to access, with '.' separating nested levels.
+            create_missing (bool): Whether to create missing intermediate structures (dict/list).
+
+        Returns:
+            A tuple of (final container, final key/index). The container is the last dict or list.
+
+        Raises:
+            KeyError, IndexError, ValueError, or TypeError for invalid navigation.
+        """
+        if "[" in key:
+            raise TypeError(f"Invalid key {key}.  Use dot rather than [0]")
+
+        keys = key.split(".")
+        target = data
+
+        for k in keys[:-1]:
+            if isinstance(target, dict):
+                if k not in target:
+                    if create_missing:
+                        target[k] = {}
+                    else:
+                        raise KeyError(f"Key '{k}' not found.")
+                target = target[k]
+            elif isinstance(target, list):
+                index = self._validate_index(k)
+                while create_missing and index >= len(target):
+                    target.append({})
+                if index >= len(target):
+                    raise IndexError(f"List index {index} out of range.")
+                target = target[index]
+            else:
+                print(f"Error: Key '{k}' not found for {type(target).__name__}")
+                raise TypeError(
+                    f"Cannot navigate key '{k}' in {type(target).__name__}: "
+                    f"Reached a scalar value."
+                )
+
+        final_key = keys[-1]
+        return target, final_key
+
+    def replace_indirect(self, data, key):
+        """
+        Replace indirect key references (e.g., 'FILES@LAYER') with the actual key.
+
+        Args:
+            data (dict): The data structure to resolve indirect references from.
+            key (str): The key with potential indirect references.
+
+        Returns:
+            str: Resolved key, or None if resolution failed.
+        """
         if "@" in key:
             main_key, indirect_ref = key.split("@", 1)
             ref = data.get(indirect_ref)
             if ref is not None:
-                key = f"{main_key}{ref}"
+                return f"{main_key}{ref}"
+            else:
+                print(f"Warning: Indirect key '{key}' not found.")
+                return None
+        return key
 
-        # Handle nested dictionaries, with each sub-key separated by "."
-        keys = key.split('.')
-        value = data
-        try:
-            for k in keys:
-                if not isinstance(value, dict):
-                    # Ensure we are dereferencing a dictionary
-                    return value
-                value = value[k]
-            return value
-        except KeyError:
-            return None
-
-    def set(self, data, key, value):
+    def _validate_index(self, key):
         """
-        Set a value in a dictionary, supporting nested key paths and indirect key references.
+        Validate and convert a key to an integer for list indexing.
 
         Args:
-            data (dict): The dictionary to modify.
-            key (str): The key to set the value at. Supports '.' for nested keys and '@' for
-            indirect keys.
-            value: The value to store in the dictionary.
+            key (str): The key to validate.
+
+        Returns:
+            int: The validated index.
+
+        Raises:
+            ValueError: If the key is not a valid integer index.
         """
-
-        # Handle indirect key case, e.g., FILES@LAYER
-        if "@" in key:
-            main_key, indirect_ref = key.split("@", 1)
-            ref = data.get(indirect_ref)  # Resolve the indirect reference from data
-            if ref is not None:
-                key = key.replace(
-                    f"@{indirect_ref}", ref
-                )  # Replace '@LAYER' with the value of 'LAYER'
-
-        keys = key.split('.')
-        target = data
-
-        # Traverse the dictionary to the correct level, except for the last key part
-        for k in keys[:-1]:
-            if k in target and not isinstance(target[k], dict):
-                raise TypeError(
-                    f"Cannot set value for {key}: Intermediate key '{k}' is not a dictionary."
-                )
-
-            # Ensure intermediate dictionaries are created
-            target = target.setdefault(k, {})
-
-        # Set the value for the final key part
-        final_key = keys[-1]
-        target[final_key] = value
+        if not key.isdigit():
+            raise ValueError(f"List index must be an integer, got '{key}'.")
+        return int(key)
 
     def items(self, data):
         """
@@ -559,7 +657,7 @@ class ListDataHandler(DataHandler):
         """
         if data:
             if index < len(data):
-                data[index] = item  # todo self.unsaved_changes = True
+                data[index] = item
             else:
                 raise IndexError(f"List index out of range: {index}")
         else:
