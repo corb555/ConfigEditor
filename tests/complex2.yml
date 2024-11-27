@@ -1,0 +1,35 @@
+version: 2.4
+executors:
+  my-executor:
+    docker:
+    - image: cimg/base:2024.05
+jobs:
+  build:
+    executor: my-executor
+    steps:
+    - checkout
+    - run: echo "gravel"
+  test:
+    executor: my-executor
+    steps:
+    - checkout
+    - run: echo "test"
+  deploy:
+    executor: my-executor
+    steps:
+    - checkout
+    - run: echo "deploy7"
+workflows:
+  build_and_test:
+    jobs:
+    - build
+    - test:
+        requires:
+        - build
+    - hold:
+        type: approval
+        requires:
+        - build
+    - deploy:
+        requires:
+        - hold
